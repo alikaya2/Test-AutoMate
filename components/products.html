@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://dummyjson.com;">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <title>Products - Test Auto Mate</title>
+</head>
+<body>
+    <header>
+        <h1>Products</h1>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="signUp.html">Sign Up</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="forms.html">Forms</a></li>
+                <li><a href="products.html" class="active">Products</a></li>
+                <li><a href="images.html">Images</a></li>
+                <li><a href="database.html">Database</a></li>
+                <li><a href="api.html">API</a></li>
+                <li><a href="advanced-api.html">Advanced API</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="card">
+            <h3 class="card-title">Product List</h3>
+            <p style="margin-bottom: 1rem; color: var(--text-muted);">Click 'Details' to open modal.</p>
+            
+            <div class="grid grid-cols-3">
+                <div class="card" style="padding: 1rem; margin-bottom: 0;">
+                    <h4 style="margin-bottom: 0.5rem;">Gaming Laptop</h4>
+                    <p style="color: var(--success); font-weight: bold;">$1200</p>
+                    <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+                        <button class="btn-primary" onclick="addToCart('Gaming Laptop', 1200)">Add to Cart</button>
+                        <button class="btn-secondary" onclick="openProductModal('Gaming Laptop', 'High performance laptop with RTX 4060.')">Details</button>
+                    </div>
+                </div>
+
+                <div class="card" style="padding: 1rem; margin-bottom: 0;">
+                    <h4 style="margin-bottom: 0.5rem;">Wireless Mouse</h4>
+                    <p style="color: var(--success); font-weight: bold;">$45</p>
+                    <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+                        <button class="btn-primary" onclick="addToCart('Wireless Mouse', 45)">Add to Cart</button>
+                        <button class="btn-secondary" onclick="openProductModal('Wireless Mouse', 'Ergonomic mouse with 100h battery life.')">Details</button>
+                    </div>
+                </div>
+                 <div class="card" style="padding: 1rem; margin-bottom: 0;">
+                    <h4 style="margin-bottom: 0.5rem;">Mechanical Keyboard</h4>
+                    <p style="color: var(--success); font-weight: bold;">$85</p>
+                    <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+                        <button class="btn-primary" onclick="addToCart('Mechanical Keyboard', 85)">Add to Cart</button>
+                        <button class="btn-secondary" onclick="openProductModal('Mechanical Keyboard', 'RGB Backlit Blue Switches.')">Details</button>
+                    </div>
+                </div>
+
+                <div class="card" style="padding: 1rem; margin-bottom: 0;">
+                    <h4 style="margin-bottom: 0.5rem;">USB-C Hub</h4>
+                    <p style="color: var(--success); font-weight: bold;">$29</p>
+                    <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+                        <button class="btn-primary" onclick="addToCart('USB-C Hub', 29)">Add to Cart</button>
+                        <button class="btn-secondary" onclick="openProductModal('USB-C Hub', '7-in-1 hub with HDMI, USB 3.0 and SD reader.')">Details</button>
+                    </div>
+                </div>
+
+                <div class="card" style="padding: 1rem; margin-bottom: 0;">
+                    <h4 style="margin-bottom: 0.5rem;">Noise Cancelling Headphones</h4>
+                    <p style="color: var(--success); font-weight: bold;">$199</p>
+                    <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+                        <button class="btn-primary" onclick="addToCart('Noise Cancelling Headphones', 199)">Add to Cart</button>
+                        <button class="btn-secondary" onclick="openProductModal('Noise Cancelling Headphones', '30-hour battery, ANC, Bluetooth 5.3.')">Details</button>
+                    </div>
+                </div>
+
+                <div class="card" style="padding: 1rem; margin-bottom: 0;">
+                    <h4 style="margin-bottom: 0.5rem;">4K Monitor</h4>
+                    <p style="color: var(--success); font-weight: bold;">$349</p>
+                    <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+                        <button class="btn-primary" onclick="addToCart('4K Monitor', 349)">Add to Cart</button>
+                        <button class="btn-secondary" onclick="openProductModal('4K Monitor', '27-inch IPS 4K display with HDR support.')">Details</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3 class="card-title">Cart (<span id="cartCount">0</span>)</h3>
+            <div id="cartItems" style="margin-top: 1rem;"></div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
+                <strong>Total: $<span id="cartTotal">0.00</span></strong>
+                <div style="display: flex; gap: 0.5rem;">
+                    <button class="btn-secondary" onclick="clearCart()">Clear</button>
+                    <button class="btn-success" onclick="checkout()">Checkout</button>
+                </div>
+            </div>
+        </div>
+
+        <div id="productModal" class="modal-overlay" style="display: none;">
+            <div class="card" style="width: 90%; max-width: 500px; margin: 0;">
+                <div class="card-header">
+                    <h3 class="card-title">Product Details</h3>
+                </div>
+                <div style="padding-bottom: 1.5rem;">
+                    <h4 id="modal-product-title" style="font-size: 1.2rem; color: var(--primary);">Title</h4>
+                    <p id="modal-product-desc" style="margin-top: 0.5rem; color: var(--text-main);">Description goes here...</p>
+                </div>
+                <button class="btn-primary" onclick="document.getElementById('productModal').style.display='none'">Close</button>
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="../scripts/main.js"></script>
+    <script>
+        const cart = new Map();
+
+        function openProductModal(title, desc) {
+            document.getElementById('modal-product-title').innerText = title;
+            document.getElementById('modal-product-desc').innerText = desc;
+            document.getElementById('productModal').style.display = 'flex';
+        }
+
+        function addToCart(name, price) {
+            const existing = cart.get(name);
+            if (existing) {
+                existing.qty += 1;
+            } else {
+                cart.set(name, { name, price, qty: 1 });
+            }
+
+            renderCart();
+            window.TestApp.showNotification(`${name} added to cart!`, 'success');
+        }
+
+        function removeFromCart(name) {
+            cart.delete(name);
+            renderCart();
+        }
+
+        function setQty(name, qty) {
+            const item = cart.get(name);
+            if (!item) return;
+            const n = parseInt(qty, 10);
+            if (Number.isNaN(n) || n <= 0) {
+                cart.delete(name);
+            } else {
+                item.qty = n;
+            }
+            renderCart();
+        }
+
+        function clearCart() {
+            cart.clear();
+            renderCart();
+            window.TestApp.showNotification('Cart cleared.', 'info');
+        }
+
+        function checkout() {
+            if (cart.size === 0) {
+                window.TestApp.showNotification('Cart is empty.', 'error');
+                return;
+            }
+            const total = Array.from(cart.values()).reduce((sum, i) => sum + (i.price * i.qty), 0);
+            
+            window.TestApp.showNotification('Successful payment! Order completed successfully.', 'success');
+            
+            cart.clear();
+            renderCart();
+            
+            setTimeout(() => {
+                window.TestApp.showNotification(`Order total: $${total.toFixed(2)} - Thank you for your purchase!`, 'info');
+            }, 2000);
+        }
+
+        function escapeHTML(str) {
+            const div = document.createElement('div');
+            div.appendChild(document.createTextNode(String(str)));
+            return div.innerHTML;
+        }
+
+        function renderCart() {
+            const container = document.getElementById('cartItems');
+            const countEl = document.getElementById('cartCount');
+            const totalEl = document.getElementById('cartTotal');
+
+            const items = Array.from(cart.values());
+            const totalQty = items.reduce((sum, i) => sum + i.qty, 0);
+            const total = items.reduce((sum, i) => sum + (i.price * i.qty), 0);
+
+            countEl.textContent = String(totalQty);
+            totalEl.textContent = total.toFixed(2);
+
+            if (items.length === 0) {
+                container.innerHTML = '<p style="color: var(--text-muted);">Your cart is empty.</p>';
+                return;
+            }
+
+            container.innerHTML = `
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Item</th>
+                            <th>Price</th>
+                            <th style="width: 120px;">Qty</th>
+                            <th>Total</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        ${items.map(i => `
+                            <tr>
+                                <td>${escapeHTML(i.name)}</td>
+                                <td>$${i.price.toFixed(2)}</td>
+                                <td>
+                                    <input type="number" min="1" value="${i.qty}" style="width: 80px;" onchange="setQty('${i.name.replace(/'/g, "\\'")}', this.value)">
+                                </td>
+                                <td>$${(i.price * i.qty).toFixed(2)}</td>
+                                <td><button class="btn-error" onclick="removeFromCart('${i.name.replace(/'/g, "\\'")}')">Remove</button></td>
+                            </tr>
+                        `).join('')}
+                    </tbody>
+                </table>
+            `;
+        }
+
+        renderCart();
+    </script>
+</body>
+</html>

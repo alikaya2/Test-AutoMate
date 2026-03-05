@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://dummyjson.com;">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../responsive/responsive.css">
+    <title>Forms - Test Automation Website</title>
+</head>
+<body>
+    <header>
+        <h1>Forms Testing Section</h1>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="signUp.html">Sign Up</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="forms.html" class="active">Forms</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="images.html">Images</a></li>
+                <li><a href="database.html">Database</a></li>
+                <li><a href="api.html">API</a></li>
+                <li><a href="advanced-api.html">Advanced API</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="grid grid-cols-2">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Basic Form</h3>
+                </div>
+                <form id="basicForm">
+                    <div class="form-group">
+                        <label for="firstName">First Name:</label>
+                        <input type="text" id="firstName" name="firstName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastName">Last Name:</label>
+                        <input type="text" id="lastName" name="lastName" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email:</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone:</label>
+                        <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="123-456-7890">
+                    </div>
+                    <button type="submit">Submit Basic Form</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Advanced Form</h3>
+                </div>
+                <form id="advancedForm">
+                    <div class="form-group">
+                        <label for="birthDate">Birth Date:</label>
+                        <input type="date" id="birthDate" name="birthDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Age:</label>
+                        <input type="number" id="age" name="age" min="1" max="120">
+                    </div>
+                    <div class="form-group">
+                        <label for="salary">Salary:</label>
+                        <input type="number" id="salary" name="salary" step="0.01" min="0">
+                    </div>
+                    <div class="form-group">
+                        <label for="website">Website:</label>
+                        <input type="url" id="website" name="website" placeholder="https://example.com">
+                    </div>
+                    <button type="submit">Submit Advanced Form</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Selection Form</h3>
+                </div>
+                <form id="selectionForm">
+                    <div class="form-group">
+                        <label for="country">Country:</label>
+                        <select id="country" name="country">
+                            <option value="">Select a country</option>
+                            <option value="us">United States</option>
+                            <option value="uk">United Kingdom</option>
+                            <option value="ca">Canada</option>
+                            <option value="au">Australia</option>
+                            <option value="de">Germany</option>
+                            <option value="fr">France</option>
+                            <option value="tr">Turkey</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Gender:</label>
+                        <div style="margin-top: 0.5rem;">
+                            <label style="font-weight: normal; display: inline-block; margin-right: 1rem;">
+                                <input type="radio" name="gender" value="male"> Male
+                            </label>
+                            <label style="font-weight: normal; display: inline-block; margin-right: 1rem;">
+                                <input type="radio" name="gender" value="female"> Female
+                            </label>
+                            <label style="font-weight: normal; display: inline-block;">
+                                <input type="radio" name="gender" value="other"> Other
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Interests:</label>
+                        <div style="margin-top: 0.5rem;">
+                            <label style="font-weight: normal; display: block; margin-bottom: 0.5rem;">
+                                <input type="checkbox" name="interests" value="sports"> Sports
+                            </label>
+                            <label style="font-weight: normal; display: block; margin-bottom: 0.5rem;">
+                                <input type="checkbox" name="interests" value="music"> Music
+                            </label>
+                            <label style="font-weight: normal; display: block; margin-bottom: 0.5rem;">
+                                <input type="checkbox" name="interests" value="technology"> Technology
+                            </label>
+                            <label style="font-weight: normal; display: block;">
+                                <input type="checkbox" name="interests" value="travel"> Travel
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit">Submit Selection Form</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">File Upload Form</h3>
+                </div>
+                <form id="fileForm">
+                    <div class="form-group">
+                        <label for="profilePicture">Profile Picture:</label>
+                        <input type="file" id="profilePicture" name="profilePicture" accept="image/*">
+                    </div>
+                    <div class="form-group">
+                        <label for="documents">Documents:</label>
+                        <input type="file" id="documents" name="documents" multiple accept=".pdf,.doc,.docx,.txt">
+                    </div>
+                    <div class="form-group">
+                        <label for="avatar">Avatar:</label>
+                        <input type="file" id="avatar" name="avatar" accept="image/png,image/jpeg,image/gif">
+                    </div>
+                    <button type="submit">Upload Files</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Text Input Form</h3>
+                </div>
+                <form id="textForm">
+                    <div class="form-group">
+                        <label for="username">Username:</label>
+                        <input type="text" id="username" name="username" minlength="3" maxlength="20" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password:</label>
+                        <input type="password" id="password" name="password" minlength="8" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="confirmPassword">Confirm Password:</label>
+                        <input type="password" id="confirmPassword" name="confirmPassword" minlength="8" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="bio">Biography:</label>
+                        <textarea id="bio" name="bio" rows="4" cols="50" placeholder="Tell us about yourself..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="comments">Comments:</label>
+                        <textarea id="comments" name="comments" rows="3" cols="50" placeholder="Leave your comments here..."></textarea>
+                    </div>
+                    <button type="submit">Submit Text Form</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Range and Color Form</h3>
+                </div>
+                <form id="rangeColorForm">
+                    <div class="form-group">
+                        <label for="satisfaction">Satisfaction Level: <span id="satisfactionValue">5</span></label>
+                        <input type="range" id="satisfaction" name="satisfaction" min="1" max="10" value="5">
+                    </div>
+                    <div class="form-group">
+                        <label for="experience">Experience (years): <span id="experienceValue">3</span></label>
+                        <input type="range" id="experience" name="experience" min="0" max="20" value="3">
+                    </div>
+                    <div class="form-group">
+                        <label for="favoriteColor">Favorite Color:</label>
+                        <input type="color" id="favoriteColor" name="favoriteColor" value="#2563eb">
+                    </div>
+                    <div class="form-group">
+                        <label for="themeColor">Theme Color:</label>
+                        <input type="color" id="themeColor" name="themeColor" value="#64748b">
+                    </div>
+                    <button type="submit">Submit Range/Color Form</button>
+                </form>
+            </div>
+        </div>
+
+        <div id="validationResults" class="hidden">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Form Submission Results</h3>
+                </div>
+                <div id="resultsContent"></div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="../scripts/main.js"></script>
+
+    <script>
+        document.getElementById('satisfaction').addEventListener('input', function() {
+            document.getElementById('satisfactionValue').textContent = this.value;
+        });
+
+        document.getElementById('experience').addEventListener('input', function() {
+            document.getElementById('experienceValue').textContent = this.value;
+        });
+
+        function handleFormSubmit(event, formId) {
+            event.preventDefault();
+            const formData = new FormData(event.target);
+            const data = Object.fromEntries(formData.entries());
+            
+            const resultsDiv = document.getElementById('validationResults');
+            const resultsContent = document.getElementById('resultsContent');
+            
+            function esc(str) {
+                const d = document.createElement('div');
+                d.appendChild(document.createTextNode(String(str)));
+                return d.innerHTML;
+            }
+            
+            let html = `<h4>${esc(formId)} Submitted Successfully!</h4>`;
+            html += '<table class="table">';
+            html += '<thead><tr><th>Field</th><th>Value</th></tr></thead><tbody>';
+            
+            for (const [key, value] of Object.entries(data)) {
+                html += `<tr><td>${esc(key)}</td><td>${esc(value)}</td></tr>`;
+            }
+            
+            html += '</tbody></table>';
+            resultsContent.innerHTML = html;
+            resultsDiv.classList.remove('hidden');
+            
+            showNotification('Form submitted successfully!', 'success');
+        }
+
+        document.getElementById('basicForm').addEventListener('submit', (e) => handleFormSubmit(e, 'Basic Form'));
+        document.getElementById('advancedForm').addEventListener('submit', (e) => handleFormSubmit(e, 'Advanced Form'));
+        document.getElementById('selectionForm').addEventListener('submit', (e) => handleFormSubmit(e, 'Selection Form'));
+        document.getElementById('fileForm').addEventListener('submit', (e) => handleFormSubmit(e, 'File Form'));
+        document.getElementById('textForm').addEventListener('submit', (e) => handleFormSubmit(e, 'Text Form'));
+        document.getElementById('rangeColorForm').addEventListener('submit', (e) => handleFormSubmit(e, 'Range/Color Form'));
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type}`;
+            notification.textContent = message;
+            notification.style.cssText = 'position:fixed;top:20px;right:20px;z-index:2000;min-width:250px;padding:1rem 1.5rem;border-radius:12px;font-weight:500;box-shadow:0 10px 15px rgba(0,0,0,0.1);';
+            document.body.appendChild(notification);
+            setTimeout(() => { if (notification.parentNode) notification.remove(); }, 4000);
+        }
+    </script>
+</body>
+</html>

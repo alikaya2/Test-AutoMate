@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://dummyjson.com https://jsonplaceholder.typicode.com https://api.mock-endpoint.com; form-action 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none';">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <title>Advanced API Testing</title>
+    <style>
+        .job-status { 
+            padding: 1rem; 
+            border-radius: 8px; 
+            margin: 1rem 0; 
+            border-left: 4px solid;
+        }
+        .job-status.pending { 
+            background: #fef3c7; 
+            border-color: #f59e0b; 
+        }
+        .job-status.running { 
+            background: #dbeafe; 
+            border-color: #3b82f6; 
+            animation: pulse 2s infinite;
+        }
+        .job-status.completed { 
+            background: #d1fae5; 
+            border-color: #10b981; 
+        }
+        .job-status.failed { 
+            background: #fee2e2; 
+            border-color: #ef4444; 
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #3b82f6, #10b981);
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+        .api-card {
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+        .token-display {
+            background: #1f2937;
+            color: #10b981;
+            padding: 0.5rem;
+            border-radius: 4px;
+            font-family: monospace;
+            font-size: 0.875rem;
+            word-break: break-all;
+        }
+        .intercept-badge {
+            background: #dc2626;
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Advanced API</h1>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="signUp.html">Sign Up</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="forms.html">Forms</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="images.html">Images</a></li>
+                <li><a href="database.html">Database</a></li>
+                <li><a href="api.html">API</a></li>
+                <li><a href="advanced-api.html" class="active">Advanced API</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Authentication & Token Management</h3>
+            </div>
+            <div class="alert alert-info" style="margin-bottom: 1rem;">
+                <strong>How to use</strong>
+                <div style="margin-top: 0.5rem; color: var(--text-secondary);">
+                    1) Login (Cookie or JWT)
+                    2) Check token status
+                    3) Try protected endpoint
+                    4) Optional: run batch job / batch calls / flaky DOM
+                </div>
+            </div>
+            <div class="grid grid-cols-2">
+                <div>
+                    <h4>Cookie-Based Login</h4>
+                    <form id="cookieLoginForm">
+                        <div class="form-group">
+                            <label>Username:</label>
+                            <input type="text" id="cookieUsername" value="admin" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Password:</label>
+                            <input type="password" id="cookiePassword" placeholder="Enter password" required>
+                        </div>
+                        <button type="submit" class="btn-primary">Login with Cookie</button>
+                    </form>
+                </div>
+                <div>
+                    <h4>JWT Token Login</h4>
+                    <form id="jwtLoginForm">
+                        <div class="form-group">
+                            <label>Username:</label>
+                            <input type="text" id="jwtUsername" value="admin" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Password:</label>
+                            <input type="password" id="jwtPassword" placeholder="Enter password" required>
+                        </div>
+                        <button type="submit" class="btn-success">Login with JWT</button>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="card" style="margin-top: 1rem;">
+                <h4>Current Token Status</h4>
+                <div id="tokenStatus" class="token-display">No token available</div>
+                <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+                    <button onclick="refreshToken()" class="btn-secondary">Refresh Token</button>
+                    <button onclick="simulateTokenExpiry()" class="btn-error">Simulate Expiry</button>
+                    <button onclick="clearTokens()" class="btn-error">Clear All</button>
+                </div>
+            </div>
+        </div>
+
+        <details class="card" open>
+            <summary class="card-header" style="cursor: pointer;">
+                <h3 class="card-title" style="margin: 0;">Protected Admin Endpoint <span class="intercept-badge">NETWORK INTERCEPT</span></h3>
+            </summary>
+            <div style="padding-top: 1rem;">
+                <p style="margin-top: 0; color: var(--text-secondary);">This endpoint requires valid authentication. Try accessing with and without tokens.</p>
+                <button onclick="accessAdminEndpoint()" class="btn-primary">Access Admin Data</button>
+                <div id="adminResponse" style="margin-top: 1rem;"></div>
+            </div>
+        </details>
+
+        <details class="card">
+            <summary class="card-header" style="cursor: pointer;">
+                <h3 class="card-title" style="margin: 0;">Batch Job Simulation</h3>
+            </summary>
+            <div style="padding-top: 1rem;">
+                <p style="margin-top: 0; color: var(--text-secondary);">Trigger a background job that runs for 10 seconds with real-time status updates.</p>
+                <button onclick="startBatchJob()" class="btn-success">Start Batch Job</button>
+                
+                <div id="jobStatus" class="job-status" style="display: none;">
+                    <h4 id="jobTitle">Job Status</h4>
+                    <div id="jobDescription">Initializing...</div>
+                    <div class="progress-bar">
+                        <div id="progressFill" class="progress-fill"></div>
+                    </div>
+                    <div id="jobProgress">0%</div>
+                    <div id="jobTime">Elapsed: 0s</div>
+                </div>
+            </div>
+        </details>
+
+        <details class="card">
+            <summary class="card-header" style="cursor: pointer;">
+                <h3 class="card-title" style="margin: 0;">Multiple API Calls (Batch)</h3>
+            </summary>
+            <div style="padding-top: 1rem;">
+                <p style="margin-top: 0; color: var(--text-secondary);">Three simultaneous API calls with different behaviors - one will fail if not mocked properly.</p>
+                <button onclick="executeBatchCalls()" class="btn-primary">Execute Batch Calls</button>
+                
+                <div id="batchResults" style="margin-top: 1rem;">
+                    <div class="grid grid-cols-3">
+                        <div class="api-card">
+                            <h4>API Call 1 (Success)</h4>
+                            <div id="api1Result">Waiting...</div>
+                        </div>
+                        <div class="api-card">
+                            <h4>API Call 2 (Mock Required)</h4>
+                            <div id="api2Result">Waiting...</div>
+                        </div>
+                        <div class="api-card">
+                            <h4>API Call 3 (Success)</h4>
+                            <div id="api3Result">Waiting...</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </details>
+
+        <details class="card">
+            <summary class="card-header" style="cursor: pointer;">
+                <h3 class="card-title" style="margin: 0;">Dynamic DOM & Flaky Elements</h3>
+            </summary>
+            <div style="padding-top: 1rem;">
+                <button onclick="createFlakyElements()" class="btn-secondary">Create Flaky Elements</button>
+                <button onclick="updateDynamicContent()" class="btn-primary">Update Dynamic Content</button>
+                
+                <div id="dynamicContainer" style="margin-top: 1rem; min-height: 200px; border: 2px dashed #e5e7eb; border-radius: 8px; padding: 1rem;">
+                    <p>Dynamic content will appear here...</p>
+                </div>
+            </div>
+        </details>
+    </main>
+
+    <script type="module" src="../scripts/main.js"></script>
+    <script>
+        let currentToken = null;
+        let refreshToken = null;
+        let jobInterval = null;
+        let jobStartTime = null;
+
+        async function hashPassword(password) {
+            const encoder = new TextEncoder();
+            const data = encoder.encode(password);
+            const hashBuffer = await crypto.subtle.digest('SHA-256', data);
+            const hashArray = Array.from(new Uint8Array(hashBuffer));
+            return hashArray.map(b => b.toString(16).padStart(2, '0')).join('');
+        }
+
+        const mockDB = {
+            users: {
+                admin: { passwordHash: '2a97516c354b68848cdbd8f54a226a0a55b21ed138e207ad6c5cbb9c00aa5aea', role: 'admin' },  // hash of 'demo'
+                user:  { passwordHash: 'e606e38b0d8c19b24cf0ee3808183162ea7cd63ff7912dbb22b5e803286b4446', role: 'user' }    // hash of 'user123'
+            },
+            jobs: {},
+            tokens: new Map()
+        };
+
+        async function verifyPassword(username, password) {
+            const user = mockDB.users[username];
+            if (!user) return false;
+            const hash = await hashPassword(password);
+            return hash === user.passwordHash;
+        }
+
+        function escapeHTML(str) {
+            const div = document.createElement('div');
+            div.appendChild(document.createTextNode(String(str)));
+            return div.innerHTML;
+        }
+
+        function generateJWT(username, expiresIn = 3600) {
+            const header = btoa(JSON.stringify({ alg: 'HS256', typ: 'JWT' }));
+            const payload = btoa(JSON.stringify({
+                username: username,
+                role: mockDB.users[username].role,
+                exp: Math.floor(Date.now() / 1000) + expiresIn,
+                iat: Math.floor(Date.now() / 1000)
+            }));
+            const signature = btoa('mock-signature');
+            return `${header}.${payload}.${signature}`;
+        }
+
+        function isTokenExpired(token) {
+            try {
+                const payload = JSON.parse(atob(token.split('.')[1]));
+                return Date.now() / 1000 > payload.exp;
+            } catch {
+                return true;
+            }
+        }
+
+
+        document.getElementById('cookieLoginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('cookieUsername').value;
+            const password = document.getElementById('cookiePassword').value;
+            
+            if (mockDB.users[username] && await verifyPassword(username, password)) {
+                document.cookie = `auth_token=${generateJWT(username)}; path=/; max-age=3600; SameSite=Strict`;
+                updateTokenStatus();
+                window.TestApp.showNotification('Cookie login successful!', 'success');
+            } else {
+                window.TestApp.showNotification('Invalid credentials!', 'error');
+            }
+        });
+
+        document.getElementById('jwtLoginForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const username = document.getElementById('jwtUsername').value;
+            const password = document.getElementById('jwtPassword').value;
+            
+            if (mockDB.users[username] && await verifyPassword(username, password)) {
+                currentToken = generateJWT(username);
+                refreshToken = generateJWT(username, 7200); 
+                sessionStorage.setItem('jwt_token', currentToken);
+                sessionStorage.setItem('refresh_token', refreshToken);
+                updateTokenStatus();
+                window.TestApp.showNotification('JWT login successful!', 'success');
+            } else {
+                window.TestApp.showNotification('Invalid credentials!', 'error');
+            }
+        });
+
+        function updateTokenStatus() {
+            const cookieToken = getCookie('auth_token');
+            const storedToken = sessionStorage.getItem('jwt_token');
+            const token = cookieToken || storedToken;
+            
+            const statusDiv = document.getElementById('tokenStatus');
+            if (token) {
+                const expired = isTokenExpired(token);
+                const payload = JSON.parse(atob(token.split('.')[1]));
+                statusDiv.innerHTML = `
+                    <strong>Token Found:</strong><br>
+                    User: ${payload.username}<br>
+                    Role: ${payload.role}<br>
+                    Expires: ${new Date(payload.exp * 1000).toLocaleString()}<br>
+                    Status: <span style="color: ${expired ? '#ef4444' : '#10b981'}">${expired ? 'EXPIRED' : 'VALID'}</span>
+                `;
+                currentToken = token;
+            } else {
+                statusDiv.innerHTML = 'No token available';
+                currentToken = null;
+            }
+        }
+
+        function refreshToken() {
+            if (refreshToken) {
+                currentToken = generateJWT('admin');
+                sessionStorage.setItem('jwt_token', currentToken);
+                updateTokenStatus();
+                window.TestApp.showNotification('Token refreshed successfully!', 'success');
+            } else {
+                window.TestApp.showNotification('No refresh token available!', 'error');
+            }
+        }
+
+        function simulateTokenExpiry() {
+            const expiredToken = generateJWT('admin', -1); 
+            sessionStorage.setItem('jwt_token', expiredToken);
+            updateTokenStatus();
+            window.TestApp.showNotification('Token expiry simulated!', 'warning');
+        }
+
+        function clearTokens() {
+            document.cookie = 'auth_token=; path=/; expires=Thu, 01 Jan 1970 00:00:01 GMT';
+            sessionStorage.removeItem('jwt_token');
+            sessionStorage.removeItem('refresh_token');
+            currentToken = null;
+            refreshToken = null;
+            updateTokenStatus();
+            window.TestApp.showNotification('All tokens cleared!', 'info');
+        }
+
+        async function accessAdminEndpoint() {
+            const responseDiv = document.getElementById('adminResponse');
+            
+            try {
+                if (!currentToken || isTokenExpired(currentToken)) {
+                    responseDiv.innerHTML = `
+                        <div class="alert alert-error">
+                            <strong>401 Unauthorized</strong><br>
+                            Network Intercept: Missing or invalid authentication token<br>
+                            Please login first to access this endpoint.
+                        </div>
+                    `;
+                    return;
+                }
+
+                await new Promise(resolve => setTimeout(resolve, 1000));
+                
+                const payload = JSON.parse(atob(currentToken.split('.')[1]));
+                if (payload.role !== 'admin') {
+                    responseDiv.innerHTML = `
+                        <div class="alert alert-error">
+                            <strong>403 Forbidden</strong><br>
+                            Access denied. Admin role required.
+                        </div>
+                    `;
+                    return;
+                }
+
+                responseDiv.innerHTML = `
+                    <div class="alert alert-success">
+                        <strong>200 OK</strong><br>
+                        Admin data accessed successfully!<br>
+                        User: ${escapeHTML(payload.username)}<br>
+                        Role: ${escapeHTML(payload.role)}<br>
+                        Timestamp: ${escapeHTML(new Date().toLocaleString())}
+                    </div>
+                `;
+            } catch (error) {
+                responseDiv.innerHTML = `
+                    <div class="alert alert-error">
+                        <strong>Network Error</strong><br>
+                        ${error.message}
+                    </div>
+                `;
+            }
+        }
+
+        function startBatchJob() {
+            const jobId = 'job_' + Date.now();
+            mockDB.jobs[jobId] = {
+                status: 'pending',
+                progress: 0,
+                startTime: Date.now()
+            };
+
+            const statusDiv = document.getElementById('jobStatus');
+            const progressFill = document.getElementById('progressFill');
+            const progressText = document.getElementById('jobProgress');
+            const timeText = document.getElementById('jobTime');
+
+            statusDiv.style.display = 'block';
+            statusDiv.className = 'job-status pending';
+            document.getElementById('jobTitle').textContent = `Job ID: ${jobId}`;
+            document.getElementById('jobDescription').textContent = 'Initializing batch job...';
+
+            let progress = 0;
+            jobStartTime = Date.now();
+
+            jobInterval = setInterval(() => {
+                progress += 10;
+                mockDB.jobs[jobId].progress = progress;
+
+                if (progress <= 30) {
+                    statusDiv.className = 'job-status running';
+                    document.getElementById('jobDescription').textContent = 'Processing data...';
+                } else if (progress <= 60) {
+                    document.getElementById('jobDescription').textContent = 'Validating results...';
+                } else if (progress <= 90) {
+                    document.getElementById('jobDescription').textContent = 'Finalizing...';
+                } else if (progress >= 100) {
+                    clearInterval(jobInterval);
+                    statusDiv.className = 'job-status completed';
+                    document.getElementById('jobDescription').textContent = 'Job completed successfully!';
+                    mockDB.jobs[jobId].status = 'completed';
+                    return;
+                }
+
+                progressFill.style.width = progress + '%';
+                progressText.textContent = progress + '%';
+                const elapsed = Math.floor((Date.now() - jobStartTime) / 1000);
+                timeText.textContent = `Elapsed: ${elapsed}s`;
+            }, 1000);
+
+            window.TestApp.showNotification('Batch job started!', 'info');
+        }
+
+        async function executeBatchCalls() {
+            const results = {
+                api1: document.getElementById('api1Result'),
+                api2: document.getElementById('api2Result'),
+                api3: document.getElementById('api3Result')
+            };
+
+            Object.values(results).forEach(div => {
+                div.innerHTML = '<div style="color: #6b7280;">Loading...</div>';
+            });
+
+            try {
+                const call1 = fetch('https://jsonplaceholder.typicode.com/posts/1')
+                    .then(res => res.json())
+                    .then(data => {
+                        results.api1.innerHTML = `
+                            <div style="color: #10b981;">✅ Success</div>
+                            <small>${escapeHTML(data.title.substring(0, 50))}...</small>
+                        `;
+                    });
+
+                const call2 = fetch('https://api.mock-endpoint.com/batch/data')
+                    .then(res => {
+                        if (!res.ok) throw new Error('Network Error');
+                        return res.json();
+                    })
+                    .then(data => {
+                        results.api2.innerHTML = `
+                            <div style="color: #10b981;">✅ Success</div>
+                            <small>${escapeHTML(JSON.stringify(data).substring(0, 50))}...</small>
+                        `;
+                    })
+                    .catch(error => {
+                        results.api2.innerHTML = `
+                            <div style="color: #ef4444;">❌ Failed</div>
+                            <small>${escapeHTML(error.message)}</small><br>
+                            <small style="color: #6b7280;">This call needs network mocking to pass</small>
+                        `;
+                    });
+
+                const call3 = fetch('https://jsonplaceholder.typicode.com/users/1')
+                    .then(res => res.json())
+                    .then(data => {
+                        results.api3.innerHTML = `
+                            <div style="color: #10b981;">✅ Success</div>
+                            <small>${escapeHTML(data.name)} - ${escapeHTML(data.email)}</small>
+                        `;
+                    });
+
+                await Promise.allSettled([call1, call2, call3]);
+                
+                window.TestApp.showNotification('Batch execution completed!', 'info');
+            } catch (error) {
+                window.TestApp.showNotification('Batch execution failed!', 'error');
+            }
+        }
+
+        function createFlakyElements() {
+            const container = document.getElementById('dynamicContainer');
+            container.innerHTML = '';
+            
+            setTimeout(() => {
+                const btn1 = document.createElement('button');
+                btn1.textContent = 'Flaky Button 1';
+                btn1.className = 'btn-secondary';
+                btn1.style.margin = '0.5rem';
+                container.appendChild(btn1);
+            }, 500);
+
+            setTimeout(() => {
+                const btn2 = document.createElement('button');
+                btn2.textContent = 'Flaky Button 2 (appears later)';
+                btn2.className = 'btn-primary';
+                btn2.style.margin = '0.5rem';
+                container.appendChild(btn2);
+            }, 2000);
+
+            setTimeout(() => {
+                const div = document.createElement('div');
+                div.className = 'card';
+                div.style.margin = '0.5rem';
+                div.innerHTML = '<h4>Delayed Content</h4><p>This content appears after 3 seconds</p>';
+                container.appendChild(div);
+            }, 3000);
+
+            window.TestApp.showNotification('Flaky elements created!', 'info');
+        }
+
+        function updateDynamicContent() {
+            const container = document.getElementById('dynamicContainer');
+            const timestamp = new Date().toLocaleTimeString();
+            
+            container.innerHTML = `
+                <div class="card">
+                    <h4>Dynamic Content Updated</h4>
+                    <p>Last updated: <strong>${timestamp}</strong></p>
+                    <p>Random data: <strong>${Math.random().toString(36).substring(7)}</strong></p>
+                    <button onclick="updateDynamicContent()" class="btn-primary">Update Again</button>
+                </div>
+            `;
+            
+            window.TestApp.showNotification('Dynamic content updated!', 'success');
+        }
+
+        function getCookie(name) {
+            const value = `; ${document.cookie}`;
+            const parts = value.split(`; ${name}=`);
+            if (parts.length === 2) return parts.pop().split(';').shift();
+            return null;
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            updateTokenStatus();
+        });
+    </script>
+</body>
+</html>

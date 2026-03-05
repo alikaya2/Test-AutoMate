@@ -1,0 +1,1137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://dummyjson.com; form-action 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none';">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <title>Database - Test Auto Mate</title>
+</head>
+<body>
+    <header>
+        <h1>Database</h1>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="signUp.html">Sign Up</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="forms.html">Forms</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="images.html">Images</a></li>
+                <li><a href="database.html" class="active">Database</a></li>
+                <li><a href="api.html">API</a></li>
+                <li><a href="advanced-api.html">Advanced API</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Database Operations</h3>
+            </div>
+            <p>Test database CRUD operations with real-time validation.</p>
+            <div class="alert alert-info" style="margin-top: 1rem;">
+                <strong>How to use</strong>
+                <div style="margin-top: 0.5rem; color: var(--text-secondary);">
+                    1) Select DB type
+                    2) Click <strong>Connect</strong>
+                    3) Use CRUD cards below
+                    4) Results appear in <strong>Query Results</strong>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-2">
+                <div class="card">
+                    <h4>Create User</h4>
+                    <form id="createUserForm">
+                        <div class="form-group">
+                            <label>Name:</label>
+                            <input type="text" id="userName" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Email:</label>
+                            <input type="email" id="userEmail" required>
+                        </div>
+                        <button type="submit" class="btn-primary">Create User</button>
+                    </form>
+                    <select id="dbType" onchange="updateConnectionForm()">
+                        <option value="dummyjson">DummyJSON (Large Test Dataset)</option>
+                        <option value="mongodb">MongoDB</option>
+                        <option value="mysql">MySQL</option>
+                        <option value="postgresql">PostgreSQL</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="connectionString">Connection String:</label>
+                    <input type="text" id="connectionString" value="https://dummyjson.com" readonly>
+                </div>
+            </div>
+            <button onclick="testConnection()" class="btn-secondary">Test Connection</button>
+            <button onclick="connectDatabase()" class="btn-success">Connect</button>
+            <div id="connectionStatus" style="margin-top: 0.75rem; color: var(--text-secondary); font-size: 0.875rem;">Status: Disconnected</div>
+        </div>
+
+        <div class="grid grid-cols-2">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Create (INSERT)</h3>
+                </div>
+                <p style="margin-top: 0; color: var(--text-secondary); font-size: 0.875rem;">Sends a POST request to create a new record in the selected collection.</p>
+                <form id="createForm">
+                    <div class="form-group">
+                        <label for="createTable">Table/Collection:</label>
+                        <select id="createTable">
+                            <option value="posts">Posts</option>
+                            <option value="users">Users</option>
+                            <option value="comments">Comments</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="createData">Data (JSON):</label>
+                        <textarea id="createData" rows="6" placeholder='{"title": "Test Post", "body": "Test content", "userId": 1}'>{
+  "title": "Test Post",
+  "body": "This is a test post created for database testing",
+  "userId": 1
+}</textarea>
+                    </div>
+                    <button type="button" onclick="createRecord()" class="btn-success">Create Record</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Read (SELECT)</h3>
+                </div>
+                <p style="margin-top: 0; color: var(--text-secondary); font-size: 0.875rem;">Fetches a single record by ID or a paginated list of records.</p>
+                <form id="readForm">
+                    <div class="form-group">
+                        <label for="readTable">Table/Collection:</label>
+                        <select id="readTable">
+                            <option value="posts">Posts</option>
+                            <option value="users">Users</option>
+                            <option value="comments">Comments</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="recordId">Record ID (optional):</label>
+                        <input type="number" id="recordId" placeholder="Leave empty for all records">
+                    </div>
+                    <div class="form-group">
+                        <label for="queryFilter">Filter (JSON):</label>
+                        <textarea id="queryFilter" rows="3" placeholder='{"userId": 1}'></textarea>
+                    </div>
+                    <button type="button" onclick="readRecords()" class="btn-secondary">Read Records</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Update (UPDATE)</h3>
+                </div>
+                <p style="margin-top: 0; color: var(--text-secondary); font-size: 0.875rem;">Sends a PUT request to update an existing record by ID.</p>
+                <form id="updateForm">
+                    <div class="form-group">
+                        <label for="updateTable">Table/Collection:</label>
+                        <select id="updateTable">
+                            <option value="posts">Posts</option>
+                            <option value="users">Users</option>
+                            <option value="comments">Comments</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="updateId">Record ID:</label>
+                        <input type="number" id="updateId" placeholder="Enter record ID to update" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="updateData">Update Data (JSON):</label>
+                        <textarea id="updateData" rows="4" placeholder='{"title": "Updated Title"}'>{
+  "title": "Updated Post Title",
+  "body": "Updated post content"
+}</textarea>
+                    </div>
+                    <button type="button" onclick="updateRecord()" class="btn-warning">Update Record</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Delete (DELETE)</h3>
+                </div>
+                <p style="margin-top: 0; color: var(--text-secondary); font-size: 0.875rem;">Sends a DELETE request to remove a record by ID (mocked on the public API).</p>
+                <form id="deleteForm">
+                    <div class="form-group">
+                        <label for="deleteTable">Table/Collection:</label>
+                        <select id="deleteTable">
+                            <option value="posts">Posts</option>
+                            <option value="users">Users</option>
+                            <option value="comments">Comments</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="deleteId">Record ID:</label>
+                        <input type="number" id="deleteId" placeholder="Enter record ID to delete" required>
+                    </div>
+                    <button type="button" onclick="deleteRecord()" class="btn-error">Delete Record</button>
+                </form>
+            </div>
+        </div>
+
+        <details class="card">
+            <summary class="card-header" style="cursor: pointer;">
+                <h3 class="card-title" style="margin: 0;">Advanced Query Builder</h3>
+            </summary>
+            <div style="padding-top: 1rem;">
+                <p style="margin-top: 0; color: var(--text-secondary); font-size: 0.875rem;">Builds a paginated query using limit/skip and optional custom query params.</p>
+                <div class="grid grid-cols-3">
+                    <div class="form-group">
+                        <label for="queryTable">Table:</label>
+                        <select id="queryTable">
+                            <option value="posts">Posts</option>
+                            <option value="users">Users</option>
+                            <option value="comments">Comments</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="queryLimit">Limit:</label>
+                        <input type="number" id="queryLimit" value="10" min="1" max="100" step="1" inputmode="numeric" maxlength="3">
+                    </div>
+                    <div class="form-group">
+                        <label for="querySort">Sort By:</label>
+                        <select id="querySort">
+                            <option value="id">ID</option>
+                            <option value="title">Title</option>
+                            <option value="userId">User ID</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="customQuery">Custom Query:</label>
+                    <textarea id="customQuery" rows="3" placeholder="Enter custom query parameters..."></textarea>
+                </div>
+                <button onclick="executeAdvancedQuery()" class="btn-secondary">Execute Query</button>
+            </div>
+        </details>
+
+        <details class="card">
+            <summary class="card-header" style="cursor: pointer;">
+                <h3 class="card-title" style="margin: 0;">API Test Scenarios (Products)</h3>
+            </summary>
+            <div style="padding-top: 1rem;">
+            <p style="margin-top: 0; color: var(--text-secondary); font-size: 0.875rem;">Covers GET list, pagination (limit/skip), search, category filter, schema validation, status codes, timeout, negative cases, and a simple rate-limit simulation.</p>
+
+            <div class="grid grid-cols-3">
+                <div class="form-group">
+                    <label for="apiProductsLimit">Limit (1-100):</label>
+                    <input type="number" id="apiProductsLimit" value="10" min="1" max="100" step="1" inputmode="numeric" maxlength="3">
+                </div>
+                <div class="form-group">
+                    <label for="apiProductsSkip">Skip (0+):</label>
+                    <input type="number" id="apiProductsSkip" value="0" min="0" step="1" inputmode="numeric">
+                </div>
+                <div class="form-group">
+                    <label for="apiDelayMs">Client Delay (ms):</label>
+                    <input type="number" id="apiDelayMs" value="0" min="0" max="10000" step="100" inputmode="numeric">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2">
+                <div class="form-group">
+                    <label for="apiSearchQ">Search query (q):</label>
+                    <input type="text" id="apiSearchQ" value="phone" placeholder="phone">
+                </div>
+                <div class="form-group">
+                    <label for="apiCategory">Category slug:</label>
+                    <input type="text" id="apiCategory" value="smartphones" placeholder="smartphones">
+                </div>
+            </div>
+
+            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
+                <button class="btn-secondary" onclick="apiGetProducts()">GET /products</button>
+                <button class="btn-secondary" onclick="apiSearchProducts()">GET /products/search</button>
+                <button class="btn-secondary" onclick="apiFilterByCategory()">GET /products/category</button>
+                <button class="btn-secondary" onclick="apiValidateSchema()">Response schema validate</button>
+                <button class="btn-secondary" onclick="apiStatusCodeChecks()">Status code checks</button>
+                <button class="btn-secondary" onclick="apiTimeoutTest()">Delay + timeout test</button>
+                <button class="btn-warning" onclick="apiNetworkErrorSimulation()">Network error sim</button>
+                <button class="btn-warning" onclick="apiRateLimitSimulation()">Rate limit sim</button>
+            </div>
+        </div>
+
+        <details class="card">
+            <summary class="card-header" style="cursor: pointer;">
+                <h3 class="card-title" style="margin: 0;">CRUD Tests (Products)</h3>
+            </summary>
+            <div style="padding-top: 1rem;">
+            <p style="margin-top: 0; color: var(--text-secondary); font-size: 0.875rem;">Uses DummyJSON mock CRUD endpoints for create/update/patch/delete and validates response bodies.</p>
+
+            <div class="grid grid-cols-2">
+                <div class="card">
+                    <h4 style="margin-top: 0;">Create Product (POST)</h4>
+                    <p style="margin-top: 0; color: var(--text-secondary); font-size: 0.875rem;">POST /products/add</p>
+                    <textarea id="crudCreateBody" rows="5">{
+  "title": "Test Product",
+  "price": 123,
+  "description": "Created from UI",
+  "category": "smartphones"
+}</textarea>
+                    <div style="margin-top: 0.5rem;">
+                        <button class="btn-success" onclick="crudCreateProduct()">Create</button>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h4 style="margin-top: 0;">Update/Patch/Delete</h4>
+                    <div class="form-group">
+                        <label for="crudProductId">Product ID:</label>
+                        <input type="number" id="crudProductId" value="1" min="1" step="1" inputmode="numeric">
+                    </div>
+                    <p style="margin-top: 0; color: var(--text-secondary); font-size: 0.875rem;">PUT/PATCH/DELETE /products/:id</p>
+                    <textarea id="crudUpdateBody" rows="5">{
+  "title": "Updated Title",
+  "price": 150
+}</textarea>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem;">
+                        <button class="btn-warning" onclick="crudUpdateProductPut()">PUT</button>
+                        <button class="btn-warning" onclick="crudUpdateProductPatch()">PATCH</button>
+                        <button class="btn-error" onclick="crudDeleteProduct()">DELETE</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <details class="card" open>
+            <summary class="card-header" style="cursor: pointer;">
+                <h3 class="card-title" style="margin: 0;">Auth Tests</h3>
+            </summary>
+            <div style="padding-top: 1rem;">
+            <p style="margin-top: 0; color: var(--text-secondary); font-size: 0.875rem;">Login, token retrieval, authorized request, and invalid login scenario.</p>
+
+            <div class="grid grid-cols-2">
+                <div class="card">
+                    <h4 style="margin-top: 0;">Login</h4>
+                    <p style="margin-top: 0; color: var(--text-secondary); font-size: 0.875rem;">POST /auth/login</p>
+                    <div class="form-group">
+                        <label for="authUsername">Username:</label>
+                        <input type="text" id="authUsername" value="kminchelle">
+                    </div>
+                    <div class="form-group">
+                        <label for="authPassword">Password:</label>
+                        <input type="password" id="authPassword" value="0lelplR">
+                    </div>
+                    <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+                        <button class="btn-success" onclick="authLogin()">Login</button>
+                        <button class="btn-error" onclick="authInvalidLogin()">Invalid login</button>
+                    </div>
+                    <div style="margin-top: 0.75rem;">
+                        <small style="color: var(--text-secondary);">Token:</small>
+                        <div id="authToken" style="word-break: break-all; font-family: monospace; font-size: 0.8rem; background: #f8fafc; padding: 0.5rem; border-radius: 6px;">(none)</div>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <h4 style="margin-top: 0;">Authorized request</h4>
+                    <p style="margin-top: 0; color: var(--text-secondary); font-size: 0.875rem;">GET /auth/me (requires Bearer token)</p>
+                    <button class="btn-secondary" onclick="authMe()">Request /auth/me</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Query Results</h3>
+            </div>
+            <div id="queryResults">
+                <p>Run a database operation to see results here.</p>
+            </div>
+        </div>
+
+        <details class="card">
+            <summary class="card-header" style="cursor: pointer;">
+                <h3 class="card-title" style="margin: 0;">Database Statistics</h3>
+            </summary>
+            <div style="padding-top: 1rem;">
+            <div class="grid grid-cols-4">
+                <div class="text-center">
+                    <h4 style="color: var(--primary-color); margin: 0;">Total Queries</h4>
+                    <p style="font-size: 2rem; font-weight: bold; margin: 0.5rem 0;" id="totalQueries">0</p>
+                </div>
+                <div class="text-center">
+                    <h4 style="color: var(--success-color); margin: 0;">Success Rate</h4>
+                    <p style="font-size: 2rem; font-weight: bold; margin: 0.5rem 0;" id="successRate">0%</p>
+                </div>
+                <div class="text-center">
+                    <h4 style="color: var(--warning-color); margin: 0;">Avg Response</h4>
+                    <p style="font-size: 2rem; font-weight: bold; margin: 0.5rem 0;" id="avgResponse">0ms</p>
+                </div>
+                <div class="text-center">
+                    <h4 style="color: var(--error-color); margin: 0;">Errors</h4>
+                    <p style="font-size: 2rem; font-weight: bold; margin: 0.5rem 0;" id="totalErrors">0</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="../scripts/main.js"></script>
+    <script>
+        let currentConnection = 'https://dummyjson.com';
+        let isConnected = false;
+        let queryStats = {
+            total: 0,
+            success: 0,
+            errors: 0,
+            responseTime: []
+        };
+
+        function showNotification(message, type = 'info') {
+            if (window.TestApp && typeof window.TestApp.showNotification === 'function') {
+                window.TestApp.showNotification(message, type);
+            }
+        }
+
+        let authState = { token: null };
+        const localUsers = [];
+
+        function sleep(ms) {
+            return new Promise((resolve) => setTimeout(resolve, ms));
+        }
+
+        function normalizeLimitInput(el) {
+            const digitsOnly = String(el.value).replace(/\D/g, '').slice(0, 3);
+            el.value = digitsOnly;
+            const parsed = Number.parseInt(el.value, 10);
+            const limit = Number.isFinite(parsed) ? Math.min(100, Math.max(1, parsed)) : 10;
+            el.value = String(limit);
+            return limit;
+        }
+
+        async function apiGetProducts() {
+            if (!isConnected) {
+                showNotification('Please connect to database first', 'error');
+                return;
+            }
+            const limitEl = document.getElementById('apiProductsLimit');
+            const skipEl = document.getElementById('apiProductsSkip');
+            const delayEl = document.getElementById('apiDelayMs');
+
+            const limit = limitEl ? normalizeLimitInput(limitEl) : 10;
+            const skip = Math.max(0, Number.parseInt((skipEl && skipEl.value) || '0', 10) || 0);
+            const delayMs = Math.max(0, Number.parseInt((delayEl && delayEl.value) || '0', 10) || 0);
+
+            const url = `${currentConnection}/products?limit=${limit}&skip=${skip}`;
+            const startTime = Date.now();
+            const res = await fetch(url);
+            const data = await res.json();
+            if (delayMs) await sleep(delayMs);
+            const endTime = Date.now();
+
+            displayResults(data, `GET /products (limit=${limit}, skip=${skip})`);
+            updateStats(res.ok, endTime - startTime);
+        }
+
+        async function apiSearchProducts() {
+            if (!isConnected) {
+                showNotification('Please connect to database first', 'error');
+                return;
+            }
+            const qEl = document.getElementById('apiSearchQ');
+            const q = (qEl && qEl.value ? qEl.value : '').trim();
+            const url = `${currentConnection}/products/search?q=${encodeURIComponent(q)}`;
+            const startTime = Date.now();
+            const res = await fetch(url);
+            const data = await res.json();
+            const endTime = Date.now();
+            displayResults(data, `GET /products/search?q=${q || '(empty)'}`);
+            updateStats(res.ok, endTime - startTime);
+        }
+
+        async function apiFilterByCategory() {
+            if (!isConnected) {
+                showNotification('Please connect to database first', 'error');
+                return;
+            }
+            const catEl = document.getElementById('apiCategory');
+            const category = (catEl && catEl.value ? catEl.value : '').trim();
+            const url = `${currentConnection}/products/category/${encodeURIComponent(category)}`;
+            const startTime = Date.now();
+            const res = await fetch(url);
+            const data = await res.json();
+            const endTime = Date.now();
+            displayResults(data, `GET /products/category/${category || '(empty)'}`);
+            updateStats(res.ok, endTime - startTime);
+        }
+
+        async function apiValidateSchema() {
+            if (!isConnected) {
+                showNotification('Please connect to database first', 'error');
+                return;
+            }
+            const startTime = Date.now();
+            const res = await fetch(`${currentConnection}/products?limit=1&skip=0`);
+            const data = await res.json();
+            const endTime = Date.now();
+
+            const product = data && data.products && data.products[0];
+            const required = ['id', 'title', 'price', 'category'];
+            const missing = product ? required.filter((k) => !(k in product)) : required;
+            const ok = res.ok && missing.length === 0;
+
+            displayResults({ ok, missing, sample: product }, 'Response schema validation');
+            updateStats(ok, endTime - startTime);
+        }
+
+        async function apiStatusCodeChecks() {
+            if (!isConnected) {
+                showNotification('Please connect to database first', 'error');
+                return;
+            }
+            const checks = [];
+
+            const res200 = await fetch(`${currentConnection}/products?limit=1&skip=0`);
+            checks.push({ name: '200 expected', status: res200.status, ok: res200.status === 200 });
+
+            const res404 = await fetch(`${currentConnection}/products/0`);
+            checks.push({ name: '404 expected', status: res404.status, ok: res404.status === 404 });
+
+            displayResults(checks, 'Status code checks');
+            updateStats(checks.every((c) => c.ok), 0);
+        }
+
+        async function apiTimeoutTest() {
+            if (!isConnected) {
+                showNotification('Please connect to database first', 'error');
+                return;
+            }
+            const controller = new AbortController();
+            const timeoutMs = 800;
+            const timer = setTimeout(() => controller.abort(), timeoutMs);
+            const startTime = Date.now();
+            try {
+                const res = await fetch(`${currentConnection}/products?limit=10&skip=0`, { signal: controller.signal });
+                const data = await res.json();
+                const endTime = Date.now();
+                displayResults(data, `Timeout test (timeout=${timeoutMs}ms)`);
+                updateStats(res.ok, endTime - startTime);
+            } catch (e) {
+                const endTime = Date.now();
+                displayResults({ error: String(e), timeoutMs }, 'Timeout test failed');
+                updateStats(false, endTime - startTime);
+            } finally {
+                clearTimeout(timer);
+            }
+        }
+
+        async function apiNetworkErrorSimulation() {
+            try {
+                await fetch('http://127.0.0.1:1/');
+                displayResults({ ok: true }, 'Network error simulation (unexpected success)');
+                updateStats(false, 0);
+            } catch (e) {
+                displayResults({ error: String(e) }, 'Network error simulation');
+                updateStats(false, 0);
+            }
+        }
+
+        let rateLimitState = { windowStart: 0, count: 0 };
+        function apiRateLimitSimulation() {
+            const now = Date.now();
+            const windowMs = 5000;
+            const maxRequests = 5;
+            if (now - rateLimitState.windowStart > windowMs) {
+                rateLimitState.windowStart = now;
+                rateLimitState.count = 0;
+            }
+            rateLimitState.count += 1;
+            const allowed = rateLimitState.count <= maxRequests;
+            displayResults({ windowMs, maxRequests, count: rateLimitState.count, allowed, status: allowed ? 200 : 429 }, 'Rate limit simulation');
+            updateStats(allowed, 0);
+        }
+
+        async function crudCreateProduct() {
+            if (!isConnected) {
+                showNotification('Please connect to database first', 'error');
+                return;
+            }
+            try {
+                const body = JSON.parse(document.getElementById('crudCreateBody').value);
+                const startTime = Date.now();
+                const res = await fetch(`${currentConnection}/products/add`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+                const data = await res.json();
+                const endTime = Date.now();
+                displayResults({ status: res.status, response: data }, 'POST /products/add');
+                updateStats(res.ok, endTime - startTime);
+            } catch (e) {
+                displayResults({ error: String(e) }, 'POST /products/add failed');
+                updateStats(false, 0);
+            }
+        }
+
+        async function crudUpdateProductPut() {
+            return crudUpdateProduct('PUT');
+        }
+
+        async function crudUpdateProductPatch() {
+            return crudUpdateProduct('PATCH');
+        }
+
+        async function crudUpdateProduct(method) {
+            if (!isConnected) {
+                showNotification('Please connect to database first', 'error');
+                return;
+            }
+            const id = document.getElementById('crudProductId').value;
+            try {
+                const body = JSON.parse(document.getElementById('crudUpdateBody').value);
+                const startTime = Date.now();
+                const res = await fetch(`${currentConnection}/products/${id}`, {
+                    method,
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body)
+                });
+                const data = await res.json();
+                const endTime = Date.now();
+                displayResults({ status: res.status, response: data }, `${method} /products/${id}`);
+                updateStats(res.ok, endTime - startTime);
+            } catch (e) {
+                displayResults({ error: String(e) }, `${method} /products/${id} failed`);
+                updateStats(false, 0);
+            }
+        }
+
+        async function crudDeleteProduct() {
+            if (!isConnected) {
+                showNotification('Please connect to database first', 'error');
+                return;
+            }
+            const id = document.getElementById('crudProductId').value;
+            try {
+                const startTime = Date.now();
+                const res = await fetch(`${currentConnection}/products/${id}`, { method: 'DELETE' });
+                const data = await res.json();
+                const endTime = Date.now();
+                displayResults({ status: res.status, response: data }, `DELETE /products/${id}`);
+                updateStats(res.ok, endTime - startTime);
+            } catch (e) {
+                displayResults({ error: String(e) }, `DELETE /products/${id} failed`);
+                updateStats(false, 0);
+            }
+        }
+
+        async function authLogin() {
+            if (!isConnected) {
+                showNotification('Please connect to database first', 'error');
+                return;
+            }
+            const username = document.getElementById('authUsername').value;
+            const password = document.getElementById('authPassword').value;
+            const startTime = Date.now();
+            try {
+                const res = await fetch(`${currentConnection}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, password })
+                });
+                const data = await res.json();
+                const endTime = Date.now();
+                authState.token = data && (data.token || data.accessToken) ? (data.token || data.accessToken) : null;
+                const tokenEl = document.getElementById('authToken');
+                if (tokenEl) tokenEl.textContent = authState.token || '(none)';
+                displayResults({ status: res.status, response: data }, 'POST /auth/login');
+                updateStats(res.ok && !!authState.token, endTime - startTime);
+            } catch (e) {
+                displayResults({ error: String(e) }, 'POST /auth/login failed');
+                updateStats(false, 0);
+            }
+        }
+
+        async function authInvalidLogin() {
+            if (!isConnected) {
+                showNotification('Please connect to database first', 'error');
+                return;
+            }
+            const startTime = Date.now();
+            try {
+                const res = await fetch(`${currentConnection}/auth/login`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username: 'invalid', password: 'wrong' })
+                });
+                const data = await res.json();
+                const endTime = Date.now();
+                displayResults({ status: res.status, response: data }, 'Invalid login');
+                updateStats(res.status >= 400, endTime - startTime);
+            } catch (e) {
+                displayResults({ error: String(e) }, 'Invalid login (network error)');
+                updateStats(true, 0);
+            }
+        }
+
+        async function authMe() {
+            if (!isConnected) {
+                showNotification('Please connect to database first', 'error');
+                return;
+            }
+            if (!authState.token) {
+                showNotification('Login first to get a token', 'error');
+                return;
+            }
+            const startTime = Date.now();
+            try {
+                const res = await fetch(`${currentConnection}/auth/me`, {
+                    headers: { 'Authorization': `Bearer ${authState.token}` }
+                });
+                const data = await res.json();
+                const endTime = Date.now();
+                displayResults({ status: res.status, response: data }, 'GET /auth/me');
+                updateStats(res.ok, endTime - startTime);
+            } catch (e) {
+                displayResults({ error: String(e) }, 'GET /auth/me failed');
+                updateStats(false, 0);
+            }
+        }
+
+        function updateConnectionForm() {
+            const dbType = document.getElementById('dbType').value;
+            const connectionString = document.getElementById('connectionString');
+            
+            switch(dbType) {
+                case 'dummyjson':
+                    connectionString.value = 'https://dummyjson.com';
+                    connectionString.readOnly = true;
+                    break;
+                case 'mongodb':
+                    connectionString.value = 'mongodb://localhost:27017/testdb';
+                    connectionString.readOnly = false;
+                    break;
+                case 'mysql':
+                    connectionString.value = 'mysql://localhost:3306/testdb';
+                    connectionString.readOnly = false;
+                    break;
+                case 'postgresql':
+                    connectionString.value = 'postgresql://localhost:5432/testdb';
+                    connectionString.readOnly = false;
+                    break;
+            }
+        }
+
+        const ALLOWED_ORIGINS = ['https://dummyjson.com', 'https://jsonplaceholder.typicode.com'];
+
+        function isAllowedUrl(urlString) {
+            try {
+                const url = new URL(urlString);
+                return ALLOWED_ORIGINS.some(origin => url.origin === origin);
+            } catch {
+                return false;
+            }
+        }
+
+        async function testConnection() {
+            const connectionString = document.getElementById('connectionString').value;
+
+            if (!isAllowedUrl(connectionString)) {
+                showNotification('Only allowed API endpoints (dummyjson.com) are permitted.', 'error');
+                return;
+            }
+
+            showNotification('Testing connection...', 'info');
+            
+            try {
+                const startTime = Date.now();
+                const response = await fetch(`${connectionString}/posts?limit=1`);
+                const endTime = Date.now();
+                
+                if (response.ok) {
+                    showNotification(`Connection successful! Response time: ${endTime - startTime}ms`, 'success');
+                    updateStats(true, endTime - startTime);
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                showNotification(`Connection failed: ${error.message}`, 'error');
+                updateStats(false, 0);
+            }
+        }
+
+        async function connectDatabase() {
+            currentConnection = document.getElementById('connectionString').value;
+
+            if (!isAllowedUrl(currentConnection)) {
+                showNotification('Only allowed API endpoints (dummyjson.com) are permitted.', 'error');
+                return;
+            }
+
+            setConnectionStatus(false);
+            showNotification('Connecting...', 'info');
+
+            try {
+                const startTime = Date.now();
+                const response = await fetch(`${currentConnection}/products?limit=1&skip=0`);
+                const endTime = Date.now();
+                if (!response.ok) {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+
+                isConnected = true;
+                setConnectionStatus(true);
+                showNotification(`Connected! Response time: ${endTime - startTime}ms`, 'success');
+                updateStats(true, endTime - startTime);
+                loadSampleData();
+            } catch (error) {
+                isConnected = false;
+                setConnectionStatus(false);
+                showNotification(`Connect failed: ${error.message}`, 'error');
+                updateStats(false, 0);
+            }
+        }
+
+        function setConnectionStatus(connected) {
+            const el = document.getElementById('connectionStatus');
+            if (!el) return;
+            el.textContent = `Status: ${connected ? 'Connected' : 'Disconnected'}`;
+            el.style.color = connected ? 'var(--success-color)' : 'var(--text-secondary)';
+        }
+
+        async function loadSampleData() {
+            try {
+                const response = await fetch(`${currentConnection}/products?limit=5&skip=0`);
+                const data = await response.json();
+                displayResults(data, 'Sample Data Loaded');
+            } catch (error) {
+                showNotification('Failed to load sample data', 'error');
+            }
+        }
+
+        async function createRecord() {
+            if (!isConnected) {
+                showNotification('Please connect to database first', 'error');
+                return;
+            }
+
+            const table = document.getElementById('createTable').value;
+            const dataText = document.getElementById('createData').value;
+            
+            try {
+                const data = JSON.parse(dataText);
+                const startTime = Date.now();
+                
+                const response = await fetch(`${currentConnection}/${table}/add`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const endTime = Date.now();
+                const result = await response.json();
+                
+                if (response.ok) {
+                    displayResults(result, 'Record Created Successfully');
+                    showNotification('Record created successfully!', 'success');
+                    updateStats(true, endTime - startTime);
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                showNotification(`Create failed: ${error.message}`, 'error');
+                updateStats(false, 0);
+            }
+        }
+
+        async function readRecords() {
+            if (!isConnected) {
+                showNotification('Please connect to database first', 'error');
+                return;
+            }
+
+            const table = document.getElementById('readTable').value;
+            const recordId = document.getElementById('recordId').value;
+            const filterText = document.getElementById('queryFilter').value;
+            
+            try {
+                let url = `${currentConnection}/${table}`;
+                
+                if (recordId) {
+                    url += `/${recordId}`;
+                }
+
+                if (!recordId) {
+                    const params = new URLSearchParams();
+                    params.append('limit', '10');
+                    params.append('skip', '0');
+                    if (filterText) {
+                        const filter = JSON.parse(filterText);
+                        Object.keys(filter).forEach((k) => params.append(k, String(filter[k])));
+                    }
+                    url += `?${params.toString()}`;
+                }
+                
+                const startTime = Date.now();
+                const response = await fetch(url);
+                const endTime = Date.now();
+                const data = await response.json();
+                
+                if (response.ok) {
+                    displayResults(data, 'Query Results');
+                    showNotification('Records retrieved successfully!', 'success');
+                    updateStats(true, endTime - startTime);
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                showNotification(`Read failed: ${error.message}`, 'error');
+                updateStats(false, 0);
+            }
+        }
+
+        async function updateRecord() {
+            if (!isConnected) {
+                showNotification('Please connect to database first', 'error');
+                return;
+            }
+
+            const table = document.getElementById('updateTable').value;
+            const recordId = document.getElementById('updateId').value;
+            const dataText = document.getElementById('updateData').value;
+            
+            try {
+                const data = JSON.parse(dataText);
+                const startTime = Date.now();
+                
+                const response = await fetch(`${currentConnection}/${table}/${recordId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(data)
+                });
+                
+                const endTime = Date.now();
+                const result = await response.json();
+                
+                if (response.ok) {
+                    displayResults(result, 'Record Updated Successfully');
+                    showNotification('Record updated successfully!', 'success');
+                    updateStats(true, endTime - startTime);
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                showNotification(`Update failed: ${error.message}`, 'error');
+                updateStats(false, 0);
+            }
+        }
+
+        async function deleteRecord() {
+            if (!isConnected) {
+                showNotification('Please connect to database first', 'error');
+                return;
+            }
+
+            const table = document.getElementById('deleteTable').value;
+            const recordId = document.getElementById('deleteId').value;
+            
+            if (!confirm(`Are you sure you want to delete record ${recordId} from ${table}?`)) {
+                return;
+            }
+            
+            try {
+                const startTime = Date.now();
+                const response = await fetch(`${currentConnection}/${table}/${recordId}`, {
+                    method: 'DELETE'
+                });
+                const endTime = Date.now();
+                const result = await response.json();
+                
+                if (response.ok) {
+                    displayResults(result, 'Record Deleted Successfully');
+                    showNotification('Record deleted successfully!', 'success');
+                    updateStats(true, endTime - startTime);
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                showNotification(`Delete failed: ${error.message}`, 'error');
+                updateStats(false, 0);
+            }
+        }
+
+        async function executeAdvancedQuery() {
+            if (!isConnected) {
+                showNotification('Please connect to database first', 'error');
+                return;
+            }
+
+            const table = document.getElementById('queryTable').value;
+            const limitRaw = document.getElementById('queryLimit').value;
+            const sort = document.getElementById('querySort').value;
+            const customQuery = document.getElementById('customQuery').value;
+
+            const limitParsed = Number.parseInt(limitRaw, 10);
+            const limit = Number.isFinite(limitParsed) ? Math.min(100, Math.max(1, limitParsed)) : 10;
+            document.getElementById('queryLimit').value = String(limit);
+            
+            try {
+                let url = `${currentConnection}/${table}`;
+                const params = new URLSearchParams();
+                
+                params.append('limit', String(limit));
+                params.append('skip', '0');
+
+                if (sort) {
+                    params.append('sortBy', String(sort));
+                    params.append('order', 'asc');
+                }
+
+                if (customQuery) {
+                    customQuery.split(/\n|&/).forEach((pair) => {
+                        const trimmed = pair.trim();
+                        if (!trimmed) return;
+                        const idx = trimmed.indexOf('=');
+                        if (idx === -1) return;
+                        const k = trimmed.slice(0, idx).trim();
+                        const v = trimmed.slice(idx + 1).trim();
+                        if (k) params.append(k, v);
+                    });
+                }
+                
+                url += `?${params.toString()}`;
+                
+                const startTime = Date.now();
+                const response = await fetch(url);
+                const endTime = Date.now();
+                const data = await response.json();
+                
+                if (response.ok) {
+                    displayResults(data, 'Advanced Query Results');
+                    showNotification('Advanced query executed successfully!', 'success');
+                    updateStats(true, endTime - startTime);
+                } else {
+                    throw new Error(`HTTP ${response.status}`);
+                }
+            } catch (error) {
+                showNotification(`Query failed: ${error.message}`, 'error');
+                updateStats(false, 0);
+            }
+        }
+
+        function escapeHTML(str) {
+            const div = document.createElement('div');
+            div.appendChild(document.createTextNode(String(str)));
+            return div.innerHTML;
+        }
+
+        function displayResults(data, title) {
+            const resultsDiv = document.getElementById('queryResults');
+            
+            let html = `<h4>${escapeHTML(title)}</h4>`;
+            
+            if (Array.isArray(data)) {
+                html += `<p>Found ${data.length} records</p>`;
+                html += '<table class="table"><thead><tr>';
+                
+                if (data.length > 0) {
+                    Object.keys(data[0]).forEach(key => {
+                        html += `<th>${escapeHTML(key)}</th>`;
+                    });
+                    html += '</tr></thead><tbody>';
+                    
+                    data.forEach(record => {
+                        html += '<tr>';
+                        Object.values(record).forEach(value => {
+                            const display = typeof value === 'object' ? JSON.stringify(value) : value;
+                            html += `<td>${escapeHTML(display)}</td>`;
+                        });
+                        html += '</tr>';
+                    });
+                }
+                
+                html += '</tbody></table>';
+            } else {
+                html += '<pre style="background: #f8fafc; padding: 1rem; border-radius: var(--border-radius); overflow-x: auto;">';
+                html += escapeHTML(JSON.stringify(data, null, 2));
+                html += '</pre>';
+            }
+            
+            resultsDiv.innerHTML = html;
+        }
+
+        function updateStats(success, responseTime) {
+            queryStats.total++;
+            if (success) {
+                queryStats.success++;
+                queryStats.responseTime.push(responseTime);
+            } else {
+                queryStats.errors++;
+            }
+            
+            document.getElementById('totalQueries').textContent = queryStats.total;
+            document.getElementById('successRate').textContent = 
+                queryStats.total > 0 ? Math.round((queryStats.success / queryStats.total) * 100) + '%' : '0%';
+            document.getElementById('avgResponse').textContent = 
+                queryStats.responseTime.length > 0 
+                    ? Math.round(queryStats.responseTime.reduce((a, b) => a + b, 0) / queryStats.responseTime.length) + 'ms'
+                    : '0ms';
+            document.getElementById('totalErrors').textContent = queryStats.errors;
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateConnectionForm();
+
+            setConnectionStatus(false);
+
+            const createUserForm = document.getElementById('createUserForm');
+            if (createUserForm) {
+                createUserForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    const name = (document.getElementById('userName').value || '').trim();
+                    const email = (document.getElementById('userEmail').value || '').trim();
+
+                    const emailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+                    if (!name || !emailOk) {
+                        showNotification('Please enter a valid name and email.', 'error');
+                        return;
+                    }
+
+                    const user = { id: Date.now(), name, email, createdAt: new Date().toISOString() };
+                    localUsers.unshift(user);
+                    if (localUsers.length > 20) localUsers.pop();
+
+                    displayResults(localUsers, 'Local Users (Real-time validation)');
+                    showNotification('User created locally (validated).', 'success');
+                    createUserForm.reset();
+                });
+            }
+
+            const limitInput = document.getElementById('queryLimit');
+            if (limitInput) {
+                limitInput.addEventListener('input', function() {
+                    const digitsOnly = String(this.value).replace(/\D/g, '').slice(0, 3);
+                    if (String(this.value) !== digitsOnly) {
+                        this.value = digitsOnly;
+                    }
+                });
+            }
+
+            const apiLimitInput = document.getElementById('apiProductsLimit');
+            if (apiLimitInput) {
+                apiLimitInput.addEventListener('input', function() {
+                    const digitsOnly = String(this.value).replace(/\D/g, '').slice(0, 3);
+                    if (String(this.value) !== digitsOnly) {
+                        this.value = digitsOnly;
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>

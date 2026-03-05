@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://dummyjson.com;">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Iframe Gallery</title>
+    <link rel="stylesheet" href="gallery.css">
+</head>
+<body>
+    <h2 style="text-align:center; color:#334155;">Context Switching Gallery (Iframe)</h2>
+
+    <div class="gallery">
+        <div class="img-container" data-src="/assets/images/nature-1.svg">
+            <img src="/assets/images/nature-1.svg" alt="Nature 1" />
+            <div class="caption">Nature Image 1</div>
+        </div>
+        <div class="img-container" data-src="/assets/images/nature-2.svg">
+            <img src="/assets/images/nature-2.svg" alt="Nature 2" />
+            <div class="caption">Nature Image 2</div>
+        </div>
+        <div class="img-container" data-src="/assets/images/nature-3.svg">
+            <img src="/assets/images/nature-3.svg" alt="Nature 3" />
+            <div class="caption">Nature Image 3</div>
+        </div>
+        <div class="img-container" data-src="/assets/images/nature-4.svg">
+            <img src="/assets/images/nature-4.svg" alt="Nature 4" />
+            <div class="caption">Nature Image 4</div>
+        </div>
+        <div class="img-container" data-src="/assets/images/nature-5.svg">
+            <img src="/assets/images/nature-5.svg" alt="Nature 5" />
+            <div class="caption">Nature Image 5</div>
+        </div>
+        <div class="img-container" data-src="/assets/images/nature-6.svg">
+            <img src="/assets/images/nature-6.svg" alt="Nature 6" />
+            <div class="caption">Nature Image 6</div>
+        </div>
+    </div>
+
+    <div id="modal" class="modal" role="dialog" aria-modal="true">
+        <img id="modal-img" src="" alt="" />
+        <button class="close-btn" id="close-btn" type="button">Close Preview</button>
+    </div>
+
+    <script src="gallery.js" integrity="sha256-b8f419125b20716ed9e226c1334cf95522efdebc29f41a6fb4f4a246aafc333d" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self'; form-action 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none';">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <link rel="stylesheet" href="styles/styles.css">
+    <link rel="stylesheet" href="responsive/responsive.css">
+    <title>Test Automation Website</title>
+</head>
+<body>
+    <header>
+        <h1>Home</h1>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="components/signUp.html">Sign Up</a></li>
+                <li><a href="components/login.html">Login</a></li>
+                <li><a href="components/forms.html">Forms</a></li>
+                <li><a href="components/products.html">Products</a></li>
+                <li><a href="components/images.html">Images</a></li>
+                <li><a href="components/database.html">Database</a></li>
+                <li><a href="components/api.html">API</a></li>
+                <li><a href="components/advanced-api.html">Advanced API</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <section class="hero">
+            <h2>Test Auto Mate</h2>
+            <p>A comprehensive test playground for UI validations, form submissions, API requests, database flows, and edge-case scenarios.</p>
+            <div class="hero-actions">
+                <a class="btn-secondary" href="components/forms.html">Explore Forms</a>
+                <a class="btn-success" href="components/api.html">Try API</a>
+                <a class="btn-secondary" href="components/database.html">Database</a>
+            </div>
+        </section>
+
+        <div class="grid grid-cols-3">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Forms</h3>
+                </div>
+                <p>Input validation, different field types, and submission scenarios.</p>
+                <a class="btn-secondary" href="components/forms.html">Open</a>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Products</h3>
+                </div>
+                <p>Modal interactions, cart workflows, and UI state management.</p>
+                <a class="btn-secondary" href="components/products.html">Open</a>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Images</h3>
+                </div>
+                <p>Iframe content, gallery components, and visual controls.</p>
+                <a class="btn-secondary" href="components/images.html">Open</a>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Database</h3>
+                </div>
+                <p>CRUD operations, authentication flows, and result validation.</p>
+                <a class="btn-secondary" href="components/database.html">Open</a>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">API</h3>
+                </div>
+                <p>Request builder, headers/params, and response inspection.</p>
+                <a class="btn-secondary" href="components/api.html">Open</a>
+            </div>
+
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Advanced API</h3>
+                </div>
+                <p>Auth tokens, batch jobs, and flaky DOM scenarios.</p>
+                <a class="btn-secondary" href="components/advanced-api.html">Open</a>
+            </div>
+        </div>
+    </main>
+    <script type="module" src="scripts/main.js" integrity="sha256-9cfb3e89646b3384144cbd4e9cc41682574297ada00d0fc3f9b316dc20a8d4bd" crossorigin="anonymous"></script>
+</body>
+</html>

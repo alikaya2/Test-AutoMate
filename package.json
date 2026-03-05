@@ -1,0 +1,42 @@
+{
+  "name": "test-automation-website",
+  "version": "1.0.0",
+  "private": true,
+  "description": "A comprehensive test automation website for testing various web functionalities",
+  "main": "index.html",
+  "scripts": {
+    "start": "live-server --port=8000 --host=127.0.0.1 --no-browser --cors=false",
+    "dev": "live-server --port=8000 --host=127.0.0.1 --no-browser --cors=false",
+    "build": "echo 'Build process not needed for static site'",
+    "serve": "live-server --port=8000 --host=127.0.0.1 --no-browser --cors=false",
+    "test": "echo 'No tests specified yet'",
+    "audit": "npm audit --omit=dev",
+    "audit:fix": "npm audit fix"
+  },
+  "keywords": [
+    "test-automation",
+    "web-testing"
+  ],
+  "author": "Test Automation Team",
+  "license": "UNLICENSED",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-username/test-automation-website.git"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.2"
+  },
+  "overrides": {
+    "braces": ">=3.0.3",
+    "set-value": ">=4.0.1",
+    "mixin-deep": ">=2.0.1",
+    "glob-parent": ">=5.1.2",
+    "nanoid": ">=3.3.7",
+    "send": ">=1.1.0",
+    "serve-index": ">=1.9.1"
+  }
+}

@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://dummyjson.com https://jsonplaceholder.typicode.com; form-action 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none';">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <title>API - Test Auto Mate</title>
+</head>
+<body>
+    <header>
+        <h1>API</h1>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="signUp.html">Sign Up</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="forms.html">Forms</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="images.html">Images</a></li>
+                <li><a href="database.html">Database</a></li>
+                <li><a href="api.html" class="active">API</a></li>
+                <li><a href="advanced-api.html">Advanced API</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">API Request Builder</h3>
+            </div>
+            <p>Test different HTTP methods and endpoints.</p>
+            <div class="alert alert-info" style="margin-top: 1rem;">
+                <strong>How to use</strong>
+                <div style="margin-top: 0.5rem; color: var(--text-secondary);">
+                    1) Choose method
+                    2) Enter URL
+                    3) Optional: add headers / query params
+                    4) For POST/PUT/PATCH: fill JSON body
+                    5) Click <strong>Send Request</strong>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-2">
+                <div class="card">
+                    <h4>Request Configuration</h4>
+                    <div class="form-group">
+                        <label>Method:</label>
+                        <select id="httpMethod" onchange="updateRequestForm()">
+                        <option value="GET">GET</option>
+                        <option value="POST">POST</option>
+                        <option value="PUT">PUT</option>
+                        <option value="DELETE">DELETE</option>
+                        <option value="PATCH">PATCH</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="apiUrl">API URL:</label>
+                    <input type="text" id="apiUrl" value="https://jsonplaceholder.typicode.com/posts" placeholder="Enter API endpoint URL">
+                </div>
+            </div>
+            
+            <div class="form-group">
+                <label>Headers:</label>
+                <div id="headersContainer">
+                    <div class="grid grid-cols-3" style="margin-bottom: 0.5rem;">
+                        <input type="text" placeholder="Header Name" class="header-key">
+                        <input type="text" placeholder="Header Value" class="header-value">
+                        <button type="button" onclick="removeHeader(this)" class="btn-error">Remove</button>
+                    </div>
+                </div>
+                <button type="button" onclick="addHeader()" class="btn-secondary">Add Header</button>
+            </div>
+
+            <div id="requestBodySection" class="form-group hidden">
+                <label for="requestBody">Request Body (JSON):</label>
+                <textarea id="requestBody" rows="6" placeholder='{"key": "value"}'>
+{
+  "title": "Test API Request",
+  "body": "This is a test request body",
+  "userId": 1
+}</textarea>
+            </div>
+            <div class="form-group">
+                <label>Query Parameters:</label>
+                <div id="paramsContainer">
+                    <div class="grid grid-cols-3" style="margin-bottom: 0.5rem;">
+                        <input type="text" placeholder="Parameter Name" class="param-key">
+                        <input type="text" placeholder="Parameter Value" class="param-value">
+                        <button type="button" onclick="removeParam(this)" class="btn-error">Remove</button>
+                    </div>
+                </div>
+                <button type="button" onclick="addParam()" class="btn-secondary">Add Parameter</button>
+            </div>
+
+            <button onclick="sendRequest()" class="btn-success">Send Request</button>
+            <button onclick="clearRequest()" class="btn-secondary">Clear</button>
+        </div>
+
+        <details class="card">
+            <summary class="card-header" style="cursor: pointer;">
+                <h3 class="card-title" style="margin: 0;">Saved Requests</h3>
+            </summary>
+            <div style="padding-top: 1rem;">
+                <div id="savedRequests">
+                    <div class="grid grid-cols-2">
+                        <button onclick="loadSavedRequest('users')" class="btn-secondary">Get Users</button>
+                        <button onclick="loadSavedRequest('posts')" class="btn-secondary">Get Posts</button>
+                        <button onclick="loadSavedRequest('createPost')" class="btn-success">Create Post</button>
+                        <button onclick="loadSavedRequest('updatePost')" class="btn-warning">Update Post</button>
+                    </div>
+                </div>
+            </div>
+        </details>
+
+        <details class="card" open>
+            <summary class="card-header" style="cursor: pointer;">
+                <h3 class="card-title" style="margin: 0;">Response</h3>
+            </summary>
+            <div style="padding-top: 1rem;">
+            
+            <!-- Response Info -->
+            <div class="grid grid-cols-4" style="margin-bottom: 1rem;">
+                <div>
+                    <strong>Status:</strong> <span id="responseStatus">-</span>
+                </div>
+                <div>
+                    <strong>Time:</strong> <span id="responseTime">-</span>
+                </div>
+                <div>
+                    <strong>Size:</strong> <span id="responseSize">-</span>
+                </div>
+                <div>
+                    <strong>Type:</strong> <span id="responseType">-</span>
+                </div>
+            </div>
+
+            <!-- Response Headers -->
+            <div class="form-group">
+                <label>Response Headers:</label>
+                <div id="responseHeaders" style="background: #f8fafc; padding: 1rem; border-radius: var(--border-radius); max-height: 200px; overflow-y: auto;">
+                    <p style="margin: 0; color: var(--text-secondary);">No response headers</p>
+                </div>
+            </div>
+
+            <!-- Response Body -->
+            <div class="form-group">
+                <label>Response Body:</label>
+                <div style="margin-bottom: 0.5rem;">
+                    <button onclick="formatResponse('json')" class="btn-secondary">Format JSON</button>
+                    <button onclick="formatResponse('raw')" class="btn-secondary">Raw</button>
+                    <button onclick="copyResponse()" class="btn-secondary">Copy Response</button>
+                    <button onclick="downloadResponse()" class="btn-secondary">Download</button>
+                </div>
+                <pre id="responseBody" style="background: #f8fafc; padding: 1rem; border-radius: var(--border-radius); max-height: 400px; overflow-y: auto; white-space: pre-wrap;">Send a request to see the response here.</pre>
+            </div>
+        </div>
+
+        <details class="card">
+            <summary class="card-header" style="cursor: pointer;">
+                <h3 class="card-title" style="margin: 0;">Request History</h3>
+            </summary>
+            <div style="padding-top: 1rem;">
+                <div id="requestHistory">
+                    <p>No requests sent yet.</p>
+                </div>
+                <button onclick="clearHistory()" class="btn-error">Clear History</button>
+            </div>
+        </details>
+
+        <details class="card">
+            <summary class="card-header" style="cursor: pointer;">
+                <h3 class="card-title" style="margin: 0;">API Statistics</h3>
+            </summary>
+            <div style="padding-top: 1rem;">
+                <div class="grid grid-cols-4">
+                    <div class="text-center">
+                        <h4 style="color: var(--primary-color); margin: 0;">Total Requests</h4>
+                        <p style="font-size: 2rem; font-weight: bold; margin: 0.5rem 0;" id="totalRequests">0</p>
+                    </div>
+                    <div class="text-center">
+                        <h4 style="color: var(--success-color); margin: 0;">Success Rate</h4>
+                        <p style="font-size: 2rem; font-weight: bold; margin: 0.5rem 0;" id="successRate">0%</p>
+                    </div>
+                    <div class="text-center">
+                        <h4 style="color: var(--warning-color); margin: 0;">Avg Response</h4>
+                        <p style="font-size: 2rem; font-weight: bold; margin: 0.5rem 0;" id="avgResponseTime">0ms</p>
+                    </div>
+                    <div class="text-center">
+                        <h4 style="color: var(--error-color); margin: 0;">Errors</h4>
+                        <p style="font-size: 2rem; font-weight: bold; margin: 0.5rem 0;" id="totalErrors">0</p>
+                    </div>
+                </div>
+            </div>
+        </details>
+    </main>
+
+    <script type="module" src="../scripts/main.js" integrity="sha256-9cfb3e89646b3384144cbd4e9cc41682574297ada00d0fc3f9b316dc20a8d4bd" crossorigin="anonymous"></script>
+    <script src="../scripts/api.js" integrity="sha256-23b7e368f7fd976f8e85cf9d5d494dce7b7d5f73a9ea2dcac2d8cece9243e2cb" crossorigin="anonymous"></script>
+    <script>
+        let requestHistory = [];
+        let apiStats = {
+            total: 0,
+            success: 0,
+            errors: 0,
+            responseTime: []
+        };
+
+        function updateRequestForm() {
+            const method = document.getElementById('httpMethod').value;
+            const bodySection = document.getElementById('requestBodySection');
+            
+            if (method === 'GET' || method === 'DELETE') {
+                bodySection.classList.add('hidden');
+            } else {
+                bodySection.classList.remove('hidden');
+            }
+        }
+
+        function addHeader() {
+            const container = document.getElementById('headersContainer');
+            const headerDiv = document.createElement('div');
+            headerDiv.className = 'grid grid-cols-3';
+            headerDiv.style.marginBottom = '0.5rem';
+            headerDiv.innerHTML = `
+                <input type="text" placeholder="Header Name" class="header-key">
+                <input type="text" placeholder="Header Value" class="header-value">
+                <button type="button" onclick="removeHeader(this)" class="btn-error">Remove</button>
+            `;
+            container.appendChild(headerDiv);
+        }
+
+        function removeHeader(button) {
+            button.parentElement.remove();
+        }
+
+        function addParam() {
+            const container = document.getElementById('paramsContainer');
+            const paramDiv = document.createElement('div');
+            paramDiv.className = 'grid grid-cols-3';
+            paramDiv.style.marginBottom = '0.5rem';
+            paramDiv.innerHTML = `
+                <input type="text" placeholder="Parameter Name" class="param-key">
+                <input type="text" placeholder="Parameter Value" class="param-value">
+                <button type="button" onclick="removeParam(this)" class="btn-error">Remove</button>
+            `;
+            container.appendChild(paramDiv);
+        }
+
+        function removeParam(button) {
+            button.parentElement.remove();
+        }
+
+        const ALLOWED_API_ORIGINS = ['https://jsonplaceholder.typicode.com', 'https://dummyjson.com', 'https://api.mock-endpoint.com'];
+
+        function isAllowedApiUrl(urlString) {
+            try {
+                const url = new URL(urlString);
+                return url.protocol === 'https:' && ALLOWED_API_ORIGINS.some(origin => url.origin === origin);
+            } catch {
+                return false;
+            }
+        }
+
+        async function sendRequest() {
+            const method = document.getElementById('httpMethod').value;
+            let url = document.getElementById('apiUrl').value;
+            const requestBody = document.getElementById('requestBody').value;
+            
+            const headers = {};
+            document.querySelectorAll('.header-key').forEach((keyInput, index) => {
+                const key = keyInput.value.trim();
+                const value = document.querySelectorAll('.header-value')[index]?.value.trim();
+                if (key && value) {
+                    headers[key] = value;
+                }
+            });
+            
+            if ((method === 'POST' || method === 'PUT' || method === 'PATCH') && !headers['Content-Type']) {
+                headers['Content-Type'] = 'application/json';
+            }
+            
+            const params = new URLSearchParams();
+            document.querySelectorAll('.param-key').forEach((keyInput, index) => {
+                const key = keyInput.value.trim();
+                const value = document.querySelectorAll('.param-value')[index]?.value.trim();
+                if (key && value) {
+                    params.append(key, value);
+                }
+            });
+            
+            if (params.toString()) {
+                url += (url.includes('?') ? '&' : '?') + params.toString();
+            }
+
+            if (!isAllowedApiUrl(url)) {
+                showNotification('Only allowed API endpoints (jsonplaceholder, dummyjson) are permitted.', 'error');
+                return;
+            }
+            
+            const options = {
+                method: method,
+                headers: headers
+            };
+            
+            if (requestBody && (method === 'POST' || method === 'PUT' || method === 'PATCH')) {
+                options.body = requestBody;
+            }
+            
+            showNotification('Sending request...', 'info');
+            const startTime = Date.now();
+            
+            try {
+                const response = await fetch(url, options);
+                const endTime = Date.now();
+                const responseTime = endTime - startTime;
+                
+                const responseText = await response.text();
+                const responseSize = new Blob([responseText]).size;
+                const contentType = response.headers.get('content-type') || 'Unknown';
+                
+                updateResponseDisplay(response, responseText, responseTime, responseSize, contentType);
+                
+                addToHistory(method, url, response.status, responseTime);
+                updateStats(response.ok, responseTime);
+                
+                showNotification(`Request completed with status ${response.status}`, response.ok ? 'success' : 'error');
+                
+            } catch (error) {
+                const endTime = Date.now();
+                const responseTime = endTime - startTime;
+                
+                updateResponseDisplay(null, error.message, responseTime, 0, 'Error');
+                
+                addToHistory(method, url, 'Error', responseTime);
+                updateStats(false, responseTime);
+                
+                showNotification(`Request failed: ${error.message}`, 'error');
+            }
+        }
+
+        function updateResponseDisplay(response, responseText, responseTime, responseSize, contentType) {
+            document.getElementById('responseStatus').textContent = response ? response.status : 'Error';
+            document.getElementById('responseTime').textContent = responseTime + 'ms';
+            document.getElementById('responseSize').textContent = formatFileSize(responseSize);
+            document.getElementById('responseType').textContent = contentType;
+            
+            const headersDiv = document.getElementById('responseHeaders');
+            if (response && response.headers) {
+                let headersHtml = '';
+                response.headers.forEach((value, key) => {
+                    headersHtml += `<div><strong>${escapeHTML(key)}:</strong> ${escapeHTML(value)}</div>`;
+                });
+                headersDiv.innerHTML = headersHtml;
+            } else {
+                headersDiv.innerHTML = '<p style="margin: 0; color: var(--text-secondary);">No response headers</p>';
+            }
+            
+            const bodyElement = document.getElementById('responseBody');
+            bodyElement.textContent = responseText;
+        }
+
+        function formatResponse(format) {
+            const bodyElement = document.getElementById('responseBody');
+            const text = bodyElement.textContent;
+            
+            if (format === 'json') {
+                try {
+                    const json = JSON.parse(text);
+                    bodyElement.textContent = JSON.stringify(json, null, 2);
+                } catch (e) {
+                    showNotification('Response is not valid JSON', 'error');
+                }
+            } else {
+                bodyElement.textContent = text;
+            }
+        }
+
+        function copyResponse() {
+            const responseText = document.getElementById('responseBody').textContent;
+            navigator.clipboard.writeText(responseText).then(() => {
+                showNotification('Response copied to clipboard!', 'success');
+            });
+        }
+
+        function downloadResponse() {
+            const responseText = document.getElementById('responseBody').textContent;
+            const blob = new Blob([responseText], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'api-response.txt';
+            a.click();
+            URL.revokeObjectURL(url);
+            showNotification('Response downloaded!', 'success');
+        }
+
+        function loadSavedRequest(type) {
+            const requests = {
+                users: {
+                    method: 'GET',
+                    url: 'https://jsonplaceholder.typicode.com/users',
+                    body: ''
+                },
+                posts: {
+                    method: 'GET',
+                    url: 'https://jsonplaceholder.typicode.com/posts',
+                    body: ''
+                },
+                createPost: {
+                    method: 'POST',
+                    url: 'https://jsonplaceholder.typicode.com/posts',
+                    body: JSON.stringify({
+                        title: 'New Post',
+                        body: 'This is a new post created via API',
+                        userId: 1
+                    }, null, 2)
+                },
+                updatePost: {
+                    method: 'PUT',
+                    url: 'https://jsonplaceholder.typicode.com/posts/1',
+                    body: JSON.stringify({
+                        id: 1,
+                        title: 'Updated Post',
+                        body: 'This post has been updated',
+                        userId: 1
+                    }, null, 2)
+                }
+            };
+            
+            const request = requests[type];
+            if (request) {
+                document.getElementById('httpMethod').value = request.method;
+                document.getElementById('apiUrl').value = request.url;
+                document.getElementById('requestBody').value = request.body;
+                updateRequestForm();
+                showNotification(`Loaded ${type} request template`, 'info');
+            }
+        }
+
+        function clearRequest() {
+            document.getElementById('apiUrl').value = '';
+            document.getElementById('requestBody').value = '';
+            document.getElementById('responseBody').textContent = 'Send a request to see the response here.';
+            document.getElementById('responseStatus').textContent = '-';
+            document.getElementById('responseTime').textContent = '-';
+            document.getElementById('responseSize').textContent = '-';
+            document.getElementById('responseType').textContent = '-';
+            
+            const headersContainer = document.getElementById('headersContainer');
+            headersContainer.innerHTML = `
+                <div class="grid grid-cols-3" style="margin-bottom: 0.5rem;">
+                    <input type="text" placeholder="Header Name" class="header-key">
+                    <input type="text" placeholder="Header Value" class="header-value">
+                    <button type="button" onclick="removeHeader(this)" class="btn-error">Remove</button>
+                </div>
+            `;
+            
+            const paramsContainer = document.getElementById('paramsContainer');
+            paramsContainer.innerHTML = `
+                <div class="grid grid-cols-3" style="margin-bottom: 0.5rem;">
+                    <input type="text" placeholder="Parameter Name" class="param-key">
+                    <input type="text" placeholder="Parameter Value" class="param-value">
+                    <button type="button" onclick="removeParam(this)" class="btn-error">Remove</button>
+                </div>
+            `;
+        }
+
+        function addToHistory(method, url, status, responseTime) {
+            const historyItem = {
+                method,
+                url,
+                status,
+                responseTime,
+                timestamp: new Date().toLocaleString()
+            };
+            
+            requestHistory.unshift(historyItem);
+            if (requestHistory.length > 10) {
+                requestHistory = requestHistory.slice(0, 10);
+            }
+            
+            updateHistoryDisplay();
+        }
+
+        function escapeHTML(str) {
+            const div = document.createElement('div');
+            div.appendChild(document.createTextNode(String(str)));
+            return div.innerHTML;
+        }
+
+        function updateHistoryDisplay() {
+            const historyDiv = document.getElementById('requestHistory');
+            
+            if (requestHistory.length === 0) {
+                historyDiv.innerHTML = '<p>No requests sent yet.</p>';
+                return;
+            }
+            
+            let html = '<table class="table"><thead><tr><th>Method</th><th>URL</th><th>Status</th><th>Time</th><th>Timestamp</th></tr></thead><tbody>';
+            
+            requestHistory.forEach(item => {
+                const statusClass = item.status === 'Error' || item.status >= 400 ? 'error' : 'success';
+                html += `
+                    <tr>
+                        <td><span style="background: var(--primary-color); color: white; padding: 0.25rem 0.5rem; border-radius: 4px; font-size: 0.75rem;">${escapeHTML(item.method)}</span></td>
+                        <td style="word-break: break-all;">${escapeHTML(item.url)}</td>
+                        <td><span style="color: var(--${statusClass}-color);">${escapeHTML(item.status)}</span></td>
+                        <td>${escapeHTML(item.responseTime)}ms</td>
+                        <td>${escapeHTML(item.timestamp)}</td>
+                    </tr>
+                `;
+            });
+            
+            html += '</tbody></table>';
+            historyDiv.innerHTML = html;
+        }
+
+        function clearHistory() {
+            requestHistory = [];
+            updateHistoryDisplay();
+            showNotification('History cleared!', 'info');
+        }
+
+        function updateStats(success, responseTime) {
+            apiStats.total++;
+            if (success) {
+                apiStats.success++;
+            } else {
+                apiStats.errors++;
+            }
+            apiStats.responseTime.push(responseTime);
+            
+            document.getElementById('totalRequests').textContent = apiStats.total;
+            document.getElementById('successRate').textContent = 
+                apiStats.total > 0 ? Math.round((apiStats.success / apiStats.total) * 100) + '%' : '0%';
+            document.getElementById('avgResponseTime').textContent = 
+                apiStats.responseTime.length > 0 
+                    ? Math.round(apiStats.responseTime.reduce((a, b) => a + b, 0) / apiStats.responseTime.length) + 'ms'
+                    : '0ms';
+            document.getElementById('totalErrors').textContent = apiStats.errors;
+        }
+
+        function formatFileSize(bytes) {
+            if (bytes === 0) return '0 Bytes';
+            const k = 1024;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+        }
+
+        function showNotification(message, type = 'info') {
+            if (window.TestApp && typeof window.TestApp.showNotification === 'function') {
+                window.TestApp.showNotification(message, type);
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            updateRequestForm();
+        });
+    </script>
+</body>
+</html>

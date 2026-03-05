@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://dummyjson.com;">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../responsive/responsive.css">
+    <title>Sign Up - Test Automation Website</title>
+</head>
+<body>
+    <header>
+        <h1>Sign Up</h1>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="signUp.html" class="active">Sign Up</a></li>
+                <li><a href="login.html">Login</a></li>
+                <li><a href="forms.html">Forms</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="images.html">Images</a></li>
+                <li><a href="database.html">Database</a></li>
+                <li><a href="api.html">API</a></li>
+                <li><a href="advanced-api.html">Advanced API</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="card">
+            <div class="card-header">
+                <h3 class="card-title">Create Your Account</h3>
+            </div>
+            <form id="signUpForm" onsubmit="handleSignUp(event)">
+                <div class="form-group">
+                    <label for="firstName">First Name:</label>
+                    <input type="text" id="firstName" name="firstName" required minlength="2" maxlength="50">
+                    <div class="error-message" id="firstNameError"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="lastName">Last Name:</label>
+                    <input type="text" id="lastName" name="lastName" required minlength="2" maxlength="50">
+                    <div class="error-message" id="lastNameError"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                    <div class="error-message" id="emailError"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required minlength="3" maxlength="20" pattern="[a-zA-Z0-9_]+">
+                    <small style="color: var(--text-secondary);">Only letters, numbers, and underscores allowed</small>
+                    <div class="error-message" id="usernameError"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required minlength="8">
+                    <small style="color: var(--text-secondary);">Minimum 8 characters, include uppercase, lowercase, number, and special character</small>
+                    <div class="error-message" id="passwordError"></div>
+                    <div id="passwordStrength" style="margin-top: 0.5rem;">
+                        <div style="background: var(--border-color); height: 5px; border-radius: 3px; overflow: hidden;">
+                            <div id="strengthBar" style="height: 100%; width: 0%; transition: all 0.3s ease;"></div>
+                        </div>
+                        <small id="strengthText" style="color: var(--text-secondary);">Password strength: Very Weak</small>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password:</label>
+                    <input type="password" id="confirmPassword" name="confirmPassword" required>
+                    <div class="error-message" id="confirmPasswordError"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Phone Number:</label>
+                    <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="123-456-7890">
+                    <div class="error-message" id="phoneError"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="birthDate">Birth Date:</label>
+                    <input type="date" id="birthDate" name="birthDate" max="">
+                    <div class="error-message" id="birthDateError"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="country">Country:</label>
+                    <select id="country" name="country" required>
+                        <option value="">Select a country</option>
+                        <option value="us">United States</option>
+                        <option value="uk">United Kingdom</option>
+                        <option value="ca">Canada</option>
+                        <option value="au">Australia</option>
+                        <option value="de">Germany</option>
+                        <option value="fr">France</option>
+                        <option value="tr">Turkey</option>
+                        <option value="other">Other</option>
+                    </select>
+                    <div class="error-message" id="countryError"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Gender:</label>
+                    <div style="margin-top: 0.5rem;">
+                        <label style="font-weight: normal; display: inline-block; margin-right: 1rem;">
+                            <input type="radio" name="gender" value="male"> Male
+                        </label>
+                        <label style="font-weight: normal; display: inline-block; margin-right: 1rem;">
+                            <input type="radio" name="gender" value="female"> Female
+                        </label>
+                        <label style="font-weight: normal; display: inline-block;">
+                            <input type="radio" name="gender" value="other"> Other
+                        </label>
+                    </div>
+                    <div class="error-message" id="genderError"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label>Interests:</label>
+                    <div style="margin-top: 0.5rem;">
+                        <label style="font-weight: normal; display: block; margin-bottom: 0.5rem;">
+                            <input type="checkbox" name="interests" value="technology"> Technology
+                        </label>
+                        <label style="font-weight: normal; display: block; margin-bottom: 0.5rem;">
+                            <input type="checkbox" name="interests" value="sports"> Sports
+                        </label>
+                        <label style="font-weight: normal; display: block; margin-bottom: 0.5rem;">
+                            <input type="checkbox" name="interests" value="music"> Music
+                        </label>
+                        <label style="font-weight: normal; display: block;">
+                            <input type="checkbox" name="interests" value="travel"> Travel
+                        </label>
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="bio">Biography:</label>
+                    <textarea id="bio" name="bio" rows="4" maxlength="500" placeholder="Tell us about yourself..."></textarea>
+                    <small style="color: var(--text-secondary);"><span id="bioCount">0</span>/500 characters</small>
+                </div>
+                
+                <div class="form-group">
+                    <label style="font-weight: normal; display: block; margin-bottom: 0.5rem;">
+                        <input type="checkbox" id="terms" name="terms" required>
+                        I agree to the <a href="#" onclick="showTerms(); return false;">Terms and Conditions</a> and <a href="#" onclick="showPrivacy(); return false;">Privacy Policy</a>
+                    </label>
+                    <div class="error-message" id="termsError"></div>
+                </div>
+                
+                <div class="form-group">
+                    <label style="font-weight: normal; display: block; margin-bottom: 0.5rem;">
+                        <input type="checkbox" id="newsletter" name="newsletter">
+                        I would like to receive newsletter and promotional emails
+                    </label>
+                </div>
+                
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
+                    <button type="submit" class="btn-success">Sign Up</button>
+                    <button type="button" onclick="resetForm()" class="btn-secondary">Reset</button>
+                </div>
+            </form>
+        </div>
+        
+        <div id="successMessage" class="hidden">
+            <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Registration Successful!</h3>
+                </div>
+                <p>Your account has been created successfully. You can now <a href="login.html">login</a> to your account.</p>
+                <button onclick="window.location.reload()" class="btn-success">Create Another Account</button>
+            </div>
+        </div>
+    </main>
+
+    <style>
+        .error-message {
+            color: var(--error-color);
+            font-size: 0.875rem;
+            margin-top: 0.25rem;
+            min-height: 1rem;
+        }
+        
+        .input-error {
+            border-color: var(--error-color) !important;
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1) !important;
+        }
+        
+        .input-success {
+            border-color: var(--success-color) !important;
+            box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.1) !important;
+        }
+        
+        #strengthBar.weak { background: var(--error-color); width: 25%; }
+        #strengthBar.fair { background: var(--warning-color); width: 50%; }
+        #strengthBar.good { background: #3b82f6; width: 75%; }
+        #strengthBar.strong { background: var(--success-color); width: 100%; }
+    </style>
+
+    <script type="module" src="../scripts/main.js"></script>
+
+    <script>
+        document.getElementById('birthDate').max = new Date(Date.now() - 18 * 365 * 24 * 60 * 60 * 1000).toISOString().split('T')[0];
+        
+        document.getElementById('bio').addEventListener('input', function() {
+            const count = this.value.length;
+            document.getElementById('bioCount').textContent = count;
+        });
+        
+        document.getElementById('password').addEventListener('input', function() {
+            const password = this.value;
+            const strengthBar = document.getElementById('strengthBar');
+            const strengthText = document.getElementById('strengthText');
+            
+            let strength = 0;
+            let strengthLabel = 'Very Weak';
+            let strengthClass = '';
+            
+            if (password.length >= 8) strength++;
+            if (password.length >= 12) strength++;
+            if (/[a-z]/.test(password)) strength++;
+            if (/[A-Z]/.test(password)) strength++;
+            if (/[0-9]/.test(password)) strength++;
+            if (/[^a-zA-Z0-9]/.test(password)) strength++;
+            
+            switch(strength) {
+                case 0:
+                case 1:
+                    strengthLabel = 'Very Weak';
+                    strengthClass = 'weak';
+                    break;
+                case 2:
+                case 3:
+                    strengthLabel = 'Weak';
+                    strengthClass = 'weak';
+                    break;
+                case 4:
+                    strengthLabel = 'Fair';
+                    strengthClass = 'fair';
+                    break;
+                case 5:
+                    strengthLabel = 'Good';
+                    strengthClass = 'good';
+                    break;
+                case 6:
+                    strengthLabel = 'Strong';
+                    strengthClass = 'strong';
+                    break;
+            }
+            
+            strengthBar.className = strengthClass;
+            strengthText.textContent = `Password strength: ${strengthLabel}`;
+        });
+        
+        document.getElementById('email').addEventListener('blur', validateEmail);
+        document.getElementById('username').addEventListener('blur', validateUsername);
+        document.getElementById('password').addEventListener('blur', validatePassword);
+        document.getElementById('confirmPassword').addEventListener('blur', validateConfirmPassword);
+        document.getElementById('phone').addEventListener('blur', validatePhone);
+        
+        function validateEmail() {
+            const email = document.getElementById('email');
+            const error = document.getElementById('emailError');
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (!email.value) {
+                showError(email, error, 'Email is required');
+                return false;
+            }
+            
+            if (!emailRegex.test(email.value)) {
+                showError(email, error, 'Please enter a valid email address');
+                return false;
+            }
+            
+            showSuccess(email, error);
+            return true;
+        }
+        
+        function validateUsername() {
+            const username = document.getElementById('username');
+            const error = document.getElementById('usernameError');
+            const usernameRegex = /^[a-zA-Z0-9_]{3,20}$/;
+            
+            if (!username.value) {
+                showError(username, error, 'Username is required');
+                return false;
+            }
+            
+            if (!usernameRegex.test(username.value)) {
+                showError(username, error, 'Username must be 3-20 characters, letters, numbers, and underscores only');
+                return false;
+            }
+            
+            showSuccess(username, error);
+            return true;
+        }
+        
+        function validatePassword() {
+            const password = document.getElementById('password');
+            const error = document.getElementById('passwordError');
+            
+            if (!password.value) {
+                showError(password, error, 'Password is required');
+                return false;
+            }
+            
+            if (password.value.length < 8) {
+                showError(password, error, 'Password must be at least 8 characters long');
+                return false;
+            }
+            
+            if (!/(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])/.test(password.value)) {
+                showError(password, error, 'Password must include uppercase, lowercase, number, and special character');
+                return false;
+            }
+            
+            showSuccess(password, error);
+            return true;
+        }
+        
+        function validateConfirmPassword() {
+            const password = document.getElementById('password');
+            const confirmPassword = document.getElementById('confirmPassword');
+            const error = document.getElementById('confirmPasswordError');
+            
+            if (!confirmPassword.value) {
+                showError(confirmPassword, error, 'Please confirm your password');
+                return false;
+            }
+            
+            if (password.value !== confirmPassword.value) {
+                showError(confirmPassword, error, 'Passwords do not match');
+                return false;
+            }
+            
+            showSuccess(confirmPassword, error);
+            return true;
+        }
+        
+        function validatePhone() {
+            const phone = document.getElementById('phone');
+            const error = document.getElementById('phoneError');
+            const phoneRegex = /^[0-9]{3}-[0-9]{3}-[0-9]{4}$/;
+            
+            if (phone.value && !phoneRegex.test(phone.value)) {
+                showError(phone, error, 'Phone format: 123-456-7890');
+                return false;
+            }
+            
+            showSuccess(phone, error);
+            return true;
+        }
+        
+        function showError(input, errorElement, message) {
+            input.classList.add('input-error');
+            input.classList.remove('input-success');
+            errorElement.textContent = message;
+        }
+        
+        function showSuccess(input, errorElement) {
+            input.classList.remove('input-error');
+            input.classList.add('input-success');
+            errorElement.textContent = '';
+        }
+        
+        function handleSignUp(event) {
+            event.preventDefault();
+            
+            document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+            document.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+            document.querySelectorAll('.input-success').forEach(el => el.classList.remove('input-success'));
+            
+            const firstNameInput = document.getElementById('firstName');
+            const lastNameInput = document.getElementById('lastName');
+            const emailInput = document.getElementById('email');
+            const usernameInput = document.getElementById('username');
+            const passwordInput = document.getElementById('password');
+            const confirmPasswordInput = document.getElementById('confirmPassword');
+            const phoneInput = document.getElementById('phone');
+            const countryInput = document.getElementById('country');
+            const termsInput = document.getElementById('terms');
+            
+            const isFirstNameValid = firstNameInput && firstNameInput.value.trim().length >= 2;
+            const isLastNameValid = lastNameInput && lastNameInput.value.trim().length >= 2;
+            const isEmailValid = validateEmail();
+            const isUsernameValid = validateUsername();
+            const isPasswordValid = validatePassword();
+            const isConfirmPasswordValid = validateConfirmPassword();
+            const isPhoneValid = validatePhone();
+            const isCountryValid = countryInput && countryInput.value !== '';
+            const isTermsAccepted = termsInput && termsInput.checked;
+            
+            if (!isFirstNameValid && firstNameInput) {
+                const firstNameError = document.getElementById('firstNameError');
+                if (firstNameError) {
+                    firstNameError.textContent = 'First name is required';
+                    firstNameInput.classList.add('input-error');
+                }
+            }
+            if (!isLastNameValid && lastNameInput) {
+                const lastNameError = document.getElementById('lastNameError');
+                if (lastNameError) {
+                    lastNameError.textContent = 'Last name is required';
+                    lastNameInput.classList.add('input-error');
+                }
+            }
+            if (!isCountryValid && countryInput) {
+                const countryError = document.getElementById('countryError');
+                if (countryError) {
+                    countryError.textContent = 'Please select a country';
+                    countryInput.classList.add('input-error');
+                }
+            }
+            if (!isTermsAccepted && termsInput) {
+                const termsError = document.getElementById('termsError');
+                if (termsError) {
+                    termsError.textContent = 'You must accept terms and conditions';
+                }
+            }
+            
+            if (isFirstNameValid && isLastNameValid && isEmailValid && isUsernameValid && 
+                isPasswordValid && isConfirmPasswordValid && isPhoneValid && isCountryValid && isTermsAccepted) {
+                
+                const formData = new FormData(event.target);
+                const data = Object.fromEntries(formData.entries());
+                
+                const interests = [];
+                document.querySelectorAll('input[name="interests"]:checked').forEach(checkbox => {
+                    interests.push(checkbox.value);
+                });
+                data.interests = interests;
+                
+    
+                const signUpForm = document.getElementById('signUpForm');
+                const successMessage = document.getElementById('successMessage');
+                
+                if (signUpForm && signUpForm.parentElement) {
+                    signUpForm.parentElement.classList.add('hidden');
+                }
+                if (successMessage) {
+                    successMessage.classList.remove('hidden');
+                }
+                
+                showNotification('Account created successfully!', 'success');
+            } else {
+                showNotification('Please fix the errors in the form', 'error');
+            }
+        }
+        
+        function resetForm() {
+            const signUpForm = document.getElementById('signUpForm');
+            const bioCount = document.getElementById('bioCount');
+            const strengthBar = document.getElementById('strengthBar');
+            const strengthText = document.getElementById('strengthText');
+            
+            if (signUpForm) {
+                signUpForm.reset();
+            }
+            document.querySelectorAll('.error-message').forEach(el => el.textContent = '');
+            document.querySelectorAll('.input-error').forEach(el => el.classList.remove('input-error'));
+            document.querySelectorAll('.input-success').forEach(el => el.classList.remove('input-success'));
+            
+            if (bioCount) bioCount.textContent = '0';
+            if (strengthBar) strengthBar.className = '';
+            if (strengthText) strengthText.textContent = 'Password strength: Very Weak';
+        }
+        
+        function showTerms() {
+            showInfoModal('Terms and Conditions', '<ol><li>You must be 18 years or older to use this service.</li><li>You are responsible for maintaining the confidentiality of your account.</li><li>You agree to provide accurate and complete information.</li><li>We reserve the right to terminate accounts that violate these terms.</li><li>Your data will be handled according to our Privacy Policy.</li></ol>');
+        }
+        
+        function showPrivacy() {
+            showInfoModal('Privacy Policy', '<ol><li>We collect personal information you provide during registration.</li><li>We use this information to provide and improve our services.</li><li>We do not sell or share your personal information with third parties.</li><li>We implement security measures to protect your data.</li><li>You can request deletion of your account and data at any time.</li><li>We may update this policy from time to time.</li></ol>');
+        }
+        function showInfoModal(title, contentHtml) {
+            var existing = document.getElementById('infoModal');
+            if (existing) existing.remove();
+            var modal = document.createElement('div');
+            modal.id = 'infoModal';
+            modal.style.cssText = 'position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.5);z-index:1000;display:flex;align-items:center;justify-content:center;';
+            var inner = document.createElement('div');
+            inner.style.cssText = 'background:#fff;border-radius:12px;padding:2rem;max-width:500px;width:90%;max-height:80vh;overflow-y:auto;position:relative;box-shadow:0 20px 25px rgba(0,0,0,0.2);';
+            var heading = document.createElement('h3');
+            heading.style.cssText = 'margin:0 0 1rem 0;color:#111827;';
+            heading.textContent = title; 
+            inner.appendChild(heading);
+            var body = document.createElement('div');
+            body.style.cssText = 'color:#374151;line-height:1.7;';
+            body.innerHTML = contentHtml; 
+            inner.appendChild(body);
+            var btn = document.createElement('button');
+            btn.textContent = 'Close';
+            btn.style.cssText = 'margin-top:1.5rem;background:#6366f1;color:#fff;border:none;padding:0.6rem 1.5rem;border-radius:8px;cursor:pointer;font-size:1rem;';
+            btn.addEventListener('click', function() { modal.remove(); });
+            inner.appendChild(btn);
+            modal.appendChild(inner);
+            modal.addEventListener('click', function(e) { if (e.target === modal) modal.remove(); });
+            document.body.appendChild(modal);
+        }
+        
+        function showNotification(message, type = 'info') {
+            // Disabled - no automatic notifications on page load
+            // const notification = document.createElement('div');
+            // notification.className = `alert alert-${type}`;
+            // notification.textContent = message;
+            // 
+            // const main = document.querySelector('main');
+            // if (main) {
+            //     main.insertBefore(notification, main.firstChild);
+            //     
+            //     setTimeout(() => {
+            //         if (notification.parentNode) {
+            //             notification.remove();
+            //         }
+            //     }, 5000);
+            // }
+        }
+    </script>
+</body>
+</html>

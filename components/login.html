@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://dummyjson.com;">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <link rel="stylesheet" href="../styles/styles.css">
+    <title>Login - Test Auto Mate</title>
+</head>
+<body>
+    <header>
+        <h1>Login</h1>
+        <nav>
+            <ul>
+                <li><a href="../index.html">Home</a></li>
+                <li><a href="signUp.html">Sign Up</a></li>
+                <li><a href="login.html" class="active">Login</a></li>
+                <li><a href="forms.html">Forms</a></li>
+                <li><a href="products.html">Products</a></li>
+                <li><a href="images.html">Images</a></li>
+                <li><a href="database.html">Database</a></li>
+                <li><a href="api.html">API</a></li>
+                <li><a href="advanced-api.html">Advanced API</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <div class="card" style="max-width: 400px; margin: 0 auto;">
+            <div class="card-header">
+                <h3 class="card-title">Login to Account</h3>
+            </div>
+            <div class="alert alert-info" style="margin-bottom: 1rem;">
+                <strong>Demo Credentials</strong>
+                <div style="margin-top: 0.5rem; color: var(--text-secondary);">
+                    Username: <code>admin</code><br>
+                    Password: <code>demo</code>
+                </div>
+            </div>
+            <form id="loginForm" onsubmit="event.preventDefault(); handleLogin();">
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" id="username" placeholder="Enter username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" placeholder="Enter password" required>
+                </div>
+                <button type="submit" class="btn-primary" style="width: 100%;">Sign In</button>
+                
+                <div style="margin-top: 1rem; text-align: center;">
+                    <a href="#" onclick="openModal('forgotPasswordModal')" style="color: var(--primary); text-decoration: none;">Forgot Password?</a>
+                </div>
+            </form>
+        </div>
+
+        <div id="forgotPasswordModal" class="modal-overlay" style="display: none;">
+            <div class="card" style="width: 90%; max-width: 400px; margin: 0;">
+                <div class="card-header">
+                    <h3 class="card-title">Reset Password</h3>
+                </div>
+                <div style="padding-bottom: 1rem;">
+                    <label for="resetEmail">Email Address:</label>
+                    <input type="email" id="resetEmail" class="form-control">
+                </div>
+                <div style="display: flex; gap: 1rem;">
+                    <button class="btn-success" onclick="closeModal('forgotPasswordModal'); window.TestApp.showNotification('Reset link sent!', 'success')">Send Reset Link</button>
+                    <button class="btn-error" onclick="closeModal('forgotPasswordModal')">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script type="module" src="../scripts/main.js"></script>
+    <script>
+        function openModal(id) {
+            const modal = document.getElementById(id);
+            modal.style.display = 'flex';
+        }
+        function closeModal(id) {
+            const modal = document.getElementById(id);
+            modal.style.display = 'none';
+        }
+
+        function handleLogin() {
+            console.log('handleLogin called');
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            
+            console.log('Username:', username, 'Password:', password);
+            console.log('TestApp available:', !!window.TestApp);
+            console.log('showNotification available:', !!(window.TestApp && window.TestApp.showNotification));
+
+            if (username === 'admin' && password === 'demo') {
+                console.log('Login successful');
+                if (window.TestApp && window.TestApp.showNotification) {
+                    window.TestApp.showNotification('Login Successful! Welcome admin!', 'success');
+                } else {
+                    showSimpleNotification('Login Successful! Welcome admin!', 'success');
+                }
+                setTimeout(() => {
+                    console.log('User logged in successfully');
+                }, 1000);
+            } else {
+                console.log('Login failed');
+                if (window.TestApp && window.TestApp.showNotification) {
+                    window.TestApp.showNotification('Invalid credentials. Please use admin/demo', 'error');
+                } else {
+                    showSimpleNotification('Invalid credentials. Please use admin/demo', 'error');
+                }
+            }
+        }
+
+        function showSimpleNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                padding: 12px 20px;
+                border-radius: 6px;
+                color: white;
+                font-weight: 500;
+                z-index: 9999;
+                max-width: 300px;
+                word-wrap: break-word;
+                ${type === 'success' ? 'background: #10b981;' : 'background: #ef4444;'}
+            `;
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
