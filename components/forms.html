@@ -15,209 +15,209 @@
     <title>Forms - Test Automation Website</title>
 </head>
 <body>
-    <header>
-        <h1>Forms Testing Section</h1>
-        <nav>
-            <ul>
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="signUp.html">Sign Up</a></li>
-                <li><a href="login.html">Login</a></li>
-                <li><a href="forms.html" class="active">Forms</a></li>
-                <li><a href="products.html">Products</a></li>
-                <li><a href="images.html">Images</a></li>
-                <li><a href="database.html">Database</a></li>
-                <li><a href="api.html">API</a></li>
-                <li><a href="advanced-api.html">Advanced API</a></li>
+    <header id="forms-header">
+        <h1 id="forms-title">Forms Testing Section</h1>
+        <nav id="forms-navigation">
+            <ul id="forms-nav-menu">
+                <li><a href="../index.html" id="forms-nav-home-link">Home</a></li>
+                <li><a href="signUp.html" id="forms-nav-signup-link">Sign Up</a></li>
+                <li><a href="login.html" id="forms-nav-login-link">Login</a></li>
+                <li><a href="forms.html" class="active" id="forms-nav-forms-link">Forms</a></li>
+                <li><a href="products.html" id="forms-nav-products-link">Products</a></li>
+                <li><a href="images.html" id="forms-nav-images-link">Images</a></li>
+                <li><a href="database.html" id="forms-nav-database-link">Database</a></li>
+                <li><a href="api.html" id="forms-nav-api-link">API</a></li>
+                <li><a href="advanced-api.html" id="forms-nav-advanced-api-link">Advanced API</a></li>
             </ul>
         </nav>
     </header>
-    <main>
-        <div class="grid grid-cols-2">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Basic Form</h3>
+    <main id="forms-main">
+        <div class="grid grid-cols-2" id="forms-grid">
+            <div class="card" id="forms-basic-card">
+                <div class="card-header" id="forms-basic-header">
+                    <h3 class="card-title" id="forms-basic-title">Basic Form</h3>
                 </div>
                 <form id="basicForm">
-                    <div class="form-group">
-                        <label for="firstName">First Name:</label>
+                    <div class="form-group" id="forms-basic-firstname-group">
+                        <label for="firstName" id="forms-basic-firstname-label">First Name:</label>
                         <input type="text" id="firstName" name="firstName" required>
                     </div>
-                    <div class="form-group">
-                        <label for="lastName">Last Name:</label>
+                    <div class="form-group" id="forms-basic-lastname-group">
+                        <label for="lastName" id="forms-basic-lastname-label">Last Name:</label>
                         <input type="text" id="lastName" name="lastName" required>
                     </div>
-                    <div class="form-group">
-                        <label for="email">Email:</label>
+                    <div class="form-group" id="forms-basic-email-group">
+                        <label for="email" id="forms-basic-email-label">Email:</label>
                         <input type="email" id="email" name="email" required>
                     </div>
-                    <div class="form-group">
-                        <label for="phone">Phone:</label>
+                    <div class="form-group" id="forms-basic-phone-group">
+                        <label for="phone" id="forms-basic-phone-label">Phone:</label>
                         <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="123-456-7890">
                     </div>
-                    <button type="submit">Submit Basic Form</button>
+                    <button type="submit" id="forms-basic-submit">Submit Basic Form</button>
                 </form>
             </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Advanced Form</h3>
+            <div class="card" id="forms-advanced-card">
+                <div class="card-header" id="forms-advanced-header">
+                    <h3 class="card-title" id="forms-advanced-title">Advanced Form</h3>
                 </div>
                 <form id="advancedForm">
-                    <div class="form-group">
-                        <label for="birthDate">Birth Date:</label>
+                    <div class="form-group" id="forms-advanced-birthdate-group">
+                        <label for="birthDate" id="forms-advanced-birthdate-label">Birth Date:</label>
                         <input type="date" id="birthDate" name="birthDate">
                     </div>
-                    <div class="form-group">
-                        <label for="age">Age:</label>
+                    <div class="form-group" id="forms-advanced-age-group">
+                        <label for="age" id="forms-advanced-age-label">Age:</label>
                         <input type="number" id="age" name="age" min="1" max="120">
                     </div>
-                    <div class="form-group">
-                        <label for="salary">Salary:</label>
+                    <div class="form-group" id="forms-advanced-salary-group">
+                        <label for="salary" id="forms-advanced-salary-label">Salary:</label>
                         <input type="number" id="salary" name="salary" step="0.01" min="0">
                     </div>
-                    <div class="form-group">
-                        <label for="website">Website:</label>
+                    <div class="form-group" id="forms-advanced-website-group">
+                        <label for="website" id="forms-advanced-website-label">Website:</label>
                         <input type="url" id="website" name="website" placeholder="https://example.com">
                     </div>
-                    <button type="submit">Submit Advanced Form</button>
+                    <button type="submit" id="forms-advanced-submit">Submit Advanced Form</button>
                 </form>
             </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Selection Form</h3>
+            <div class="card" id="forms-selection-card">
+                <div class="card-header" id="forms-selection-header">
+                    <h3 class="card-title" id="forms-selection-title">Selection Form</h3>
                 </div>
                 <form id="selectionForm">
-                    <div class="form-group">
-                        <label for="country">Country:</label>
+                    <div class="form-group" id="forms-selection-country-group">
+                        <label for="country" id="forms-selection-country-label">Country:</label>
                         <select id="country" name="country">
-                            <option value="">Select a country</option>
-                            <option value="us">United States</option>
-                            <option value="uk">United Kingdom</option>
-                            <option value="ca">Canada</option>
-                            <option value="au">Australia</option>
-                            <option value="de">Germany</option>
-                            <option value="fr">France</option>
-                            <option value="tr">Turkey</option>
+                            <option value="" id="forms-selection-country-default">Select a country</option>
+                            <option value="us" id="forms-selection-country-us">United States</option>
+                            <option value="uk" id="forms-selection-country-uk">United Kingdom</option>
+                            <option value="ca" id="forms-selection-country-ca">Canada</option>
+                            <option value="au" id="forms-selection-country-au">Australia</option>
+                            <option value="de" id="forms-selection-country-de">Germany</option>
+                            <option value="fr" id="forms-selection-country-fr">France</option>
+                            <option value="tr" id="forms-selection-country-tr">Turkey</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label>Gender:</label>
-                        <div style="margin-top: 0.5rem;">
-                            <label style="font-weight: normal; display: inline-block; margin-right: 1rem;">
-                                <input type="radio" name="gender" value="male"> Male
+                    <div class="form-group" id="forms-selection-gender-group">
+                        <label id="forms-selection-gender-label">Gender:</label>
+                        <div style="margin-top: 0.5rem;" id="forms-selection-gender-options">
+                            <label style="font-weight: normal; display: inline-block; margin-right: 1rem;" id="forms-selection-gender-male-label">
+                                <input type="radio" name="gender" value="male" id="forms-selection-gender-male"> Male
                             </label>
-                            <label style="font-weight: normal; display: inline-block; margin-right: 1rem;">
-                                <input type="radio" name="gender" value="female"> Female
+                            <label style="font-weight: normal; display: inline-block; margin-right: 1rem;" id="forms-selection-gender-female-label">
+                                <input type="radio" name="gender" value="female" id="forms-selection-gender-female"> Female
                             </label>
-                            <label style="font-weight: normal; display: inline-block;">
-                                <input type="radio" name="gender" value="other"> Other
-                            </label>
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label>Interests:</label>
-                        <div style="margin-top: 0.5rem;">
-                            <label style="font-weight: normal; display: block; margin-bottom: 0.5rem;">
-                                <input type="checkbox" name="interests" value="sports"> Sports
-                            </label>
-                            <label style="font-weight: normal; display: block; margin-bottom: 0.5rem;">
-                                <input type="checkbox" name="interests" value="music"> Music
-                            </label>
-                            <label style="font-weight: normal; display: block; margin-bottom: 0.5rem;">
-                                <input type="checkbox" name="interests" value="technology"> Technology
-                            </label>
-                            <label style="font-weight: normal; display: block;">
-                                <input type="checkbox" name="interests" value="travel"> Travel
+                            <label style="font-weight: normal; display: inline-block;" id="forms-selection-gender-other-label">
+                                <input type="radio" name="gender" value="other" id="forms-selection-gender-other"> Other
                             </label>
                         </div>
                     </div>
-                    <button type="submit">Submit Selection Form</button>
+                    <div class="form-group" id="forms-selection-interests-group">
+                        <label id="forms-selection-interests-label">Interests:</label>
+                        <div style="margin-top: 0.5rem;" id="forms-selection-interests-options">
+                            <label style="font-weight: normal; display: block; margin-bottom: 0.5rem;" id="forms-selection-interests-sports-label">
+                                <input type="checkbox" name="interests" value="sports" id="forms-selection-interests-sports"> Sports
+                            </label>
+                            <label style="font-weight: normal; display: block; margin-bottom: 0.5rem;" id="forms-selection-interests-music-label">
+                                <input type="checkbox" name="interests" value="music" id="forms-selection-interests-music"> Music
+                            </label>
+                            <label style="font-weight: normal; display: block; margin-bottom: 0.5rem;" id="forms-selection-interests-technology-label">
+                                <input type="checkbox" name="interests" value="technology" id="forms-selection-interests-technology"> Technology
+                            </label>
+                            <label style="font-weight: normal; display: block;" id="forms-selection-interests-travel-label">
+                                <input type="checkbox" name="interests" value="travel" id="forms-selection-interests-travel"> Travel
+                            </label>
+                        </div>
+                    </div>
+                    <button type="submit" id="forms-selection-submit">Submit Selection Form</button>
                 </form>
             </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">File Upload Form</h3>
+            <div class="card" id="forms-file-card">
+                <div class="card-header" id="forms-file-header">
+                    <h3 class="card-title" id="forms-file-title">File Upload Form</h3>
                 </div>
                 <form id="fileForm">
-                    <div class="form-group">
-                        <label for="profilePicture">Profile Picture:</label>
+                    <div class="form-group" id="forms-file-profile-group">
+                        <label for="profilePicture" id="forms-file-profile-label">Profile Picture:</label>
                         <input type="file" id="profilePicture" name="profilePicture" accept="image/*">
                     </div>
-                    <div class="form-group">
-                        <label for="documents">Documents:</label>
+                    <div class="form-group" id="forms-file-documents-group">
+                        <label for="documents" id="forms-file-documents-label">Documents:</label>
                         <input type="file" id="documents" name="documents" multiple accept=".pdf,.doc,.docx,.txt">
                     </div>
-                    <div class="form-group">
-                        <label for="avatar">Avatar:</label>
+                    <div class="form-group" id="forms-file-avatar-group">
+                        <label for="avatar" id="forms-file-avatar-label">Avatar:</label>
                         <input type="file" id="avatar" name="avatar" accept="image/png,image/jpeg,image/gif">
                     </div>
-                    <button type="submit">Upload Files</button>
+                    <button type="submit" id="forms-file-submit">Upload Files</button>
                 </form>
             </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Text Input Form</h3>
+            <div class="card" id="forms-text-card">
+                <div class="card-header" id="forms-text-header">
+                    <h3 class="card-title" id="forms-text-title">Text Input Form</h3>
                 </div>
                 <form id="textForm">
-                    <div class="form-group">
-                        <label for="username">Username:</label>
+                    <div class="form-group" id="forms-text-username-group">
+                        <label for="username" id="forms-text-username-label">Username:</label>
                         <input type="text" id="username" name="username" minlength="3" maxlength="20" required>
                     </div>
-                    <div class="form-group">
-                        <label for="password">Password:</label>
+                    <div class="form-group" id="forms-text-password-group">
+                        <label for="password" id="forms-text-password-label">Password:</label>
                         <input type="password" id="password" name="password" minlength="8" required>
                     </div>
-                    <div class="form-group">
-                        <label for="confirmPassword">Confirm Password:</label>
+                    <div class="form-group" id="forms-text-confirm-password-group">
+                        <label for="confirmPassword" id="forms-text-confirm-password-label">Confirm Password:</label>
                         <input type="password" id="confirmPassword" name="confirmPassword" minlength="8" required>
                     </div>
-                    <div class="form-group">
-                        <label for="bio">Biography:</label>
+                    <div class="form-group" id="forms-text-bio-group">
+                        <label for="bio" id="forms-text-bio-label">Biography:</label>
                         <textarea id="bio" name="bio" rows="4" cols="50" placeholder="Tell us about yourself..."></textarea>
                     </div>
-                    <div class="form-group">
-                        <label for="comments">Comments:</label>
+                    <div class="form-group" id="forms-text-comments-group">
+                        <label for="comments" id="forms-text-comments-label">Comments:</label>
                         <textarea id="comments" name="comments" rows="3" cols="50" placeholder="Leave your comments here..."></textarea>
                     </div>
-                    <button type="submit">Submit Text Form</button>
+                    <button type="submit" id="forms-text-submit">Submit Text Form</button>
                 </form>
             </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Range and Color Form</h3>
+            <div class="card" id="forms-range-color-card">
+                <div class="card-header" id="forms-range-color-header">
+                    <h3 class="card-title" id="forms-range-color-title">Range and Color Form</h3>
                 </div>
                 <form id="rangeColorForm">
-                    <div class="form-group">
-                        <label for="satisfaction">Satisfaction Level: <span id="satisfactionValue">5</span></label>
+                    <div class="form-group" id="forms-range-satisfaction-group">
+                        <label for="satisfaction" id="forms-range-satisfaction-label">Satisfaction Level: <span id="satisfactionValue">5</span></label>
                         <input type="range" id="satisfaction" name="satisfaction" min="1" max="10" value="5">
                     </div>
-                    <div class="form-group">
-                        <label for="experience">Experience (years): <span id="experienceValue">3</span></label>
+                    <div class="form-group" id="forms-range-experience-group">
+                        <label for="experience" id="forms-range-experience-label">Experience (years): <span id="experienceValue">3</span></label>
                         <input type="range" id="experience" name="experience" min="0" max="20" value="3">
                     </div>
-                    <div class="form-group">
-                        <label for="favoriteColor">Favorite Color:</label>
+                    <div class="form-group" id="forms-color-favorite-group">
+                        <label for="favoriteColor" id="forms-color-favorite-label">Favorite Color:</label>
                         <input type="color" id="favoriteColor" name="favoriteColor" value="#2563eb">
                     </div>
-                    <div class="form-group">
-                        <label for="themeColor">Theme Color:</label>
+                    <div class="form-group" id="forms-color-theme-group">
+                        <label for="themeColor" id="forms-color-theme-label">Theme Color:</label>
                         <input type="color" id="themeColor" name="themeColor" value="#64748b">
                     </div>
-                    <button type="submit">Submit Range/Color Form</button>
+                    <button type="submit" id="forms-range-color-submit">Submit Range/Color Form</button>
                 </form>
             </div>
         </div>
 
-        <div id="validationResults" class="hidden">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Form Submission Results</h3>
+        <div id="validationResults" class="hidden" id="forms-results-container">
+            <div class="card" id="forms-results-card">
+                <div class="card-header" id="forms-results-header">
+                    <h3 class="card-title" id="forms-results-title">Form Submission Results</h3>
                 </div>
-                <div id="resultsContent"></div>
+                <div id="resultsContent" id="forms-results-content"></div>
             </div>
         </div>
     </main>
@@ -277,6 +277,20 @@
             document.body.appendChild(notification);
             setTimeout(() => { if (notification.parentNode) notification.remove(); }, 4000);
         }
+        
+        // Add scroll effect to header
+        document.addEventListener('DOMContentLoaded', function() {
+            const header = document.querySelector('header');
+            if (header) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 50) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+                });
+            }
+        });
     </script>
 </body>
 </html>

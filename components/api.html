@@ -6,39 +6,40 @@
     <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://dummyjson.com https://jsonplaceholder.typicode.com; form-action 'self'; base-uri 'self'; frame-ancestors 'none'; object-src 'none';">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://dummyjson.com https://jsonplaceholder.typicode.com; form-action 'self'; base-uri 'self'; object-src 'none';">
     <meta http-equiv="X-Frame-Options" content="DENY">
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../responsive/responsive.css">
     <title>API - Test Auto Mate</title>
 </head>
 <body>
-    <header>
-        <h1>API</h1>
-        <nav>
-            <ul>
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="signUp.html">Sign Up</a></li>
-                <li><a href="login.html">Login</a></li>
-                <li><a href="forms.html">Forms</a></li>
-                <li><a href="products.html">Products</a></li>
-                <li><a href="images.html">Images</a></li>
-                <li><a href="database.html">Database</a></li>
-                <li><a href="api.html" class="active">API</a></li>
-                <li><a href="advanced-api.html">Advanced API</a></li>
+    <header id="api-header">
+        <h1 id="api-title">API</h1>
+        <nav id="api-navigation">
+            <ul id="api-nav-menu">
+                <li><a href="../index.html" id="api-nav-home-link">Home</a></li>
+                <li><a href="signUp.html" id="api-nav-signup-link">Sign Up</a></li>
+                <li><a href="login.html" id="api-nav-login-link">Login</a></li>
+                <li><a href="forms.html" id="api-nav-forms-link">Forms</a></li>
+                <li><a href="products.html" id="api-nav-products-link">Products</a></li>
+                <li><a href="images.html" id="api-nav-images-link">Images</a></li>
+                <li><a href="database.html" id="api-nav-database-link">Database</a></li>
+                <li><a href="api.html" class="active" id="api-nav-api-link">API</a></li>
+                <li><a href="advanced-api.html" id="api-nav-advanced-api-link">Advanced API</a></li>
             </ul>
         </nav>
     </header>
-    <main>
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">API Request Builder</h3>
+    <main id="api-main">
+        <div class="card" id="api-request-builder-card">
+            <div class="card-header" id="api-request-builder-header">
+                <h3 class="card-title" id="api-request-builder-title">API Request Builder</h3>
             </div>
-            <p>Test different HTTP methods and endpoints.</p>
-            <div class="alert alert-info" style="margin-top: 1rem;">
-                <strong>How to use</strong>
-                <div style="margin-top: 0.5rem; color: var(--text-secondary);">
+            <p id="api-request-builder-description">Test different HTTP methods and endpoints.</p>
+            <div class="alert alert-info" id="api-usage-guide" style="margin-top: 1rem;">
+                <strong id="api-usage-title">How to use</strong>
+                <div style="margin-top: 0.5rem; color: var(--text-secondary);" id="api-usage-steps">
                     1) Choose method
                     2) Enter URL
                     3) Optional: add headers / query params
@@ -46,58 +47,57 @@
                     5) Click <strong>Send Request</strong>
                 </div>
             </div>
-            
-            <div class="grid grid-cols-2">
-                <div class="card">
-                    <h4>Request Configuration</h4>
-                    <div class="form-group">
-                        <label>Method:</label>
-                        <select id="httpMethod" onchange="updateRequestForm()">
-                        <option value="GET">GET</option>
-                        <option value="POST">POST</option>
-                        <option value="PUT">PUT</option>
-                        <option value="DELETE">DELETE</option>
-                        <option value="PATCH">PATCH</option>
+            <div class="grid grid-cols-2" id="api-config-grid">
+                <div class="card" id="api-method-card">
+                    <h4 id="api-method-title">Request Configuration</h4>
+                    <div class="form-group" id="api-method-group">
+                        <label id="api-method-label">Method:</label>
+                        <select id="httpMethod" id="api-method-select" onchange="updateRequestForm()">
+                        <option value="GET" id="api-method-get">GET</option>
+                        <option value="POST" id="api-method-post">POST</option>
+                        <option value="PUT" id="api-method-put">PUT</option>
+                        <option value="DELETE" id="api-method-delete">DELETE</option>
+                        <option value="PATCH" id="api-method-patch">PATCH</option>
                         </select>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="apiUrl">API URL:</label>
-                    <input type="text" id="apiUrl" value="https://jsonplaceholder.typicode.com/posts" placeholder="Enter API endpoint URL">
+                <div class="form-group" id="api-url-group">
+                    <label for="apiUrl" id="api-url-label">API URL:</label>
+                    <input type="text" id="apiUrl" value="https://jsonplaceholder.typicode.com/posts" placeholder="Enter API endpoint URL" id="api-url-input">
                 </div>
             </div>
             
-            <div class="form-group">
-                <label>Headers:</label>
-                <div id="headersContainer">
-                    <div class="grid grid-cols-3" style="margin-bottom: 0.5rem;">
-                        <input type="text" placeholder="Header Name" class="header-key">
-                        <input type="text" placeholder="Header Value" class="header-value">
-                        <button type="button" onclick="removeHeader(this)" class="btn-error">Remove</button>
+            <div class="form-group" id="api-headers-group">
+                <label id="api-headers-label">Headers:</label>
+                <div id="headersContainer" id="api-headers-container">
+                    <div class="grid grid-cols-3" style="margin-bottom: 0.5rem;" id="api-header-row-default">
+                        <input type="text" placeholder="Header Name" class="header-key" id="api-header-key-default">
+                        <input type="text" placeholder="Header Value" class="header-value" id="api-header-value-default">
+                        <button type="button" onclick="removeHeader(this)" class="btn-error" id="api-header-remove-default">Remove</button>
                     </div>
                 </div>
-                <button type="button" onclick="addHeader()" class="btn-secondary">Add Header</button>
+                <button type="button" onclick="addHeader()" class="btn-secondary" id="api-add-header-btn">Add Header</button>
             </div>
 
-            <div id="requestBodySection" class="form-group hidden">
-                <label for="requestBody">Request Body (JSON):</label>
-                <textarea id="requestBody" rows="6" placeholder='{"key": "value"}'>
+            <div id="requestBodySection" class="form-group hidden" id="api-body-section">
+                <label for="requestBody" id="api-body-label">Request Body (JSON):</label>
+                <textarea id="requestBody" rows="6" placeholder='{"key": "value"}' id="api-body-textarea">
 {
   "title": "Test API Request",
   "body": "This is a test request body",
   "userId": 1
 }</textarea>
             </div>
-            <div class="form-group">
-                <label>Query Parameters:</label>
-                <div id="paramsContainer">
-                    <div class="grid grid-cols-3" style="margin-bottom: 0.5rem;">
-                        <input type="text" placeholder="Parameter Name" class="param-key">
-                        <input type="text" placeholder="Parameter Value" class="param-value">
-                        <button type="button" onclick="removeParam(this)" class="btn-error">Remove</button>
+            <div class="form-group" id="api-params-group">
+                <label id="api-params-label">Query Parameters:</label>
+                <div id="paramsContainer" id="api-params-container">
+                    <div class="grid grid-cols-3" style="margin-bottom: 0.5rem;" id="api-param-row-default">
+                        <input type="text" placeholder="Parameter Name" class="param-key" id="api-param-key-default">
+                        <input type="text" placeholder="Parameter Value" class="param-value" id="api-param-value-default">
+                        <button type="button" onclick="removeParam(this)" class="btn-error" id="api-param-remove-default">Remove</button>
                     </div>
                 </div>
-                <button type="button" onclick="addParam()" class="btn-secondary">Add Parameter</button>
+                <button type="button" onclick="addParam()" class="btn-secondary" id="api-add-param-btn">Add Parameter</button>
             </div>
 
             <button onclick="sendRequest()" class="btn-success">Send Request</button>
@@ -202,8 +202,8 @@
         </details>
     </main>
 
-    <script type="module" src="../scripts/main.js" integrity="sha256-9cfb3e89646b3384144cbd4e9cc41682574297ada00d0fc3f9b316dc20a8d4bd" crossorigin="anonymous"></script>
-    <script src="../scripts/api.js" integrity="sha256-23b7e368f7fd976f8e85cf9d5d494dce7b7d5f73a9ea2dcac2d8cece9243e2cb" crossorigin="anonymous"></script>
+    <script type="module" src="../scripts/main.js" integrity="sha256-wm2FHag8nsfwWL1RRHTXvkC3kZTl3v+WWQd9VgCZQ0s=" crossorigin="anonymous"></script>
+    <script src="../scripts/api.js" integrity="sha256-5Fib3LzySxp0dMJmaDaxW5hDWi8Q2uc8wHJ/CSPS8AA=" crossorigin="anonymous"></script>
     <script>
         let requestHistory = [];
         let apiStats = {
@@ -564,6 +564,20 @@
 
         document.addEventListener('DOMContentLoaded', function() {
             updateRequestForm();
+        });
+        
+        // Add scroll effect to header
+        document.addEventListener('DOMContentLoaded', function() {
+            const header = document.querySelector('header');
+            if (header) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 50) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+                });
+            }
         });
     </script>
 </body>

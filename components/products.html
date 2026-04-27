@@ -11,108 +11,109 @@
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../responsive/responsive.css">
     <title>Products - Test Auto Mate</title>
 </head>
 <body>
-    <header>
-        <h1>Products</h1>
-        <nav>
-            <ul>
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="signUp.html">Sign Up</a></li>
-                <li><a href="login.html">Login</a></li>
-                <li><a href="forms.html">Forms</a></li>
-                <li><a href="products.html" class="active">Products</a></li>
-                <li><a href="images.html">Images</a></li>
-                <li><a href="database.html">Database</a></li>
-                <li><a href="api.html">API</a></li>
-                <li><a href="advanced-api.html">Advanced API</a></li>
+    <header id="products-header">
+        <h1 id="products-title">Products</h1>
+        <nav id="products-navigation">
+            <ul id="products-nav-menu">
+                <li><a href="../index.html" id="products-nav-home-link">Home</a></li>
+                <li><a href="signUp.html" id="products-nav-signup-link">Sign Up</a></li>
+                <li><a href="login.html" id="products-nav-login-link">Login</a></li>
+                <li><a href="forms.html" id="products-nav-forms-link">Forms</a></li>
+                <li><a href="products.html" class="active" id="products-nav-products-link">Products</a></li>
+                <li><a href="images.html" id="products-nav-images-link">Images</a></li>
+                <li><a href="database.html" id="products-nav-database-link">Database</a></li>
+                <li><a href="api.html" id="products-nav-api-link">API</a></li>
+                <li><a href="advanced-api.html" id="products-nav-advanced-api-link">Advanced API</a></li>
             </ul>
         </nav>
     </header>
-    <main>
-        <div class="card">
-            <h3 class="card-title">Product List</h3>
-            <p style="margin-bottom: 1rem; color: var(--text-muted);">Click 'Details' to open modal.</p>
+    <main id="products-main">
+        <div class="card" id="products-list-card">
+            <h3 class="card-title" id="products-list-title">Product List</h3>
+            <p style="margin-bottom: 1rem; color: var(--text-muted);" id="products-list-description">Click 'Details' to open modal.</p>
             
-            <div class="grid grid-cols-3">
-                <div class="card" style="padding: 1rem; margin-bottom: 0;">
-                    <h4 style="margin-bottom: 0.5rem;">Gaming Laptop</h4>
-                    <p style="color: var(--success); font-weight: bold;">$1200</p>
-                    <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
-                        <button class="btn-primary" onclick="addToCart('Gaming Laptop', 1200)">Add to Cart</button>
-                        <button class="btn-secondary" onclick="openProductModal('Gaming Laptop', 'High performance laptop with RTX 4060.')">Details</button>
+            <div class="grid grid-cols-3" id="products-grid">
+                <div class="card" id="products-laptop-card" style="padding: 1rem; margin-bottom: 0;">
+                    <h4 style="margin-bottom: 0.5rem;" id="products-laptop-title">Gaming Laptop</h4>
+                    <p style="color: var(--success); font-weight: bold;" id="products-laptop-price">$1200</p>
+                    <div style="margin-top: 1rem; display: flex; gap: 0.5rem;" id="products-laptop-actions">
+                        <button class="btn-primary" id="products-laptop-add-btn" onclick="addToCart('Gaming Laptop', 1200)">Add to Cart</button>
+                        <button class="btn-secondary" id="products-laptop-details-btn" onclick="openProductModal('Gaming Laptop', 'High performance laptop with RTX 4060.')">Details</button>
                     </div>
                 </div>
 
-                <div class="card" style="padding: 1rem; margin-bottom: 0;">
-                    <h4 style="margin-bottom: 0.5rem;">Wireless Mouse</h4>
-                    <p style="color: var(--success); font-weight: bold;">$45</p>
-                    <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
-                        <button class="btn-primary" onclick="addToCart('Wireless Mouse', 45)">Add to Cart</button>
-                        <button class="btn-secondary" onclick="openProductModal('Wireless Mouse', 'Ergonomic mouse with 100h battery life.')">Details</button>
+                <div class="card" id="products-mouse-card" style="padding: 1rem; margin-bottom: 0;">
+                    <h4 style="margin-bottom: 0.5rem;" id="products-mouse-title">Wireless Mouse</h4>
+                    <p style="color: var(--success); font-weight: bold;" id="products-mouse-price">$45</p>
+                    <div style="margin-top: 1rem; display: flex; gap: 0.5rem;" id="products-mouse-actions">
+                        <button class="btn-primary" id="products-mouse-add-btn" onclick="addToCart('Wireless Mouse', 45)">Add to Cart</button>
+                        <button class="btn-secondary" id="products-mouse-details-btn" onclick="openProductModal('Wireless Mouse', 'Ergonomic mouse with 100h battery life.')">Details</button>
                     </div>
                 </div>
-                 <div class="card" style="padding: 1rem; margin-bottom: 0;">
-                    <h4 style="margin-bottom: 0.5rem;">Mechanical Keyboard</h4>
-                    <p style="color: var(--success); font-weight: bold;">$85</p>
-                    <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
-                        <button class="btn-primary" onclick="addToCart('Mechanical Keyboard', 85)">Add to Cart</button>
-                        <button class="btn-secondary" onclick="openProductModal('Mechanical Keyboard', 'RGB Backlit Blue Switches.')">Details</button>
-                    </div>
-                </div>
-
-                <div class="card" style="padding: 1rem; margin-bottom: 0;">
-                    <h4 style="margin-bottom: 0.5rem;">USB-C Hub</h4>
-                    <p style="color: var(--success); font-weight: bold;">$29</p>
-                    <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
-                        <button class="btn-primary" onclick="addToCart('USB-C Hub', 29)">Add to Cart</button>
-                        <button class="btn-secondary" onclick="openProductModal('USB-C Hub', '7-in-1 hub with HDMI, USB 3.0 and SD reader.')">Details</button>
+                 <div class="card" id="products-keyboard-card" style="padding: 1rem; margin-bottom: 0;">
+                    <h4 style="margin-bottom: 0.5rem;" id="products-keyboard-title">Mechanical Keyboard</h4>
+                    <p style="color: var(--success); font-weight: bold;" id="products-keyboard-price">$85</p>
+                    <div style="margin-top: 1rem; display: flex; gap: 0.5rem;" id="products-keyboard-actions">
+                        <button class="btn-primary" id="products-keyboard-add-btn" onclick="addToCart('Mechanical Keyboard', 85)">Add to Cart</button>
+                        <button class="btn-secondary" id="products-keyboard-details-btn" onclick="openProductModal('Mechanical Keyboard', 'RGB Backlit Blue Switches.')">Details</button>
                     </div>
                 </div>
 
-                <div class="card" style="padding: 1rem; margin-bottom: 0;">
-                    <h4 style="margin-bottom: 0.5rem;">Noise Cancelling Headphones</h4>
-                    <p style="color: var(--success); font-weight: bold;">$199</p>
-                    <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
-                        <button class="btn-primary" onclick="addToCart('Noise Cancelling Headphones', 199)">Add to Cart</button>
-                        <button class="btn-secondary" onclick="openProductModal('Noise Cancelling Headphones', '30-hour battery, ANC, Bluetooth 5.3.')">Details</button>
+                <div class="card" id="products-hub-card" style="padding: 1rem; margin-bottom: 0;">
+                    <h4 style="margin-bottom: 0.5rem;" id="products-hub-title">USB-C Hub</h4>
+                    <p style="color: var(--success); font-weight: bold;" id="products-hub-price">$29</p>
+                    <div style="margin-top: 1rem; display: flex; gap: 0.5rem;" id="products-hub-actions">
+                        <button class="btn-primary" id="products-hub-add-btn" onclick="addToCart('USB-C Hub', 29)">Add to Cart</button>
+                        <button class="btn-secondary" id="products-hub-details-btn" onclick="openProductModal('USB-C Hub', '7-in-1 hub with HDMI, USB 3.0 and SD reader.')">Details</button>
                     </div>
                 </div>
 
-                <div class="card" style="padding: 1rem; margin-bottom: 0;">
-                    <h4 style="margin-bottom: 0.5rem;">4K Monitor</h4>
-                    <p style="color: var(--success); font-weight: bold;">$349</p>
-                    <div style="margin-top: 1rem; display: flex; gap: 0.5rem;">
-                        <button class="btn-primary" onclick="addToCart('4K Monitor', 349)">Add to Cart</button>
-                        <button class="btn-secondary" onclick="openProductModal('4K Monitor', '27-inch IPS 4K display with HDR support.')">Details</button>
+                <div class="card" id="products-headphones-card" style="padding: 1rem; margin-bottom: 0;">
+                    <h4 style="margin-bottom: 0.5rem;" id="products-headphones-title">Noise Cancelling Headphones</h4>
+                    <p style="color: var(--success); font-weight: bold;" id="products-headphones-price">$199</p>
+                    <div style="margin-top: 1rem; display: flex; gap: 0.5rem;" id="products-headphones-actions">
+                        <button class="btn-primary" id="products-headphones-add-btn" onclick="addToCart('Noise Cancelling Headphones', 199)">Add to Cart</button>
+                        <button class="btn-secondary" id="products-headphones-details-btn" onclick="openProductModal('Noise Cancelling Headphones', '30-hour battery, ANC, Bluetooth 5.3.')">Details</button>
+                    </div>
+                </div>
+
+                <div class="card" id="products-monitor-card" style="padding: 1rem; margin-bottom: 0;">
+                    <h4 style="margin-bottom: 0.5rem;" id="products-monitor-title">4K Monitor</h4>
+                    <p style="color: var(--success); font-weight: bold;" id="products-monitor-price">$349</p>
+                    <div style="margin-top: 1rem; display: flex; gap: 0.5rem;" id="products-monitor-actions">
+                        <button class="btn-primary" id="products-monitor-add-btn" onclick="addToCart('4K Monitor', 349)">Add to Cart</button>
+                        <button class="btn-secondary" id="products-monitor-details-btn" onclick="openProductModal('4K Monitor', '27-inch IPS 4K display with HDR support.')">Details</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <div class="card">
-            <h3 class="card-title">Cart (<span id="cartCount">0</span>)</h3>
-            <div id="cartItems" style="margin-top: 1rem;"></div>
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;">
-                <strong>Total: $<span id="cartTotal">0.00</span></strong>
-                <div style="display: flex; gap: 0.5rem;">
-                    <button class="btn-secondary" onclick="clearCart()">Clear</button>
-                    <button class="btn-success" onclick="checkout()">Checkout</button>
+        <div class="card" id="products-cart-card">
+            <h3 class="card-title" id="products-cart-title">Cart (<span id="cartCount">0</span>)</h3>
+            <div id="cartItems" id="products-cart-items" style="margin-top: 1rem;"></div>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1rem;" id="products-cart-summary">
+                <strong id="products-cart-total-label">Total: $<span id="cartTotal">0.00</span></strong>
+                <div style="display: flex; gap: 0.5rem;" id="products-cart-actions">
+                    <button class="btn-secondary" id="products-cart-clear-btn" onclick="clearCart()">Clear</button>
+                    <button class="btn-success" id="products-cart-checkout-btn" onclick="checkout()">Checkout</button>
                 </div>
             </div>
         </div>
 
-        <div id="productModal" class="modal-overlay" style="display: none;">
-            <div class="card" style="width: 90%; max-width: 500px; margin: 0;">
-                <div class="card-header">
-                    <h3 class="card-title">Product Details</h3>
+        <div id="productModal" class="modal-overlay" id="products-modal" style="display: none;">
+            <div class="card" id="products-modal-card" style="width: 90%; max-width: 500px; margin: 0;">
+                <div class="card-header" id="products-modal-header">
+                    <h3 class="card-title" id="products-modal-title">Product Details</h3>
                 </div>
-                <div style="padding-bottom: 1.5rem;">
-                    <h4 id="modal-product-title" style="font-size: 1.2rem; color: var(--primary);">Title</h4>
-                    <p id="modal-product-desc" style="margin-top: 0.5rem; color: var(--text-main);">Description goes here...</p>
+                <div style="padding-bottom: 1.5rem;" id="products-modal-content">
+                    <h4 id="modal-product-title" id="products-modal-product-title" style="font-size: 1.2rem; color: var(--primary);">Title</h4>
+                    <p id="modal-product-desc" id="products-modal-product-desc" style="margin-top: 0.5rem; color: var(--text-main);">Description goes here...</p>
                 </div>
-                <button class="btn-primary" onclick="document.getElementById('productModal').style.display='none'">Close</button>
+                <button class="btn-primary" id="products-modal-close-btn" onclick="document.getElementById('productModal').style.display='none'">Close</button>
             </div>
         </div>
     </main>
@@ -231,6 +232,20 @@
         }
 
         renderCart();
+        
+        // Add scroll effect to header
+        document.addEventListener('DOMContentLoaded', function() {
+            const header = document.querySelector('header');
+            if (header) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 50) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+                });
+            }
+        });
     </script>
 </body>
 </html>

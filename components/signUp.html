@@ -15,57 +15,57 @@
     <title>Sign Up - Test Automation Website</title>
 </head>
 <body>
-    <header>
-        <h1>Sign Up</h1>
-        <nav>
-            <ul>
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="signUp.html" class="active">Sign Up</a></li>
-                <li><a href="login.html">Login</a></li>
-                <li><a href="forms.html">Forms</a></li>
-                <li><a href="products.html">Products</a></li>
-                <li><a href="images.html">Images</a></li>
-                <li><a href="database.html">Database</a></li>
-                <li><a href="api.html">API</a></li>
-                <li><a href="advanced-api.html">Advanced API</a></li>
+    <header id="signup-header">
+        <h1 id="signup-title">Sign Up</h1>
+        <nav id="signup-navigation">
+            <ul id="signup-nav-menu">
+                <li><a href="../index.html" id="signup-nav-home-link">Home</a></li>
+                <li><a href="signUp.html" class="active" id="signup-nav-signup-link">Sign Up</a></li>
+                <li><a href="login.html" id="signup-nav-login-link">Login</a></li>
+                <li><a href="forms.html" id="signup-nav-forms-link">Forms</a></li>
+                <li><a href="products.html" id="signup-nav-products-link">Products</a></li>
+                <li><a href="images.html" id="signup-nav-images-link">Images</a></li>
+                <li><a href="database.html" id="signup-nav-database-link">Database</a></li>
+                <li><a href="api.html" id="signup-nav-api-link">API</a></li>
+                <li><a href="advanced-api.html" id="signup-nav-advanced-api-link">Advanced API</a></li>
             </ul>
         </nav>
     </header>
-    <main>
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Create Your Account</h3>
+    <main id="signup-main">
+        <div class="card" id="signup-card">
+            <div class="card-header" id="signup-card-header">
+                <h3 class="card-title" id="signup-card-title">Create Your Account</h3>
             </div>
             <form id="signUpForm" onsubmit="handleSignUp(event)">
-                <div class="form-group">
-                    <label for="firstName">First Name:</label>
+                <div class="form-group" id="signup-firstname-group">
+                    <label for="firstName" id="signup-firstname-label">First Name:</label>
                     <input type="text" id="firstName" name="firstName" required minlength="2" maxlength="50">
                     <div class="error-message" id="firstNameError"></div>
                 </div>
                 
-                <div class="form-group">
-                    <label for="lastName">Last Name:</label>
+                <div class="form-group" id="signup-lastname-group">
+                    <label for="lastName" id="signup-lastname-label">Last Name:</label>
                     <input type="text" id="lastName" name="lastName" required minlength="2" maxlength="50">
                     <div class="error-message" id="lastNameError"></div>
                 </div>
                 
-                <div class="form-group">
-                    <label for="email">Email:</label>
+                <div class="form-group" id="signup-email-group">
+                    <label for="email" id="signup-email-label">Email:</label>
                     <input type="email" id="email" name="email" required>
                     <div class="error-message" id="emailError"></div>
                 </div>
                 
-                <div class="form-group">
-                    <label for="username">Username:</label>
+                <div class="form-group" id="signup-username-group">
+                    <label for="username" id="signup-username-label">Username:</label>
                     <input type="text" id="username" name="username" required minlength="3" maxlength="20" pattern="[a-zA-Z0-9_]+">
-                    <small style="color: var(--text-secondary);">Only letters, numbers, and underscores allowed</small>
+                    <small style="color: var(--text-secondary);" id="signup-username-help">Only letters, numbers, and underscores allowed</small>
                     <div class="error-message" id="usernameError"></div>
                 </div>
                 
-                <div class="form-group">
-                    <label for="password">Password:</label>
+                <div class="form-group" id="signup-password-group">
+                    <label for="password" id="signup-password-label">Password:</label>
                     <input type="password" id="password" name="password" required minlength="8">
-                    <small style="color: var(--text-secondary);">Minimum 8 characters, include uppercase, lowercase, number, and special character</small>
+                    <small style="color: var(--text-secondary);" id="signup-password-help">Minimum 8 characters, include uppercase, lowercase, number, and special character</small>
                     <div class="error-message" id="passwordError"></div>
                     <div id="passwordStrength" style="margin-top: 0.5rem;">
                         <div style="background: var(--border-color); height: 5px; border-radius: 3px; overflow: hidden;">
@@ -75,109 +75,109 @@
                     </div>
                 </div>
                 
-                <div class="form-group">
-                    <label for="confirmPassword">Confirm Password:</label>
+                <div class="form-group" id="signup-confirm-password-group">
+                    <label for="confirmPassword" id="signup-confirm-password-label">Confirm Password:</label>
                     <input type="password" id="confirmPassword" name="confirmPassword" required>
                     <div class="error-message" id="confirmPasswordError"></div>
                 </div>
                 
-                <div class="form-group">
-                    <label for="phone">Phone Number:</label>
+                <div class="form-group" id="signup-phone-group">
+                    <label for="phone" id="signup-phone-label">Phone Number:</label>
                     <input type="tel" id="phone" name="phone" pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" placeholder="123-456-7890">
                     <div class="error-message" id="phoneError"></div>
                 </div>
                 
-                <div class="form-group">
-                    <label for="birthDate">Birth Date:</label>
+                <div class="form-group" id="signup-birthdate-group">
+                    <label for="birthDate" id="signup-birthdate-label">Birth Date:</label>
                     <input type="date" id="birthDate" name="birthDate" max="">
                     <div class="error-message" id="birthDateError"></div>
                 </div>
                 
-                <div class="form-group">
-                    <label for="country">Country:</label>
+                <div class="form-group" id="signup-country-group">
+                    <label for="country" id="signup-country-label">Country:</label>
                     <select id="country" name="country" required>
-                        <option value="">Select a country</option>
-                        <option value="us">United States</option>
-                        <option value="uk">United Kingdom</option>
-                        <option value="ca">Canada</option>
-                        <option value="au">Australia</option>
-                        <option value="de">Germany</option>
-                        <option value="fr">France</option>
-                        <option value="tr">Turkey</option>
-                        <option value="other">Other</option>
+                        <option value="" id="signup-country-default">Select a country</option>
+                        <option value="us" id="signup-country-us">United States</option>
+                        <option value="uk" id="signup-country-uk">United Kingdom</option>
+                        <option value="ca" id="signup-country-ca">Canada</option>
+                        <option value="au" id="signup-country-au">Australia</option>
+                        <option value="de" id="signup-country-de">Germany</option>
+                        <option value="fr" id="signup-country-fr">France</option>
+                        <option value="tr" id="signup-country-tr">Turkey</option>
+                        <option value="other" id="signup-country-other">Other</option>
                     </select>
                     <div class="error-message" id="countryError"></div>
                 </div>
                 
-                <div class="form-group">
-                    <label>Gender:</label>
-                    <div style="margin-top: 0.5rem;">
-                        <label style="font-weight: normal; display: inline-block; margin-right: 1rem;">
-                            <input type="radio" name="gender" value="male"> Male
+                <div class="form-group" id="signup-gender-group">
+                    <label id="signup-gender-label">Gender:</label>
+                    <div style="margin-top: 0.5rem;" id="signup-gender-options">
+                        <label style="font-weight: normal; display: inline-block; margin-right: 1rem;" id="signup-gender-male-label">
+                            <input type="radio" name="gender" value="male" id="signup-gender-male"> Male
                         </label>
-                        <label style="font-weight: normal; display: inline-block; margin-right: 1rem;">
-                            <input type="radio" name="gender" value="female"> Female
+                        <label style="font-weight: normal; display: inline-block; margin-right: 1rem;" id="signup-gender-female-label">
+                            <input type="radio" name="gender" value="female" id="signup-gender-female"> Female
                         </label>
-                        <label style="font-weight: normal; display: inline-block;">
-                            <input type="radio" name="gender" value="other"> Other
+                        <label style="font-weight: normal; display: inline-block;" id="signup-gender-other-label">
+                            <input type="radio" name="gender" value="other" id="signup-gender-other"> Other
                         </label>
                     </div>
                     <div class="error-message" id="genderError"></div>
                 </div>
                 
-                <div class="form-group">
-                    <label>Interests:</label>
-                    <div style="margin-top: 0.5rem;">
-                        <label style="font-weight: normal; display: block; margin-bottom: 0.5rem;">
-                            <input type="checkbox" name="interests" value="technology"> Technology
+                <div class="form-group" id="signup-interests-group">
+                    <label id="signup-interests-label">Interests:</label>
+                    <div style="margin-top: 0.5rem;" id="signup-interests-options">
+                        <label style="font-weight: normal; display: block; margin-bottom: 0.5rem;" id="signup-interests-technology-label">
+                            <input type="checkbox" name="interests" value="technology" id="signup-interests-technology"> Technology
                         </label>
-                        <label style="font-weight: normal; display: block; margin-bottom: 0.5rem;">
-                            <input type="checkbox" name="interests" value="sports"> Sports
+                        <label style="font-weight: normal; display: block; margin-bottom: 0.5rem;" id="signup-interests-sports-label">
+                            <input type="checkbox" name="interests" value="sports" id="signup-interests-sports"> Sports
                         </label>
-                        <label style="font-weight: normal; display: block; margin-bottom: 0.5rem;">
-                            <input type="checkbox" name="interests" value="music"> Music
+                        <label style="font-weight: normal; display: block; margin-bottom: 0.5rem;" id="signup-interests-music-label">
+                            <input type="checkbox" name="interests" value="music" id="signup-interests-music"> Music
                         </label>
-                        <label style="font-weight: normal; display: block;">
-                            <input type="checkbox" name="interests" value="travel"> Travel
+                        <label style="font-weight: normal; display: block;" id="signup-interests-travel-label">
+                            <input type="checkbox" name="interests" value="travel" id="signup-interests-travel"> Travel
                         </label>
                     </div>
                 </div>
                 
-                <div class="form-group">
-                    <label for="bio">Biography:</label>
+                <div class="form-group" id="signup-bio-group">
+                    <label for="bio" id="signup-bio-label">Biography:</label>
                     <textarea id="bio" name="bio" rows="4" maxlength="500" placeholder="Tell us about yourself..."></textarea>
-                    <small style="color: var(--text-secondary);"><span id="bioCount">0</span>/500 characters</small>
+                    <small style="color: var(--text-secondary);" id="signup-bio-count"><span id="bioCount">0</span>/500 characters</small>
                 </div>
                 
-                <div class="form-group">
-                    <label style="font-weight: normal; display: block; margin-bottom: 0.5rem;">
+                <div class="form-group" id="signup-terms-group">
+                    <label style="font-weight: normal; display: block; margin-bottom: 0.5rem;" id="signup-terms-label">
                         <input type="checkbox" id="terms" name="terms" required>
-                        I agree to the <a href="#" onclick="showTerms(); return false;">Terms and Conditions</a> and <a href="#" onclick="showPrivacy(); return false;">Privacy Policy</a>
+                        I agree to the <a href="#" onclick="showTerms(); return false;" id="signup-terms-link">Terms and Conditions</a> and <a href="#" onclick="showPrivacy(); return false;" id="signup-privacy-link">Privacy Policy</a>
                     </label>
                     <div class="error-message" id="termsError"></div>
                 </div>
                 
-                <div class="form-group">
-                    <label style="font-weight: normal; display: block; margin-bottom: 0.5rem;">
+                <div class="form-group" id="signup-newsletter-group">
+                    <label style="font-weight: normal; display: block; margin-bottom: 0.5rem;" id="signup-newsletter-label">
                         <input type="checkbox" id="newsletter" name="newsletter">
                         I would like to receive newsletter and promotional emails
                     </label>
                 </div>
                 
-                <div style="display: flex; gap: 1rem; margin-top: 2rem;">
-                    <button type="submit" class="btn-success">Sign Up</button>
-                    <button type="button" onclick="resetForm()" class="btn-secondary">Reset</button>
+                <div style="display: flex; gap: 1rem; margin-top: 2rem;" id="signup-form-actions">
+                    <button type="submit" class="btn-success" id="signup-submit-btn">Sign Up</button>
+                    <button type="button" onclick="resetForm()" class="btn-secondary" id="signup-reset-btn">Reset</button>
                 </div>
             </form>
         </div>
         
-        <div id="successMessage" class="hidden">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Registration Successful!</h3>
+        <div id="successMessage" class="hidden" id="signup-success-container">
+            <div class="card" id="signup-success-card">
+                <div class="card-header" id="signup-success-header">
+                    <h3 class="card-title" id="signup-success-title">Registration Successful!</h3>
                 </div>
-                <p>Your account has been created successfully. You can now <a href="login.html">login</a> to your account.</p>
-                <button onclick="window.location.reload()" class="btn-success">Create Another Account</button>
+                <p id="signup-success-message">Your account has been created successfully. You can now <a href="login.html" id="signup-success-login-link">login</a> to your account.</p>
+                <button onclick="window.location.reload()" class="btn-success" id="signup-success-create-another-btn">Create Another Account</button>
             </div>
         </div>
     </main>
@@ -525,6 +525,20 @@
             //     }, 5000);
             // }
         }
+        
+        // Add scroll effect to header
+        document.addEventListener('DOMContentLoaded', function() {
+            const header = document.querySelector('header');
+            if (header) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 50) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+                });
+            }
+        });
     </script>
 </body>
 </html>

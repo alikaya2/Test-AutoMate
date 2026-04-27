@@ -11,6 +11,7 @@
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../responsive/responsive.css">
     <title>Login - Test Auto Mate</title>
 </head>
 <body>
@@ -78,13 +79,125 @@
 
     <script type="module" src="../scripts/main.js"></script>
     <script>
-        function openModal(id) {
-            const modal = document.getElementById(id);
-            modal.style.display = 'flex';
+        // Generate dynamic IDs for elements
+        function generateDynamicId(prefix) {
+            return prefix + '_' + Math.random().toString(36).substr(2, 9);
         }
-        function closeModal(id) {
-            const modal = document.getElementById(id);
-            modal.style.display = 'none';
+
+        // Assign dynamic IDs when page loads
+        function assignDynamicIds() {
+            // Header elements
+            const header = document.querySelector('header');
+            if (header) header.id = generateDynamicId('header');
+            
+            const title = document.querySelector('h1');
+            if (title) title.id = generateDynamicId('title');
+            
+            // Navigation elements
+            const nav = document.querySelector('nav');
+            if (nav) nav.id = generateDynamicId('nav');
+            
+            const navUl = document.querySelector('nav ul');
+            if (navUl) navUl.id = generateDynamicId('nav-menu');
+            
+            // Navigation links
+            const navLinks = document.querySelectorAll('nav a');
+            navLinks.forEach((link, index) => {
+                link.id = generateDynamicId('nav-link-' + index);
+            });
+            
+            // Main content
+            const main = document.querySelector('main');
+            if (main) main.id = generateDynamicId('main');
+            
+            // Login card
+            const loginCard = document.querySelector('.card');
+            if (loginCard) loginCard.id = generateDynamicId('login-card');
+            
+            // Card header and title
+            const cardHeader = document.querySelector('.card-header');
+            if (cardHeader) cardHeader.id = generateDynamicId('card-header');
+            
+            const cardTitle = document.querySelector('.card-title');
+            if (cardTitle) cardTitle.id = generateDynamicId('card-title');
+            
+            // Demo credentials section
+            const alertInfo = document.querySelector('.alert-info');
+            if (alertInfo) alertInfo.id = generateDynamicId('demo-credentials');
+            
+            const demoTitle = document.querySelector('.alert-info strong');
+            if (demoTitle) demoTitle.id = generateDynamicId('demo-title');
+            
+            const demoInfo = document.querySelector('.alert-info div');
+            if (demoInfo) demoInfo.id = generateDynamicId('demo-info');
+            
+            // Form elements
+            const loginForm = document.getElementById('loginForm');
+            if (loginForm) loginForm.id = generateDynamicId('login-form');
+            
+            const formGroups = document.querySelectorAll('.form-group');
+            formGroups.forEach((group, index) => {
+                group.id = generateDynamicId('form-group-' + index);
+            });
+            
+            const labels = document.querySelectorAll('label');
+            labels.forEach((label, index) => {
+                label.id = generateDynamicId('label-' + index);
+            });
+            
+            const inputs = document.querySelectorAll('input');
+            inputs.forEach((input, index) => {
+                if (input.id !== 'username' && input.id !== 'password' && input.id !== 'resetEmail') {
+                    input.id = generateDynamicId('input-' + index);
+                }
+            });
+            
+            // Buttons
+            const submitBtn = document.querySelector('button[type="submit"]');
+            if (submitBtn) submitBtn.id = generateDynamicId('submit-btn');
+            
+            // Forgot password link
+            const forgotLink = document.querySelector('a[href="#"]');
+            if (forgotLink) forgotLink.id = generateDynamicId('forgot-link');
+            
+            // Modal elements
+            const modal = document.getElementById('forgotPasswordModal');
+            if (modal) modal.id = generateDynamicId('forgot-modal');
+            
+            const modalCard = document.querySelector('.modal-overlay .card');
+            if (modalCard) modalCard.id = generateDynamicId('modal-card');
+            
+            const modalHeader = document.querySelector('.modal-overlay .card-header');
+            if (modalHeader) modalHeader.id = generateDynamicId('modal-header');
+            
+            const modalTitle = document.querySelector('.modal-overlay .card-title');
+            if (modalTitle) modalTitle.id = generateDynamicId('modal-title');
+            
+            const modalContent = document.querySelector('.modal-overlay div[style*="padding-bottom"]');
+            if (modalContent) modalContent.id = generateDynamicId('modal-content');
+            
+            const modalActions = document.querySelector('.modal-overlay div[style*="display: flex"]');
+            if (modalActions) modalActions.id = generateDynamicId('modal-actions');
+            
+            const modalButtons = document.querySelectorAll('.modal-overlay button');
+            modalButtons.forEach((btn, index) => {
+                btn.id = generateDynamicId('modal-btn-' + index);
+            });
+        }
+
+        // Update modal functions to work with dynamic IDs
+        function openModal(modalId) {
+            const modal = document.querySelector('.modal-overlay');
+            if (modal) {
+                modal.style.display = 'flex';
+            }
+        }
+        
+        function closeModal(modalId) {
+            const modal = document.querySelector('.modal-overlay');
+            if (modal) {
+                modal.style.display = 'none';
+            }
         }
 
         function handleLogin() {
@@ -131,6 +244,7 @@
                 word-wrap: break-word;
                 ${type === 'success' ? 'background: #10b981;' : 'background: #ef4444;'}
             `;
+            notification.id = generateDynamicId('notification');
             notification.textContent = message;
             document.body.appendChild(notification);
             
@@ -140,6 +254,23 @@
                 }
             }, 3000);
         }
+
+        // Initialize dynamic IDs when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            assignDynamicIds();
+            
+            // Add scroll effect to header
+            const header = document.querySelector('header');
+            if (header) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 50) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+                });
+            }
+        });
     </script>
 </body>
 </html>

@@ -11,6 +11,7 @@
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../responsive/responsive.css">
     <title>Advanced API Testing</title>
     <style>
         .job-status { 
@@ -80,24 +81,24 @@
     </style>
 </head>
 <body>
-    <header>
-        <h1>Advanced API</h1>
-        <nav>
-            <ul>
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="signUp.html">Sign Up</a></li>
-                <li><a href="login.html">Login</a></li>
-                <li><a href="forms.html">Forms</a></li>
-                <li><a href="products.html">Products</a></li>
-                <li><a href="images.html">Images</a></li>
-                <li><a href="database.html">Database</a></li>
-                <li><a href="api.html">API</a></li>
-                <li><a href="advanced-api.html" class="active">Advanced API</a></li>
+    <header id="advanced-api-header">
+        <h1 id="advanced-api-title">Advanced API</h1>
+        <nav id="advanced-api-navigation">
+            <ul id="advanced-api-nav-menu">
+                <li><a href="../index.html" id="advanced-api-nav-home-link">Home</a></li>
+                <li><a href="signUp.html" id="advanced-api-nav-signup-link">Sign Up</a></li>
+                <li><a href="login.html" id="advanced-api-nav-login-link">Login</a></li>
+                <li><a href="forms.html" id="advanced-api-nav-forms-link">Forms</a></li>
+                <li><a href="products.html" id="advanced-api-nav-products-link">Products</a></li>
+                <li><a href="images.html" id="advanced-api-nav-images-link">Images</a></li>
+                <li><a href="database.html" id="advanced-api-nav-database-link">Database</a></li>
+                <li><a href="api.html" id="advanced-api-nav-api-link">API</a></li>
+                <li><a href="advanced-api.html" class="active" id="advanced-api-nav-advanced-api-link">Advanced API</a></li>
             </ul>
         </nav>
     </header>
-    <main>
-        <div class="card">
+    <main id="advanced-api-main">
+        <div class="card" id="advanced-api-main-card">
             <div class="card-header">
                 <h3 class="card-title">Authentication & Token Management</h3>
             </div>
@@ -324,16 +325,23 @@
             if (token) {
                 const expired = isTokenExpired(token);
                 const payload = JSON.parse(atob(token.split('.')[1]));
+                
+                const username = escapeHTML(payload.username);
+                const role = escapeHTML(payload.role);
+                const expires = escapeHTML(new Date(payload.exp * 1000).toLocaleString());
+                const statusText = expired ? 'EXPIRED' : 'VALID';
+                const statusColor = expired ? '#ef4444' : '#10b981';
+
                 statusDiv.innerHTML = `
                     <strong>Token Found:</strong><br>
-                    User: ${payload.username}<br>
-                    Role: ${payload.role}<br>
-                    Expires: ${new Date(payload.exp * 1000).toLocaleString()}<br>
-                    Status: <span style="color: ${expired ? '#ef4444' : '#10b981'}">${expired ? 'EXPIRED' : 'VALID'}</span>
+                    User: ${username}<br>
+                    Role: ${role}<br>
+                    Expires: ${expires}<br>
+                    Status: <span style="color: ${statusColor}">${statusText}</span>
                 `;
                 currentToken = token;
             } else {
-                statusDiv.innerHTML = 'No token available';
+                statusDiv.textContent = 'No token available';
                 currentToken = null;
             }
         }
@@ -575,6 +583,18 @@
 
         document.addEventListener('DOMContentLoaded', () => {
             updateTokenStatus();
+            
+            // Add scroll effect to header
+            const header = document.querySelector('header');
+            if (header) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 50) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+                });
+            }
         });
     </script>
 </body>

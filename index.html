@@ -15,83 +15,98 @@
     <title>Test Automation Website</title>
 </head>
 <body>
-    <header>
-        <h1>Home</h1>
-        <nav>
-            <ul>
-                <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="components/signUp.html">Sign Up</a></li>
-                <li><a href="components/login.html">Login</a></li>
-                <li><a href="components/forms.html">Forms</a></li>
-                <li><a href="components/products.html">Products</a></li>
-                <li><a href="components/images.html">Images</a></li>
-                <li><a href="components/database.html">Database</a></li>
-                <li><a href="components/api.html">API</a></li>
-                <li><a href="components/advanced-api.html">Advanced API</a></li>
+    <header id="main-header">
+        <h1 id="home-title">Home</h1>
+        <nav id="main-navigation">
+            <ul id="nav-menu">
+                <li id="nav-home"><a href="index.html" class="active" id="nav-home-link">Home</a></li>
+                <li id="nav-signup"><a href="components/signUp.html" id="nav-signup-link">Sign Up</a></li>
+                <li id="nav-login"><a href="components/login.html" id="nav-login-link">Login</a></li>
+                <li id="nav-forms"><a href="components/forms.html" id="nav-forms-link">Forms</a></li>
+                <li id="nav-products"><a href="components/products.html" id="nav-products-link">Products</a></li>
+                <li id="nav-images"><a href="components/images.html" id="nav-images-link">Images</a></li>
+                <li id="nav-database"><a href="components/database.html" id="nav-database-link">Database</a></li>
+                <li id="nav-api"><a href="components/api.html" id="nav-api-link">API</a></li>
+                <li id="nav-advanced-api"><a href="components/advanced-api.html" id="nav-advanced-api-link">Advanced API</a></li>
             </ul>
         </nav>
     </header>
-    <main>
-        <section class="hero">
-            <h2>Test Auto Mate</h2>
-            <p>A comprehensive test playground for UI validations, form submissions, API requests, database flows, and edge-case scenarios.</p>
-            <div class="hero-actions">
-                <a class="btn-secondary" href="components/forms.html">Explore Forms</a>
-                <a class="btn-success" href="components/api.html">Try API</a>
-                <a class="btn-secondary" href="components/database.html">Database</a>
+    <main id="main-content">
+        <section class="hero" id="hero-section">
+            <h2 id="hero-title">Test Auto Mate</h2>
+            <p id="hero-description">A comprehensive test playground for UI validations, form submissions, API requests, database flows, and edge-case scenarios.</p>
+            <div class="hero-actions" id="hero-actions">
+                <a class="btn-secondary" href="components/forms.html" id="hero-explore-forms-btn">Explore Forms</a>
+                <a class="btn-success" href="components/api.html" id="hero-try-api-btn">Try API</a>
+                <a class="btn-secondary" href="components/database.html" id="hero-database-btn">Database</a>
             </div>
         </section>
 
-        <div class="grid grid-cols-3">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Forms</h3>
+        <div class="grid grid-cols-3" id="features-grid">
+            <div class="card" id="forms-card">
+                <div class="card-header" id="forms-card-header">
+                    <h3 class="card-title" id="forms-card-title">Forms</h3>
                 </div>
-                <p>Input validation, different field types, and submission scenarios.</p>
-                <a class="btn-secondary" href="components/forms.html">Open</a>
+                <p id="forms-card-description">Input validation, different field types, and submission scenarios.</p>
+                <a class="btn-secondary" href="components/forms.html" id="forms-card-btn">Open</a>
             </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Products</h3>
+            <div class="card" id="products-card">
+                <div class="card-header" id="products-card-header">
+                    <h3 class="card-title" id="products-card-title">Products</h3>
                 </div>
-                <p>Modal interactions, cart workflows, and UI state management.</p>
-                <a class="btn-secondary" href="components/products.html">Open</a>
+                <p id="products-card-description">Modal interactions, cart workflows, and UI state management.</p>
+                <a class="btn-secondary" href="components/products.html" id="products-card-btn">Open</a>
             </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Images</h3>
+            <div class="card" id="images-card">
+                <div class="card-header" id="images-card-header">
+                    <h3 class="card-title" id="images-card-title">Images</h3>
                 </div>
-                <p>Iframe content, gallery components, and visual controls.</p>
-                <a class="btn-secondary" href="components/images.html">Open</a>
+                <p id="images-card-description">Iframe content, gallery components, and visual controls.</p>
+                <a class="btn-secondary" href="components/images.html" id="images-card-btn">Open</a>
             </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Database</h3>
+            <div class="card" id="database-card">
+                <div class="card-header" id="database-card-header">
+                    <h3 class="card-title" id="database-card-title">Database</h3>
                 </div>
-                <p>CRUD operations, authentication flows, and result validation.</p>
-                <a class="btn-secondary" href="components/database.html">Open</a>
+                <p id="database-card-description">CRUD operations, authentication flows, and result validation.</p>
+                <a class="btn-secondary" href="components/database.html" id="database-card-btn">Open</a>
             </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">API</h3>
+            <div class="card" id="api-card">
+                <div class="card-header" id="api-card-header">
+                    <h3 class="card-title" id="api-card-title">API</h3>
                 </div>
-                <p>Request builder, headers/params, and response inspection.</p>
-                <a class="btn-secondary" href="components/api.html">Open</a>
+                <p id="api-card-description">Request builder, headers/params, and response inspection.</p>
+                <a class="btn-secondary" href="components/api.html" id="api-card-btn">Open</a>
             </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Advanced API</h3>
+            <div class="card" id="advanced-api-card">
+                <div class="card-header" id="advanced-api-card-header">
+                    <h3 class="card-title" id="advanced-api-card-title">Advanced API</h3>
                 </div>
-                <p>Auth tokens, batch jobs, and flaky DOM scenarios.</p>
-                <a class="btn-secondary" href="components/advanced-api.html">Open</a>
+                <p id="advanced-api-card-description">Auth tokens, batch jobs, and flaky DOM scenarios.</p>
+                <a class="btn-secondary" href="components/advanced-api.html" id="advanced-api-card-btn">Open</a>
             </div>
         </div>
     </main>
     <script type="module" src="scripts/main.js" integrity="sha256-9cfb3e89646b3384144cbd4e9cc41682574297ada00d0fc3f9b316dc20a8d4bd" crossorigin="anonymous"></script>
+    <script>
+        // Add scroll effect to header
+        document.addEventListener('DOMContentLoaded', function() {
+            const header = document.querySelector('header');
+            if (header) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 50) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>

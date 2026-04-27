@@ -11,282 +11,282 @@
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../responsive/responsive.css">
     <title>Database - Test Auto Mate</title>
 </head>
 <body>
-    <header>
-        <h1>Database</h1>
-        <nav>
-            <ul>
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="signUp.html">Sign Up</a></li>
-                <li><a href="login.html">Login</a></li>
-                <li><a href="forms.html">Forms</a></li>
-                <li><a href="products.html">Products</a></li>
-                <li><a href="images.html">Images</a></li>
-                <li><a href="database.html" class="active">Database</a></li>
-                <li><a href="api.html">API</a></li>
-                <li><a href="advanced-api.html">Advanced API</a></li>
+    <header id="database-header">
+        <h1 id="database-title">Database</h1>
+        <nav id="database-navigation">
+            <ul id="database-nav-menu">
+                <li><a href="../index.html" id="database-nav-home-link">Home</a></li>
+                <li><a href="signUp.html" id="database-nav-signup-link">Sign Up</a></li>
+                <li><a href="login.html" id="database-nav-login-link">Login</a></li>
+                <li><a href="forms.html" id="database-nav-forms-link">Forms</a></li>
+                <li><a href="products.html" id="database-nav-products-link">Products</a></li>
+                <li><a href="images.html" id="database-nav-images-link">Images</a></li>
+                <li><a href="database.html" class="active" id="database-nav-database-link">Database</a></li>
+                <li><a href="api.html" id="database-nav-api-link">API</a></li>
+                <li><a href="advanced-api.html" id="database-nav-advanced-api-link">Advanced API</a></li>
             </ul>
         </nav>
     </header>
-    <main>
-        <div class="card">
-            <div class="card-header">
-                <h3 class="card-title">Database Operations</h3>
+    <main id="database-main">
+        <div class="card" id="database-operations-card">
+            <div class="card-header" id="database-operations-header">
+                <h3 class="card-title" id="database-operations-title">Database Operations</h3>
             </div>
-            <p>Test database CRUD operations with real-time validation.</p>
-            <div class="alert alert-info" style="margin-top: 1rem;">
-                <strong>How to use</strong>
-                <div style="margin-top: 0.5rem; color: var(--text-secondary);">
+            <p id="database-operations-description">Test database CRUD operations with real-time validation.</p>
+            <div class="alert alert-info" id="database-usage-guide" style="margin-top: 1rem;">
+                <strong id="database-usage-title">How to use</strong>
+                <div style="margin-top: 0.5rem; color: var(--text-secondary);" id="database-usage-steps">
                     1) Select DB type
                     2) Click <strong>Connect</strong>
                     3) Use CRUD cards below
                     4) Results appear in <strong>Query Results</strong>
                 </div>
             </div>
-            
-            <div class="grid grid-cols-2">
-                <div class="card">
-                    <h4>Create User</h4>
+            <div class="grid grid-cols-2" id="database-connection-grid">
+                <div class="card" id="database-create-user-card">
+                    <h4 id="database-create-user-title">Create User</h4>
                     <form id="createUserForm">
-                        <div class="form-group">
-                            <label>Name:</label>
+                        <div class="form-group" id="database-create-name-group">
+                            <label id="database-create-name-label">Name:</label>
                             <input type="text" id="userName" required>
                         </div>
-                        <div class="form-group">
-                            <label>Email:</label>
+                        <div class="form-group" id="database-create-email-group">
+                            <label id="database-create-email-label">Email:</label>
                             <input type="email" id="userEmail" required>
                         </div>
-                        <button type="submit" class="btn-primary">Create User</button>
+                        <button type="submit" class="btn-primary" id="database-create-user-btn">Create User</button>
                     </form>
-                    <select id="dbType" onchange="updateConnectionForm()">
-                        <option value="dummyjson">DummyJSON (Large Test Dataset)</option>
-                        <option value="mongodb">MongoDB</option>
-                        <option value="mysql">MySQL</option>
-                        <option value="postgresql">PostgreSQL</option>
+                    <select id="dbType" id="database-type-select" onchange="updateConnectionForm()">
+                        <option value="dummyjson" id="database-type-dummyjson">DummyJSON (Large Test Dataset)</option>
+                        <option value="mongodb" id="database-type-mongodb">MongoDB</option>
+                        <option value="mysql" id="database-type-mysql">MySQL</option>
+                        <option value="postgresql" id="database-type-postgresql">PostgreSQL</option>
                     </select>
                 </div>
-                <div class="form-group">
-                    <label for="connectionString">Connection String:</label>
-                    <input type="text" id="connectionString" value="https://dummyjson.com" readonly>
+                <div class="form-group" id="database-connection-group">
+                    <label for="connectionString" id="database-connection-label">Connection String:</label>
+                    <input type="text" id="connectionString" value="https://dummyjson.com" readonly id="database-connection-input">
                 </div>
             </div>
-            <button onclick="testConnection()" class="btn-secondary">Test Connection</button>
-            <button onclick="connectDatabase()" class="btn-success">Connect</button>
-            <div id="connectionStatus" style="margin-top: 0.75rem; color: var(--text-secondary); font-size: 0.875rem;">Status: Disconnected</div>
+            <button onclick="testConnection()" class="btn-secondary" id="database-test-connection-btn">Test Connection</button>
+            <button onclick="connectDatabase()" class="btn-success" id="database-connect-btn">Connect</button>
+            <div id="connectionStatus" id="database-connection-status" style="margin-top: 0.75rem; color: var(--text-secondary); font-size: 0.875rem;">Status: Disconnected</div>
         </div>
 
-        <div class="grid grid-cols-2">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Create (INSERT)</h3>
+        <div class="grid grid-cols-2" id="database-crud-grid">
+            <div class="card" id="database-create-card">
+                <div class="card-header" id="database-create-header">
+                    <h3 class="card-title" id="database-create-title">Create (INSERT)</h3>
                 </div>
-                <p style="margin-top: 0; color: var(--text-secondary); font-size: 0.875rem;">Sends a POST request to create a new record in the selected collection.</p>
+                <p style="margin-top: 0; color: var(--text-secondary); font-size: 0.875rem;" id="database-create-description">Sends a POST request to create a new record in the selected collection.</p>
                 <form id="createForm">
-                    <div class="form-group">
-                        <label for="createTable">Table/Collection:</label>
+                    <div class="form-group" id="database-create-table-group">
+                        <label for="createTable" id="database-create-table-label">Table/Collection:</label>
                         <select id="createTable">
-                            <option value="posts">Posts</option>
-                            <option value="users">Users</option>
-                            <option value="comments">Comments</option>
+                            <option value="posts" id="database-create-table-posts">Posts</option>
+                            <option value="users" id="database-create-table-users">Users</option>
+                            <option value="comments" id="database-create-table-comments">Comments</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="createData">Data (JSON):</label>
-                        <textarea id="createData" rows="6" placeholder='{"title": "Test Post", "body": "Test content", "userId": 1}'>{
+                    <div class="form-group" id="database-create-data-group">
+                        <label for="createData" id="database-create-data-label">Data (JSON):</label>
+                        <textarea id="createData" rows="6" placeholder='{"title": "Test Post", "body": "Test content", "userId": 1}' id="database-create-data-textarea">{
   "title": "Test Post",
   "body": "This is a test post created for database testing",
   "userId": 1
 }</textarea>
                     </div>
-                    <button type="button" onclick="createRecord()" class="btn-success">Create Record</button>
+                    <button type="button" onclick="createRecord()" class="btn-success" id="database-create-btn">Create Record</button>
                 </form>
             </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Read (SELECT)</h3>
+            <div class="card" id="database-read-card">
+                <div class="card-header" id="database-read-header">
+                    <h3 class="card-title" id="database-read-title">Read (SELECT)</h3>
                 </div>
-                <p style="margin-top: 0; color: var(--text-secondary); font-size: 0.875rem;">Fetches a single record by ID or a paginated list of records.</p>
+                <p style="margin-top: 0; color: var(--text-secondary); font-size: 0.875rem;" id="database-read-description">Fetches a single record by ID or a paginated list of records.</p>
                 <form id="readForm">
-                    <div class="form-group">
-                        <label for="readTable">Table/Collection:</label>
+                    <div class="form-group" id="database-read-table-group">
+                        <label for="readTable" id="database-read-table-label">Table/Collection:</label>
                         <select id="readTable">
-                            <option value="posts">Posts</option>
-                            <option value="users">Users</option>
-                            <option value="comments">Comments</option>
+                            <option value="posts" id="database-read-table-posts">Posts</option>
+                            <option value="users" id="database-read-table-users">Users</option>
+                            <option value="comments" id="database-read-table-comments">Comments</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="recordId">Record ID (optional):</label>
-                        <input type="number" id="recordId" placeholder="Leave empty for all records">
+                    <div class="form-group" id="database-read-id-group">
+                        <label for="recordId" id="database-read-id-label">Record ID (optional):</label>
+                        <input type="number" id="recordId" placeholder="Leave empty for all records" id="database-read-id-input">
                     </div>
-                    <div class="form-group">
-                        <label for="queryFilter">Filter (JSON):</label>
-                        <textarea id="queryFilter" rows="3" placeholder='{"userId": 1}'></textarea>
+                    <div class="form-group" id="database-read-filter-group">
+                        <label for="queryFilter" id="database-read-filter-label">Filter (JSON):</label>
+                        <textarea id="queryFilter" rows="3" placeholder='{"userId": 1}' id="database-read-filter-textarea"></textarea>
                     </div>
-                    <button type="button" onclick="readRecords()" class="btn-secondary">Read Records</button>
+                    <button type="button" onclick="readRecords()" class="btn-secondary" id="database-read-btn">Read Records</button>
                 </form>
             </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Update (UPDATE)</h3>
+            <div class="card" id="database-update-card">
+                <div class="card-header" id="database-update-header">
+                    <h3 class="card-title" id="database-update-title">Update (UPDATE)</h3>
                 </div>
-                <p style="margin-top: 0; color: var(--text-secondary); font-size: 0.875rem;">Sends a PUT request to update an existing record by ID.</p>
+                <p style="margin-top: 0; color: var(--text-secondary); font-size: 0.875rem;" id="database-update-description">Sends a PUT request to update an existing record by ID.</p>
                 <form id="updateForm">
-                    <div class="form-group">
-                        <label for="updateTable">Table/Collection:</label>
+                    <div class="form-group" id="database-update-table-group">
+                        <label for="updateTable" id="database-update-table-label">Table/Collection:</label>
                         <select id="updateTable">
-                            <option value="posts">Posts</option>
-                            <option value="users">Users</option>
-                            <option value="comments">Comments</option>
+                            <option value="posts" id="database-update-table-posts">Posts</option>
+                            <option value="users" id="database-update-table-users">Users</option>
+                            <option value="comments" id="database-update-table-comments">Comments</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="updateId">Record ID:</label>
-                        <input type="number" id="updateId" placeholder="Enter record ID to update" required>
+                    <div class="form-group" id="database-update-id-group">
+                        <label for="updateId" id="database-update-id-label">Record ID:</label>
+                        <input type="number" id="updateId" placeholder="Enter record ID to update" required id="database-update-id-input">
                     </div>
-                    <div class="form-group">
-                        <label for="updateData">Update Data (JSON):</label>
-                        <textarea id="updateData" rows="4" placeholder='{"title": "Updated Title"}'>{
+                    <div class="form-group" id="database-update-data-group">
+                        <label for="updateData" id="database-update-data-label">Update Data (JSON):</label>
+                        <textarea id="updateData" rows="4" placeholder='{"title": "Updated Title"}' id="database-update-data-textarea">{
   "title": "Updated Post Title",
   "body": "Updated post content"
 }</textarea>
                     </div>
-                    <button type="button" onclick="updateRecord()" class="btn-warning">Update Record</button>
+                    <button type="button" onclick="updateRecord()" class="btn-warning" id="database-update-btn">Update Record</button>
                 </form>
             </div>
 
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="card-title">Delete (DELETE)</h3>
+            <div class="card" id="database-delete-card">
+                <div class="card-header" id="database-delete-header">
+                    <h3 class="card-title" id="database-delete-title">Delete (DELETE)</h3>
                 </div>
-                <p style="margin-top: 0; color: var(--text-secondary); font-size: 0.875rem;">Sends a DELETE request to remove a record by ID (mocked on the public API).</p>
+                <p style="margin-top: 0; color: var(--text-secondary); font-size: 0.875rem;" id="database-delete-description">Sends a DELETE request to remove a record by ID (mocked on the public API).</p>
                 <form id="deleteForm">
-                    <div class="form-group">
-                        <label for="deleteTable">Table/Collection:</label>
+                    <div class="form-group" id="database-delete-table-group">
+                        <label for="deleteTable" id="database-delete-table-label">Table/Collection:</label>
                         <select id="deleteTable">
-                            <option value="posts">Posts</option>
-                            <option value="users">Users</option>
-                            <option value="comments">Comments</option>
+                            <option value="posts" id="database-delete-table-posts">Posts</option>
+                            <option value="users" id="database-delete-table-users">Users</option>
+                            <option value="comments" id="database-delete-table-comments">Comments</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="deleteId">Record ID:</label>
-                        <input type="number" id="deleteId" placeholder="Enter record ID to delete" required>
+                    <div class="form-group" id="database-delete-id-group">
+                        <label for="deleteId" id="database-delete-id-label">Record ID:</label>
+                        <input type="number" id="deleteId" placeholder="Enter record ID to delete" required id="database-delete-id-input">
                     </div>
-                    <button type="button" onclick="deleteRecord()" class="btn-error">Delete Record</button>
+                    <button type="button" onclick="deleteRecord()" class="btn-error" id="database-delete-btn">Delete Record</button>
                 </form>
             </div>
         </div>
 
-        <details class="card">
-            <summary class="card-header" style="cursor: pointer;">
-                <h3 class="card-title" style="margin: 0;">Advanced Query Builder</h3>
+        <details class="card" id="database-advanced-query-card">
+            <summary class="card-header" id="database-advanced-query-summary" style="cursor: pointer;">
+                <h3 class="card-title" id="database-advanced-query-title" style="margin: 0;">Advanced Query Builder</h3>
             </summary>
-            <div style="padding-top: 1rem;">
-                <p style="margin-top: 0; color: var(--text-secondary); font-size: 0.875rem;">Builds a paginated query using limit/skip and optional custom query params.</p>
-                <div class="grid grid-cols-3">
-                    <div class="form-group">
-                        <label for="queryTable">Table:</label>
+            <div style="padding-top: 1rem;" id="database-advanced-query-content">
+                <p style="margin-top: 0; color: var(--text-secondary); font-size: 0.875rem;" id="database-advanced-query-description">Builds a paginated query using limit/skip and optional custom query params.</p>
+                <div class="grid grid-cols-3" id="database-advanced-query-grid">
+                    <div class="form-group" id="database-query-table-group">
+                        <label for="queryTable" id="database-query-table-label">Table:</label>
                         <select id="queryTable">
-                            <option value="posts">Posts</option>
-                            <option value="users">Users</option>
-                            <option value="comments">Comments</option>
+                            <option value="posts" id="database-query-table-posts">Posts</option>
+                            <option value="users" id="database-query-table-users">Users</option>
+                            <option value="comments" id="database-query-table-comments">Comments</option>
                         </select>
                     </div>
-                    <div class="form-group">
-                        <label for="queryLimit">Limit:</label>
-                        <input type="number" id="queryLimit" value="10" min="1" max="100" step="1" inputmode="numeric" maxlength="3">
+                    <div class="form-group" id="database-query-limit-group">
+                        <label for="queryLimit" id="database-query-limit-label">Limit:</label>
+                        <input type="number" id="queryLimit" value="10" min="1" max="100" step="1" inputmode="numeric" maxlength="3" id="database-query-limit-input">
                     </div>
-                    <div class="form-group">
-                        <label for="querySort">Sort By:</label>
+                    <div class="form-group" id="database-query-sort-group">
+                        <label for="querySort" id="database-query-sort-label">Sort By:</label>
                         <select id="querySort">
-                            <option value="id">ID</option>
-                            <option value="title">Title</option>
-                            <option value="userId">User ID</option>
+                            <option value="id" id="database-query-sort-id">ID</option>
+                            <option value="title" id="database-query-sort-title">Title</option>
+                            <option value="userId" id="database-query-sort-userid">User ID</option>
                         </select>
                     </div>
                 </div>
-                <div class="form-group">
-                    <label for="customQuery">Custom Query:</label>
-                    <textarea id="customQuery" rows="3" placeholder="Enter custom query parameters..."></textarea>
+                <div class="form-group" id="database-custom-query-group">
+                    <label for="customQuery" id="database-custom-query-label">Custom Query:</label>
+                    <textarea id="customQuery" rows="3" placeholder="Enter custom query parameters..." id="database-custom-query-textarea"></textarea>
                 </div>
-                <button onclick="executeAdvancedQuery()" class="btn-secondary">Execute Query</button>
+                <button onclick="executeAdvancedQuery()" class="btn-secondary" id="database-execute-query-btn">Execute Query</button>
             </div>
         </details>
 
-        <details class="card">
-            <summary class="card-header" style="cursor: pointer;">
-                <h3 class="card-title" style="margin: 0;">API Test Scenarios (Products)</h3>
+        <details class="card" id="database-api-scenarios-card">
+            <summary class="card-header" id="database-api-scenarios-summary" style="cursor: pointer;">
+                <h3 class="card-title" id="database-api-scenarios-title" style="margin: 0;">API Test Scenarios (Products)</h3>
             </summary>
-            <div style="padding-top: 1rem;">
-            <p style="margin-top: 0; color: var(--text-secondary); font-size: 0.875rem;">Covers GET list, pagination (limit/skip), search, category filter, schema validation, status codes, timeout, negative cases, and a simple rate-limit simulation.</p>
+            <div style="padding-top: 1rem;" id="database-api-scenarios-content">
+            <p style="margin-top: 0; color: var(--text-secondary); font-size: 0.875rem;" id="database-api-scenarios-description">Covers GET list, pagination (limit/skip), search, category filter, schema validation, status codes, timeout, negative cases, and a simple rate-limit simulation.</p>
 
-            <div class="grid grid-cols-3">
-                <div class="form-group">
-                    <label for="apiProductsLimit">Limit (1-100):</label>
-                    <input type="number" id="apiProductsLimit" value="10" min="1" max="100" step="1" inputmode="numeric" maxlength="3">
+            <div class="grid grid-cols-3" id="database-api-pagination-grid">
+                <div class="form-group" id="database-api-limit-group">
+                    <label for="apiProductsLimit" id="database-api-limit-label">Limit (1-100):</label>
+                    <input type="number" id="apiProductsLimit" value="10" min="1" max="100" step="1" inputmode="numeric" maxlength="3" id="database-api-limit-input">
                 </div>
-                <div class="form-group">
-                    <label for="apiProductsSkip">Skip (0+):</label>
-                    <input type="number" id="apiProductsSkip" value="0" min="0" step="1" inputmode="numeric">
+                <div class="form-group" id="database-api-skip-group">
+                    <label for="apiProductsSkip" id="database-api-skip-label">Skip (0+):</label>
+                    <input type="number" id="apiProductsSkip" value="0" min="0" step="1" inputmode="numeric" id="database-api-skip-input">
                 </div>
-                <div class="form-group">
-                    <label for="apiDelayMs">Client Delay (ms):</label>
-                    <input type="number" id="apiDelayMs" value="0" min="0" max="10000" step="100" inputmode="numeric">
+                <div class="form-group" id="database-api-delay-group">
+                    <label for="apiDelayMs" id="database-api-delay-label">Client Delay (ms):</label>
+                    <input type="number" id="apiDelayMs" value="0" min="0" max="10000" step="100" inputmode="numeric" id="database-api-delay-input">
                 </div>
             </div>
 
-            <div class="grid grid-cols-2">
-                <div class="form-group">
-                    <label for="apiSearchQ">Search query (q):</label>
-                    <input type="text" id="apiSearchQ" value="phone" placeholder="phone">
+            <div class="grid grid-cols-2" id="database-api-search-grid">
+                <div class="form-group" id="database-api-search-group">
+                    <label for="apiSearchQ" id="database-api-search-label">Search query (q):</label>
+                    <input type="text" id="apiSearchQ" value="phone" placeholder="phone" id="database-api-search-input">
                 </div>
-                <div class="form-group">
-                    <label for="apiCategory">Category slug:</label>
-                    <input type="text" id="apiCategory" value="smartphones" placeholder="smartphones">
+                <div class="form-group" id="database-api-category-group">
+                    <label for="apiCategory" id="database-api-category-label">Category slug:</label>
+                    <input type="text" id="apiCategory" value="smartphones" placeholder="smartphones" id="database-api-category-input">
                 </div>
             </div>
 
-            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;">
-                <button class="btn-secondary" onclick="apiGetProducts()">GET /products</button>
-                <button class="btn-secondary" onclick="apiSearchProducts()">GET /products/search</button>
-                <button class="btn-secondary" onclick="apiFilterByCategory()">GET /products/category</button>
-                <button class="btn-secondary" onclick="apiValidateSchema()">Response schema validate</button>
-                <button class="btn-secondary" onclick="apiStatusCodeChecks()">Status code checks</button>
-                <button class="btn-secondary" onclick="apiTimeoutTest()">Delay + timeout test</button>
-                <button class="btn-warning" onclick="apiNetworkErrorSimulation()">Network error sim</button>
-                <button class="btn-warning" onclick="apiRateLimitSimulation()">Rate limit sim</button>
+            <div style="display: flex; flex-wrap: wrap; gap: 0.5rem;" id="database-api-buttons">
+                <button class="btn-secondary" id="database-api-get-products-btn" onclick="apiGetProducts()">GET /products</button>
+                <button class="btn-secondary" id="database-api-search-products-btn" onclick="apiSearchProducts()">GET /products/search</button>
+                <button class="btn-secondary" id="database-api-filter-category-btn" onclick="apiFilterByCategory()">GET /products/category</button>
+                <button class="btn-secondary" id="database-api-validate-schema-btn" onclick="apiValidateSchema()">Response schema validate</button>
+                <button class="btn-secondary" id="database-api-status-codes-btn" onclick="apiStatusCodeChecks()">Status code checks</button>
+                <button class="btn-secondary" id="database-api-timeout-btn" onclick="apiTimeoutTest()">Delay + timeout test</button>
+                <button class="btn-warning" id="database-api-network-error-btn" onclick="apiNetworkErrorSimulation()">Network error sim</button>
+                <button class="btn-warning" id="database-api-rate-limit-btn" onclick="apiRateLimitSimulation()">Rate limit sim</button>
             </div>
         </div>
 
-        <details class="card">
-            <summary class="card-header" style="cursor: pointer;">
-                <h3 class="card-title" style="margin: 0;">CRUD Tests (Products)</h3>
+        <details class="card" id="database-crud-tests-card">
+            <summary class="card-header" id="database-crud-tests-summary" style="cursor: pointer;">
+                <h3 class="card-title" id="database-crud-tests-title" style="margin: 0;">CRUD Tests (Products)</h3>
             </summary>
-            <div style="padding-top: 1rem;">
-            <p style="margin-top: 0; color: var(--text-secondary); font-size: 0.875rem;">Uses DummyJSON mock CRUD endpoints for create/update/patch/delete and validates response bodies.</p>
+            <div style="padding-top: 1rem;" id="database-crud-tests-content">
+            <p style="margin-top: 0; color: var(--text-secondary); font-size: 0.875rem;" id="database-crud-tests-description">Uses DummyJSON mock CRUD endpoints for create/update/patch/delete and validates response bodies.</p>
 
-            <div class="grid grid-cols-2">
-                <div class="card">
-                    <h4 style="margin-top: 0;">Create Product (POST)</h4>
-                    <p style="margin-top: 0; color: var(--text-secondary); font-size: 0.875rem;">POST /products/add</p>
-                    <textarea id="crudCreateBody" rows="5">{
+            <div class="grid grid-cols-2" id="database-crud-grid">
+                <div class="card" id="database-crud-create-card">
+                    <h4 style="margin-top: 0;" id="database-crud-create-title">Create Product (POST)</h4>
+                    <p style="margin-top: 0; color: var(--text-secondary); font-size: 0.875rem;" id="database-crud-create-description">POST /products/add</p>
+                    <textarea id="crudCreateBody" rows="5" id="database-crud-create-body">{
   "title": "Test Product",
   "price": 123,
   "description": "Created from UI",
   "category": "smartphones"
 }</textarea>
-                    <div style="margin-top: 0.5rem;">
-                        <button class="btn-success" onclick="crudCreateProduct()">Create</button>
+                    <div style="margin-top: 0.5rem;" id="database-crud-create-actions">
+                        <button class="btn-success" id="database-crud-create-btn" onclick="crudCreateProduct()">Create</button>
                     </div>
                 </div>
 
-                <div class="card">
-                    <h4 style="margin-top: 0;">Update/Patch/Delete</h4>
+                <div class="card" id="database-crud-update-card">
+                    <h4 style="margin-top: 0;" id="database-crud-update-title">Update/Patch/Delete</h4>
                     <div class="form-group">
                         <label for="crudProductId">Product ID:</label>
                         <input type="number" id="crudProductId" value="1" min="1" step="1" inputmode="numeric">
@@ -1128,6 +1128,19 @@
                     const digitsOnly = String(this.value).replace(/\D/g, '').slice(0, 3);
                     if (String(this.value) !== digitsOnly) {
                         this.value = digitsOnly;
+                    }
+                });
+            }
+        });
+        
+        document.addEventListener('DOMContentLoaded', function() {
+            const header = document.querySelector('header');
+            if (header) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 50) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
                     }
                 });
             }

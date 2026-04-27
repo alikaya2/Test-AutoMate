@@ -11,6 +11,7 @@
     <meta http-equiv="X-Content-Type-Options" content="nosniff">
     <meta name="referrer" content="strict-origin-when-cross-origin">
     <link rel="stylesheet" href="../styles/styles.css">
+    <link rel="stylesheet" href="../responsive/responsive.css">
     <title>Iframe Image Gallery - Test Auto Mate</title>
     <style>
         .iframe-container {
@@ -25,29 +26,43 @@
     </style>
 </head>
 <body>
-    <header>
-        <h1>Images</h1>
-        <nav>
-            <ul>
-                <li><a href="../index.html">Home</a></li>
-                <li><a href="signUp.html">Sign Up</a></li>
-                <li><a href="login.html">Login</a></li>
-                <li><a href="forms.html">Forms</a></li>
-                <li><a href="products.html">Products</a></li>
-                <li><a href="images.html" class="active">Images</a></li>
-                <li><a href="database.html">Database</a></li>
-                <li><a href="api.html">API</a></li>
-                <li><a href="advanced-api.html">Advanced API</a></li>
+    <header id="images-header">
+        <h1 id="images-title">Images</h1>
+        <nav id="images-navigation">
+            <ul id="images-nav-menu">
+                <li><a href="../index.html" id="images-nav-home-link">Home</a></li>
+                <li><a href="signUp.html" id="images-nav-signup-link">Sign Up</a></li>
+                <li><a href="login.html" id="images-nav-login-link">Login</a></li>
+                <li><a href="forms.html" id="images-nav-forms-link">Forms</a></li>
+                <li><a href="products.html" id="images-nav-products-link">Products</a></li>
+                <li><a href="images.html" class="active" id="images-nav-images-link">Images</a></li>
+                <li><a href="database.html" id="images-nav-database-link">Database</a></li>
+                <li><a href="api.html" id="images-nav-api-link">API</a></li>
+                <li><a href="advanced-api.html" id="images-nav-advanced-api-link">Advanced API</a></li>
             </ul>
         </nav>
     </header>
-    <main>
-        <div class="iframe-container">
-            <iframe id="gallery-frame" name="gallery-frame" src="../assets/gallery.html"></iframe>
+    <main id="images-main">
+        <div class="iframe-container" id="images-iframe-container">
+            <iframe id="gallery-frame" name="gallery-frame" src="../assets/gallery.html" id="images-gallery-frame"></iframe>
         </div>
     </main>
 
     <script type="module" src="../scripts/main.js"></script>
-    
+    <script>
+        // Add scroll effect to header
+        document.addEventListener('DOMContentLoaded', function() {
+            const header = document.querySelector('header');
+            if (header) {
+                window.addEventListener('scroll', function() {
+                    if (window.scrollY > 50) {
+                        header.classList.add('scrolled');
+                    } else {
+                        header.classList.remove('scrolled');
+                    }
+                });
+            }
+        });
+    </script>
 </body>
 </html>
